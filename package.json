@@ -1,5 +1,6 @@
 {
   "name": "ffbt",
+  "version": "0.1.0",
   "description": "Tools for assembling your TypeScript web project",
   "license": "MIT",
   "engines": {
@@ -54,10 +55,7 @@
     "webpack-dev-server": "2.9.7",
     "worker-loader": "1.1.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/readdle/ffs.git"
-  },
+  "repository": "git+https://github.com/readdle/ffs.git",
   "keywords": [
     "cli",
     "build-tools",
@@ -66,5 +64,9 @@
     "webpack",
     "tslint",
     "karma"
-  ]
+  ],
+  "bugs": {
+    "url": "https://github.com/readdle/ffs/issues"
+  },
+  "homepage": "https://github.com/readdle/ffs#readme"
 }
