@@ -1,0 +1,70 @@
+{
+  "name": "ffbt",
+  "description": "Tools for assembling your TypeScript web project",
+  "license": "MIT",
+  "engines": {
+    "node": ">=6"
+  },
+  "bin": {
+    "ffbt": "./cli/cli.js"
+  },
+  "scripts": {
+    "postinstall": "npm run compile-lint-rules",
+    "compile-lint-rules": "tsc -m commonjs -t es6 linters/ts-rules/*.ts"
+  },
+  "types": "./index.d.ts",
+  "dependencies": {
+    "@types/node": "8.5.2",
+    "chalk": "2.3.0",
+    "chunk-manifest-webpack-plugin": "1.1.0",
+    "clean-webpack-plugin": "0.1.17",
+    "css-loader": "0.28.7",
+    "extract-text-webpack-plugin": "3.0.2",
+    "file-loader": "1.1.6",
+    "fork-ts-checker-webpack-plugin": "0.2.10",
+    "html-webpack-plugin": "2.30.1",
+    "jasmine-core": "2.8.0",
+    "jasmine-expect": "3.8.1",
+    "karma": "2.0.0",
+    "karma-chrome-launcher": "2.2.0",
+    "karma-cli": "1.0.1",
+    "karma-jasmine": "1.1.1",
+    "karma-phantomjs-launcher": "1.0.4",
+    "karma-sourcemap-loader": "0.3.7",
+    "karma-spec-reporter": "0.0.32",
+    "karma-teamcity-reporter": "1.0.1",
+    "karma-webpack": "2.0.9",
+    "minimist": "1.2.0",
+    "node-sass": "4.7.2",
+    "node-sass-import-once": "github:readdle/node-sass-import-once#custom-importer",
+    "phantomjs-prebuilt": "2.1.16",
+    "postcss-loader": "2.0.9",
+    "raw-loader": "0.5.1",
+    "sass-loader": "6.0.6",
+    "script-ext-html-webpack-plugin": "1.8.8",
+    "stylelint": "8.4.0",
+    "ts-loader": "3.2.0",
+    "tslib": "1.8.1",
+    "tslint": "5.8.0",
+    "typescript": "2.6.2",
+    "uglifyjs-webpack-plugin": "1.1.5",
+    "url-loader": "0.6.2",
+    "webpack": "3.10.0",
+    "webpack-chunk-hash": "0.5.0",
+    "webpack-dev-server": "2.9.7",
+    "worker-loader": "1.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/readdle/ffs.git"
+  },
+  "keywords": [
+    "cli",
+    "build-tools",
+    "frontend",
+    "typescript",
+    "webpack",
+    "tslint",
+    "karma"
+  ]
+}
