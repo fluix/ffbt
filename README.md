@@ -15,10 +15,9 @@ CLI utility for compiling, testing and linting your TypeScript code.
 
 ## What I need to do to build my project?
 - `npm i ffbt`
-- First of all, you need to create a `config.js` file near the `package.json`.
-- Call the command. For example `ffbt dev --workdir=./src/app`
-
-It works perfectly in a pair with npm scripts, so I strongly recommend to call the CLI via `NPM` scripts, not via `npx` or global install
+- Create an entrypoint for your app. Call it `app.ts`. 
+- Create a `config.js` file near the `package.json`.
+- Call the command. For example `ffbt dev src/app`. Where `src/app` is a relative path to a directory with `app.ts` file. 
 
 ### Config.js example
 ```javascript
@@ -68,7 +67,6 @@ module.exports = BuildConfigGenerator.makeBuildConfig(buildProfile, buildWorkdir
 - `lint-ts`. Lints TS files
 
 ##### Each command has the following options:
-- `workdir`. Path to the directory with your sources. Webpack searches for `app.ts` file in this directory
 - `ci`. Enabling CI mode, now it useful only in pair with the test command. It changes the Karma output by running the Teamcity reporter
 
 ## Info for developers

@@ -10,9 +10,12 @@ const NODE_MODULES = path.resolve(ROOT, "./node_modules");
 const PROJECT_ROOT = process.cwd();
 const PROJECT_CONFIG_PATH = path.resolve(PROJECT_ROOT, "config.js");
 
-const [command] = argv._;
-const workdir = argv.workdir || "./";
+let [command, workdir] = argv._;
 const ciMode = argv.ci === true;
+
+if (!workdir) {
+    workdir = "./";
+}
 
 function printAvailableCommands(availableCommands) {
     console.log("Available commands:");
