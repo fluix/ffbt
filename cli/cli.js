@@ -40,7 +40,7 @@ function runCommand(command) {
 
     const config = require(PROJECT_CONFIG_PATH);
     config.resolveLoader = {
-        modules: [NODE_MODULES]
+        modules: ["node_modules", NODE_MODULES]
     };
 
     const runCommand = require(`./commands/${command}.js`);
