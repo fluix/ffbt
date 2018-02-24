@@ -1,7 +1,6 @@
 const path = require("path"),
-    chalk = require("chalk");
-
-const tsMainFile = "./app.ts";
+    chalk = require("chalk"),
+    constants = require("../constants");
 
 class WebpackConfigGenerator {
     constructor(projectSettings) {
@@ -32,7 +31,7 @@ class WebpackConfigGenerator {
         const webpackConfig = Object.assign(baseWebpackConfig, {
             context: workingDirectory,
             entry: {
-                app: tsMainFile,
+                app: constants.tsEntrypointName,
                 vendor: this.projectSettings.vendorContents
             },
             output: {
@@ -67,7 +66,7 @@ class WebpackConfigGenerator {
     }
 
     printHeading(profileName, wokingDirectory) {
-        const entrypointAbsolutePath = path.resolve(wokingDirectory, tsMainFile);
+        const entrypointAbsolutePath = path.resolve(wokingDirectory, constants.tsEntrypointName);
         const isTestWorkdirProvided = Boolean(process.env.TEST_DIR);
         const bigProfileName = profileName.toUpperCase();
 

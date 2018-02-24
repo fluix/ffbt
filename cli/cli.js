@@ -1,20 +1,37 @@
 #!/usr/bin/env node
-
 const path = require("path"),
-    chalk = require("chalk");
+    fs = require("fs"),
+    chalk = require("chalk"),
+    findUp = require('find-up');
 
-const argv = require("minimist")(process.argv.slice(2));
+const argv = require("minimist")(process.argv.slice(2)),
+    constants = require("../constants");
 
-const ROOT = path.resolve(__dirname, "../");
-const NODE_MODULES = path.resolve(ROOT, "./node_modules");
-const PROJECT_ROOT = process.cwd();
-const PROJECT_CONFIG_PATH = path.resolve(PROJECT_ROOT, "config.js");
+const NODE_MODULES = locate("node_modules");
+const ROOT = path.dirname(NODE_MODULES);
+const PROJECT_CONFIG_PATH = locate("config.js");
+const PROJECT_ROOT = path.dirname(PROJECT_CONFIG_PATH);
 
 let [command, workdir] = argv._;
 const ciMode = argv.ci === true;
 
 if (!workdir) {
-    workdir = "./";
+    workdir = process.cwd();
+}
+const ENTRYPOINT_PATH = path.resolve(workdir, constants.tsEntrypointName);
+
+function locate(name) {
+    const path = findUp.sync(name);
+    if (!path) {
+        printCriticalError(`Can't locate ${name}`);
+    }
+
+    return path;
+}
+
+function printCriticalError(errorText) {
+    console.error(chalk.red(errorText));
+    process.exit(1);
 }
 
 function printAvailableCommands(availableCommands) {
@@ -83,6 +100,10 @@ if (!availableCommands.includes(command)) {
     console.error(chalk.red(`Unknown command "${command}"`));
     printAvailableCommands(availableCommands);
     process.exit(1);
+}
+
+if (!fs.existsSync(ENTRYPOINT_PATH)) {
+    printCriticalError(`Can't locate ${constants.tsEntrypointName}`)
 }
 
 if (command === "lint-style" || command === "lint-ts") {

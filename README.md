@@ -1,4 +1,4 @@
-# FFBT: Fluix Frontend Building Tools 
+# FFBT: Fluix Frontend Build Tools 
 CLI utility for compiling, testing and linting your TypeScript code.
 
 `npm i ffbt`
@@ -9,7 +9,7 @@ CLI utility for compiling, testing and linting your TypeScript code.
 - Typescript
 - Node-Sass with import-once plugin
 - Autoprefixer
-- Karma + Jasmine
+- Karma + Jasmine (With Console and TeamCity reporters)
 - Tslint + Stylelint with ready to use configs (linters dir)
 - WebWorkers support (experimental, will be stable in 1.0)
 
