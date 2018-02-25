@@ -8,6 +8,7 @@ const path = require("path"),
 const argv = require("minimist")(process.argv.slice(2)),
     constants = require("../constants");
 
+const FFBT_ROOT = path.dirname(locate("node_modules", __dirname));
 const NODE_MODULES = locate("node_modules");
 const ROOT = path.dirname(NODE_MODULES);
 const PROJECT_CONFIG_PATH = locate("config.js");
@@ -22,8 +23,10 @@ if (!workdir) {
 }
 const ENTRYPOINT_PATH = path.resolve(workdir, constants.tsEntrypointName);
 
-function locate(name) {
-    const path = findUp.sync(name);
+function locate(name, cwd = '') {
+    const path = findUp.sync(name, {
+        cwd: cwd
+    });
     if (!path) {
         printCriticalError(`Can't locate ${name}`);
     }
@@ -80,7 +83,7 @@ function runCommand(command) {
 function runLintCommand(type) {
     const startLinter = require(`./commands/lint/${type}.js`);
 
-    startLinter(ROOT, path.resolve(PROJECT_ROOT, workdir), argv);
+    startLinter(FFBT_ROOT, path.resolve(PROJECT_ROOT, workdir), argv);
 }
 
 function getProfileForCommand(command) {

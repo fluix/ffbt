@@ -88,7 +88,7 @@ class WebpackConfigGenerator {
 
         if (!isTestWorkdirProvided) {
             console.log(chalk.yellow("Working dir:"), chalk.green(wokingDirectory));
-            console.log(chalk.yellow("Build dir:"), chalk.green(this.projectSettings.buildPath));
+            console.log(chalk.yellow("Output dir:"), chalk.green(this.projectSettings.buildPath));
             console.log();
         }
     }
