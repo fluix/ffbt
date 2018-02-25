@@ -21,10 +21,9 @@ CLI utility for compiling, testing and linting your TypeScript code.
 
 ### Config.js example
 ```javascript
-const path = require("path"),
-    WebpackConfigGenerator = require("ffbt/webpack/config-generator");
+const path = require("path");
 
-const ProjectSettings = {
+module.exports = {
     profiles: {
         dev: {
             // custom variables for index.html in DEV profile
@@ -47,15 +46,6 @@ const ProjectSettings = {
     buildPath: path.resolve(__dirname, "public") // absolute path to your dist directory
     // generally its path to your public directory
 };
-
-// Sorry for this boilerplate, we'll remove it soon (in 1.0 version)
-const BuildConfigGenerator = new WebpackConfigGenerator(ProjectSettings);
-const buildProfile = process.env.NODE_ENV;
-const buildWorkdir = process.env.BUILD_WORKDIR
-    ? path.resolve(__dirname, process.env.BUILD_WORKDIR)
-    : __dirname;
-
-module.exports = BuildConfigGenerator.makeBuildConfig(buildProfile, buildWorkdir);
 ```
 
 ## Available commands

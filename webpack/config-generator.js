@@ -13,7 +13,7 @@ class WebpackConfigGenerator {
      *
      * @param string profileName. You can get allowed profiles from the PROFILES constant
      */
-    makeBuildConfig(profileName, workingDirectory) {
+    makeBuildConfig(profileName, workingDirectory, modules_dir) {
         this.printHeading(profileName, workingDirectory);
 
         const normalizedProfileName = profileName.toLowerCase();
@@ -31,7 +31,7 @@ class WebpackConfigGenerator {
         const webpackConfig = Object.assign(baseWebpackConfig, {
             context: workingDirectory,
             entry: {
-                app: constants.tsEntrypointName,
+                app: path.resolve(workingDirectory, constants.tsEntrypointName),
                 vendor: this.projectSettings.vendorContents
             },
             output: {
@@ -44,6 +44,10 @@ class WebpackConfigGenerator {
 
         webpackConfig.module.noParse = this.projectSettings.noParse;
         webpackConfig.resolve.alias = this.projectSettings.aliases;
+
+        webpackConfig.resolveLoader = {
+            modules: ["node_modules", modules_dir]
+        };
 
         // Add sourcemaps
         if (profileConfig.webpackDevtool) {

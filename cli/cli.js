@@ -2,7 +2,8 @@
 const path = require("path"),
     fs = require("fs"),
     chalk = require("chalk"),
-    findUp = require('find-up');
+    findUp = require('find-up'),
+    WebpackConfigGenerator = require("../webpack/config-generator");
 
 const argv = require("minimist")(process.argv.slice(2)),
     constants = require("../constants");
@@ -58,13 +59,17 @@ function setupEnvVariables(command) {
 function runCommand(command) {
     setupEnvVariables(command);
 
-    const config = require(PROJECT_CONFIG_PATH);
-    config.resolveLoader = {
-        modules: ["node_modules", NODE_MODULES]
-    };
+    const projectConfig = require(PROJECT_CONFIG_PATH);
+    const BuildConfigGenerator = new WebpackConfigGenerator(projectConfig);
+    const buildProfile = getEnvForCommand(command);
+    const buildWorkdir = workdir
+        ? path.resolve(PROJECT_ROOT, workdir)
+        : PROJECT_ROOT;
+
+    const webpackConfig = BuildConfigGenerator.makeBuildConfig(buildProfile, buildWorkdir, NODE_MODULES);
 
     const runBuildCommand = require(`./commands/${command}.js`);
-    runBuildCommand(config);
+    runBuildCommand(webpackConfig);
 }
 
 function runLintCommand(type) {
