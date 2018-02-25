@@ -38,10 +38,9 @@ class ConfigGenerator {
 
     makeEnvironmentConfig(buildConfig) {
         const ciMode = Environment.ciModeEnabled(),
-            workDir = Environment.getTestWorkingDir(),
-            pathToEntry = path.resolve(buildConfig.context, workDir);
+            workDir = Environment.getTestWorkingDir();
         
-        const testConfig = this.makeConfig(ciMode, pathToEntry, buildConfig);
+        const testConfig = this.makeConfig(ciMode, workDir, buildConfig);
 
         return testConfig;
     }
