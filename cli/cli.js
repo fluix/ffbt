@@ -63,15 +63,14 @@ function runCommand(command) {
         modules: ["node_modules", NODE_MODULES]
     };
 
-    const runCommand = require(`./commands/${command}.js`);
-
-    runCommand(config);
+    const runBuildCommand = require(`./commands/${command}.js`);
+    runBuildCommand(config);
 }
 
 function runLintCommand(type) {
-    const runCommand = require(`./commands/lint/${type}.js`);
+    const startLinter = require(`./commands/lint/${type}.js`);
 
-    runCommand(ROOT, path.resolve(PROJECT_ROOT, workdir), argv);
+    startLinter(ROOT, path.resolve(PROJECT_ROOT, workdir), argv);
 }
 
 function getEnvForCommand(command) {
