@@ -15,6 +15,7 @@ const PROJECT_ROOT = path.dirname(PROJECT_CONFIG_PATH);
 
 let [command, workdir] = argv._;
 const ciMode = argv.ci === true;
+const analyzeMode = argv.analyze === true;
 
 if (!workdir) {
     workdir = process.cwd();
@@ -43,7 +44,11 @@ function printAvailableCommands(availableCommands) {
 }
 
 function setupEnvVariables(command) {
-    process.env.NODE_ENV = getEnvForCommand(command);
+    process.env.NODE_ENV = getProfileForCommand(command);
+
+    if (analyzeMode) {
+        process.env.FFBT_ANALYZE_MODE = true;
+    }
 
     if (command === "test") {
         process.env.TEST_DIR = workdir;
@@ -61,7 +66,7 @@ function runCommand(command) {
 
     const projectConfig = require(PROJECT_CONFIG_PATH);
     const BuildConfigGenerator = new WebpackConfigGenerator(projectConfig);
-    const buildProfile = getEnvForCommand(command);
+    const buildProfile = getProfileForCommand(command);
     const buildWorkdir = workdir
         ? path.resolve(PROJECT_ROOT, workdir)
         : PROJECT_ROOT;
@@ -78,7 +83,7 @@ function runLintCommand(type) {
     startLinter(ROOT, path.resolve(PROJECT_ROOT, workdir), argv);
 }
 
-function getEnvForCommand(command) {
+function getProfileForCommand(command) {
     switch (command) {
         case "dev":
         case "dev-server":

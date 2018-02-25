@@ -16,11 +16,16 @@ function printColorError(useColor, error) {
         console.log(chalk.red(error));
     }
 
-    return console.error(error);
+    console.error(error);
+}
+
+function printAllWebpackStats(error, stats) {
+    console.log(stats.toString("verbose"));
 }
 
 module.exports = {
-    printVerboseWebpackStats: printVerboseWebpackStats,
-    printBriefWebpackStats: printBriefWebpackStats,
-    printColorError: printColorError
+    printVerboseWebpackStats,
+    printBriefWebpackStats,
+    printColorError,
+    printAllWebpackStats
 };

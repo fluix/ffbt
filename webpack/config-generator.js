@@ -1,6 +1,8 @@
 const path = require("path"),
     chalk = require("chalk"),
-    constants = require("../constants");
+    constants = require("../constants"),
+    env = require("../environment"),
+    BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 class WebpackConfigGenerator {
     constructor(projectSettings) {
@@ -66,13 +68,21 @@ class WebpackConfigGenerator {
             }
         };
 
+        if (env.analyzeModeEnabled()) {
+            webpackConfig.plugins.push(
+                new BundleAnalyzerPlugin()
+            );
+        }
+
         return webpackConfig;
     }
 
     printHeading(profileName, wokingDirectory) {
         const entrypointAbsolutePath = path.resolve(wokingDirectory, constants.tsEntrypointName);
         const isTestWorkdirProvided = Boolean(process.env.TEST_DIR);
-        const bigProfileName = profileName.toUpperCase();
+        const bigProfileName = env.analyzeModeEnabled()
+            ? `${profileName.toUpperCase()} (analyze bundle structure)`
+            : profileName.toUpperCase();
 
         console.log(chalk.yellow.bold("Build profile:"), chalk.green.bold(bigProfileName));
 
