@@ -102,14 +102,14 @@ if (!availableCommands.includes(command)) {
     process.exit(1);
 }
 
-if (!fs.existsSync(ENTRYPOINT_PATH)) {
-    printCriticalError(`Can't locate ${constants.tsEntrypointName}`)
-}
-
 if (command === "lint-style" || command === "lint-ts") {
     const [, type] = command.split("-");
     runLintCommand(type);
 } else {
+    if (!fs.existsSync(ENTRYPOINT_PATH)) {
+        printCriticalError(`Can't locate ${constants.tsEntrypointName}`)
+    }
+
     runCommand(command);
 }
 
