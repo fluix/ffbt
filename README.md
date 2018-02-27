@@ -17,7 +17,7 @@ CLI utility for compiling, testing and linting your TypeScript code.
 - `npm i ffbt`
 - Create an entrypoint for your app. Call it `app.ts`. 
 - Create a `config.js` file near the `package.json`.
-- Call the command. For example `ffbt dev src/app`. Where `src/app` is a relative path to a directory with `app.ts` file. 
+- `ffbt dev`
 
 ### Config.js example
 ```javascript

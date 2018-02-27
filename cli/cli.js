@@ -8,12 +8,6 @@ const path = require("path"),
 const argv = require("minimist")(process.argv.slice(2)),
     constants = require("../constants");
 
-const FFBT_ROOT = path.dirname(locate("node_modules", __dirname));
-const NODE_MODULES = locate("node_modules");
-const ROOT = path.dirname(NODE_MODULES);
-const PROJECT_CONFIG_PATH = locate("config.js");
-const PROJECT_ROOT = path.dirname(PROJECT_CONFIG_PATH);
-
 let [command, workdir] = argv._;
 const ciMode = argv.ci === true;
 const analyzeMode = argv.analyze === true;
@@ -21,6 +15,11 @@ const analyzeMode = argv.analyze === true;
 if (!workdir) {
     workdir = process.cwd();
 }
+
+const FFBT_ROOT_PATH = path.dirname(locate("node_modules", __dirname));
+const PROJECT_NODE_MODULES_PATH = locate("node_modules", workdir);
+const PROJECT_CONFIG_PATH = locate("config.js", workdir);
+const PROJECT_ROOT_PATH = path.dirname(PROJECT_CONFIG_PATH);
 const ENTRYPOINT_PATH = path.resolve(workdir, constants.tsEntrypointName);
 
 function locate(name, cwd = '') {
@@ -71,10 +70,10 @@ function runCommand(command) {
     const BuildConfigGenerator = new WebpackConfigGenerator(projectConfig);
     const buildProfile = getProfileForCommand(command);
     const buildWorkdir = workdir
-        ? path.resolve(PROJECT_ROOT, workdir)
-        : PROJECT_ROOT;
+        ? path.resolve(PROJECT_ROOT_PATH, workdir)
+        : PROJECT_ROOT_PATH;
 
-    const webpackConfig = BuildConfigGenerator.makeBuildConfig(buildProfile, buildWorkdir, NODE_MODULES);
+    const webpackConfig = BuildConfigGenerator.makeBuildConfig(buildProfile, buildWorkdir, PROJECT_NODE_MODULES_PATH);
 
     const runBuildCommand = require(`./commands/${command}.js`);
     runBuildCommand(webpackConfig);
@@ -83,7 +82,7 @@ function runCommand(command) {
 function runLintCommand(type) {
     const startLinter = require(`./commands/lint/${type}.js`);
 
-    startLinter(FFBT_ROOT, path.resolve(PROJECT_ROOT, workdir), argv);
+    startLinter(FFBT_ROOT_PATH, path.resolve(PROJECT_ROOT_PATH, workdir), argv);
 }
 
 function getProfileForCommand(command) {
