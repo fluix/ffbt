@@ -57,7 +57,7 @@
     "webpack-dev-server": "2.11.1",
     "worker-loader": "1.1.0"
   },
-  "repository": "git+https://github.com/readdle/ffs.git",
+  "repository": "git+https://github.com/readdle/ffbt.git",
   "keywords": [
     "cli",
     "build-tools",
@@ -65,10 +65,14 @@
     "typescript",
     "webpack",
     "tslint",
-    "karma"
+    "karma",
+    "bundler",
+    "scss",
+    "ready-to-use",
+    "stylelint"
   ],
   "bugs": {
-    "url": "https://github.com/readdle/ffs/issues"
+    "url": "https://github.com/readdle/ffbt/issues"
   },
-  "homepage": "https://github.com/readdle/ffs#readme"
+  "homepage": "https://github.com/readdle/ffbt#readme"
 }
