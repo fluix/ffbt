@@ -46,6 +46,7 @@ function printAvailableCommands(availableCommands) {
 }
 
 function setupEnvVariables(command) {
+    process.env.PLATFORM = "web";
     process.env.NODE_ENV = getProfileForCommand(command);
 
     if (analyzeMode) {
