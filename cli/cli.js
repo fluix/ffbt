@@ -68,6 +68,8 @@ function runCommand(command) {
     setupEnvVariables(command);
 
     const projectConfig = require(PROJECT_CONFIG_PATH);
+    overrideConfigOptionsFromCli(projectConfig, argv);
+
     const BuildConfigGenerator = new WebpackConfigGenerator(projectConfig);
     const buildProfile = getProfileForCommand(command);
     const buildWorkdir = workdir
@@ -78,6 +80,15 @@ function runCommand(command) {
 
     const runBuildCommand = require(`./commands/${command}.js`);
     runBuildCommand(webpackConfig);
+}
+
+function overrideConfigOptionsFromCli(projectConfig, argv) {
+    // ability to override output path via cli option
+    const outputPathOption = argv.output;
+
+    if (outputPathOption) {
+        projectConfig.buildPath = path.resolve(process.cwd(), outputPathOption);
+    }
 }
 
 function runLintCommand(type) {
