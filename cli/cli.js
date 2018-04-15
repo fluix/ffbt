@@ -97,6 +97,8 @@ function applyConfigDefaults(projectConfig) {
     const newConfig = Object.assign({}, defaultConfig, projectConfig);
     newConfig.projectRoot = PROJECT_ROOT_PATH;
 
+    newConfig.buildPath = newConfig.buildPath.replace("%ROOT_PATH%", PROJECT_ROOT_PATH);
+
     return newConfig;
 }
 
@@ -139,7 +141,7 @@ if (command === "lint-style" || command === "lint-ts") {
     runLintCommand(type);
 } else {
     if (!fs.existsSync(ENTRYPOINT_PATH)) {
-        printCriticalError(`Can't locate ${constants.tsEntrypointName}`)
+        printCriticalError(`Can't locate ${constants.tsEntrypointName}`);
     }
 
     runCommand(command);

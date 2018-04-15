@@ -4,6 +4,6 @@ module.exports = {
     aliases: [],
     supportedBrowsers: "last 2 versions",
     htmlBaseRoot: "/",
-    buildPath: "dist",
+    buildPath: "%ROOT_PATH%/dist",
     profiles: {}
 };
