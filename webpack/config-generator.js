@@ -2,7 +2,8 @@ const path = require("path"),
     chalk = require("chalk"),
     constants = require("../constants"),
     env = require("../environment"),
-    BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+    BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin,
+    configValidator = require("../config/validator");
 
 class WebpackConfigGenerator {
     constructor(projectSettings) {
@@ -33,8 +34,7 @@ class WebpackConfigGenerator {
         const webpackConfig = Object.assign(baseWebpackConfig, {
             context: workingDirectory,
             entry: {
-                app: path.resolve(workingDirectory, constants.tsEntrypointName),
-                vendor: this.projectSettings.vendorContents
+                app: path.resolve(workingDirectory, constants.tsEntrypointName)
             },
             output: {
                 path: this.projectSettings.buildPath,
@@ -44,12 +44,20 @@ class WebpackConfigGenerator {
             plugins: profileConfig.webpackPlugins
         });
 
+        if (configValidator.vendor(this.projectSettings.vendorContents)) {
+            webpackConfig.entry.vendor = this.projectSettings.vendorContents;
+        }
+
         webpackConfig.module.noParse = this.projectSettings.noParse;
         webpackConfig.resolve.alias = this.projectSettings.aliases;
 
         webpackConfig.resolveLoader = {
-            modules: ["node_modules", projectNodeModulesDir]
+            modules: ["node_modules"]
         };
+
+        if (projectNodeModulesDir) {
+            webpackConfig.resolveLoader.modules.push(projectNodeModulesDir);
+        }
 
         // Add sourcemaps
         if (profileConfig.webpackDevtool) {

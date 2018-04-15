@@ -1,6 +1,6 @@
 module.exports = {
     vendorContents: [],
-    noParse: [],
+    noParse: void 0,
     aliases: [],
     supportedBrowsers: "last 2 versions",
     htmlBaseRoot: "/",

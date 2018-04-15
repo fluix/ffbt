@@ -7,7 +7,7 @@ const path = require("path"),
 
 const argv = require("minimist")(process.argv.slice(2)),
     constants = require("../constants"),
-    defaultConfig = require("../default-config");
+    defaultConfig = require("../config/default");
 
 let [command, workdir] = argv._;
 const ciMode = argv.ci === true;
