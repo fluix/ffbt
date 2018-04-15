@@ -58,6 +58,8 @@ module.exports = {
 
 ##### Each command has the following options:
 - `ci`. Enabling CI mode, now it useful only in pair with the test command. It changes the Karma output by running the Teamcity reporter
+- `output`. You can override buildPath config property via this option
+- `analyze`. Runs webpack-bundle-analyzer plugin that displays a map of your dependencies
 
 ## Info for developers
 
