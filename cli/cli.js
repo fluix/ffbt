@@ -97,7 +97,9 @@ function applyConfigDefaults(projectConfig) {
     const newConfig = Object.assign({}, defaultConfig, projectConfig);
     newConfig.projectRoot = PROJECT_ROOT_PATH;
 
-    newConfig.buildPath = newConfig.buildPath.replace("%ROOT_PATH%", PROJECT_ROOT_PATH);
+    // if path is relative - it becomes absolute to project root
+    // if path is absolute - nothing happens
+    newConfig.buildPath = path.resolve(PROJECT_ROOT_PATH, newConfig.buildPath);
 
     return newConfig;
 }
