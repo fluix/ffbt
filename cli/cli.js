@@ -6,7 +6,8 @@ const path = require("path"),
     WebpackConfigGenerator = require("../webpack/config-generator");
 
 const argv = require("minimist")(process.argv.slice(2)),
-    constants = require("../constants");
+    constants = require("../constants"),
+    defaultConfig = require("../config/default");
 
 let [command, workdir] = argv._;
 const ciMode = argv.ci === true;
@@ -17,20 +18,20 @@ if (!workdir) {
 }
 
 const FFBT_ROOT_PATH = path.dirname(locate("node_modules", __dirname));
-const PROJECT_NODE_MODULES_PATH = locate("node_modules", workdir);
+const PROJECT_NODE_MODULES_PATH = locate("node_modules", workdir, false);
 const PROJECT_CONFIG_PATH = locate("config.js", workdir);
 const PROJECT_ROOT_PATH = path.dirname(PROJECT_CONFIG_PATH);
 const ENTRYPOINT_PATH = path.resolve(workdir, constants.tsEntrypointName);
 
-function locate(name, cwd = '') {
+function locate(name, cwd = '', raiseErrorIfNotExists = true) {
     const path = findUp.sync(name, {
         cwd: cwd
     });
-    if (!path) {
+    if (!path && raiseErrorIfNotExists) {
         printCriticalError(`Can't locate ${name}`);
     }
 
-    return path;
+    return path || "";
 }
 
 function printCriticalError(errorText) {
@@ -67,7 +68,8 @@ function setupEnvVariables(command) {
 function runCommand(command) {
     setupEnvVariables(command);
 
-    const projectConfig = require(PROJECT_CONFIG_PATH);
+    let projectConfig = require(PROJECT_CONFIG_PATH);
+    projectConfig = applyConfigDefaults(projectConfig);
     overrideConfigOptionsFromCli(projectConfig, argv);
 
     const BuildConfigGenerator = new WebpackConfigGenerator(projectConfig);
@@ -89,6 +91,17 @@ function overrideConfigOptionsFromCli(projectConfig, argv) {
     if (outputPathOption) {
         projectConfig.buildPath = path.resolve(process.cwd(), outputPathOption);
     }
+}
+
+function applyConfigDefaults(projectConfig) {
+    const newConfig = Object.assign({}, defaultConfig, projectConfig);
+    newConfig.projectRoot = PROJECT_ROOT_PATH;
+
+    // if path is relative - it becomes absolute to project root
+    // if path is absolute - nothing happens
+    newConfig.buildPath = path.resolve(PROJECT_ROOT_PATH, newConfig.buildPath);
+
+    return newConfig;
 }
 
 function runLintCommand(type) {
@@ -130,7 +143,7 @@ if (command === "lint-style" || command === "lint-ts") {
     runLintCommand(type);
 } else {
     if (!fs.existsSync(ENTRYPOINT_PATH)) {
-        printCriticalError(`Can't locate ${constants.tsEntrypointName}`)
+        printCriticalError(`Can't locate ${constants.tsEntrypointName}`);
     }
 
     runCommand(command);

@@ -4,12 +4,18 @@ const HtmlWebpackPlugin = require("html-webpack-plugin"),
     WebpackChunkHash = require("webpack-chunk-hash"),
     ChunkManifestPlugin = require("chunk-manifest-webpack-plugin"),
     ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin"),
-    UglifyJSPlugin = require('uglifyjs-webpack-plugin'),
-    CleanWebpackPlugin = require('clean-webpack-plugin');
+    UglifyJSPlugin = require("uglifyjs-webpack-plugin"),
+    CleanWebpackPlugin = require("clean-webpack-plugin"),
+    configValidator = require("../../config/validator");
 
 function makeConfig(projectConfig) {
     const gaId = projectConfig.profiles.production
         && projectConfig.profiles.production.googleAnalyticsId;
+
+    let additionalBundles = ["runtime"];
+    if (configValidator.vendor(projectConfig.vendorContents)) {
+        additionalBundles = ["vendor", ...additionalBundles];
+    }
 
     return {
         webpackDevtool: "source-map",
@@ -28,7 +34,7 @@ function makeConfig(projectConfig) {
                 inlineManifest: true
             }),
             new Webpack.optimize.CommonsChunkPlugin({
-                name: ["vendor", "runtime"],
+                name: additionalBundles,
                 minChunks: Infinity
             }),
             new Webpack.optimize.ModuleConcatenationPlugin(),
