@@ -8,6 +8,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin"),
     CleanWebpackPlugin = require('clean-webpack-plugin');
 
 function makeConfig(projectConfig) {
+    const gaId = projectConfig.profiles.production
+        && projectConfig.profiles.production.googleAnalyticsId;
+
     return {
         webpackDevtool: "source-map",
         webpackOutputSettings: {
@@ -39,7 +42,7 @@ function makeConfig(projectConfig) {
                     collapseWhitespace: true
                 },
                 template: "index.ejs",
-                gaUA: projectConfig.profiles.production.googleAnalyticsId,
+                gaUA: gaId,
                 htmlBaseRoot: projectConfig.htmlBaseRoot
             }),
             new ScriptExtHtmlWebpackPlugin({

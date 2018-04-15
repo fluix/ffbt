@@ -5,6 +5,9 @@ const path = require("path"),
     HtmlWebpackPlugin = require("html-webpack-plugin");
 
 function makeConfig(projectConfig) {
+    const gaId = projectConfig.profiles.dev
+        && projectConfig.profiles.dev.googleAnalyticsId;
+
     return {
         webpackDevtool: 'eval-source-map',
         webpackOutputSettings: {
@@ -29,7 +32,7 @@ function makeConfig(projectConfig) {
                 inject: "body",
                 hash: true,
                 template: "index.ejs",
-                gaUA: projectConfig.profiles.production.googleAnalyticsId,
+                gaUA: gaId,
                 htmlBaseRoot: projectConfig.htmlBaseRoot
             }),
             new Webpack.SourceMapDevToolPlugin({
