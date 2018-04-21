@@ -1,6 +1,6 @@
 const path = require("path"),
     chalk = require("chalk"),
-    constants = require("../constants"),
+    utils = require("../utils"),
     env = require("../environment"),
     BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin,
     configValidator = require("../config/validator");
@@ -34,7 +34,7 @@ class WebpackConfigGenerator {
         const webpackConfig = Object.assign(baseWebpackConfig, {
             context: workingDirectory,
             entry: {
-                app: path.resolve(workingDirectory, constants.tsEntrypointName)
+                app: utils.locateEntrypoint(workingDirectory)
             },
             output: {
                 path: this.projectSettings.buildPath,
@@ -86,7 +86,6 @@ class WebpackConfigGenerator {
     }
 
     printHeading(profileName, wokingDirectory) {
-        const entrypointAbsolutePath = path.resolve(wokingDirectory, constants.tsEntrypointName);
         const isTestWorkdirProvided = Boolean(process.env.TEST_DIR);
         const bigProfileName = env.analyzeModeEnabled()
             ? `${profileName.toUpperCase()} (analyze bundle structure)`

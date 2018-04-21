@@ -81,6 +81,6 @@ function makeConfig(options = {
             extensions: [".ts", ".tsx", ".js"],
         }
     }
-};
+}
 
 module.exports = makeConfig;

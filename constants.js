@@ -1,3 +1,3 @@
 module.exports = {
-    tsEntrypointName: "app.ts"
+    tsEntrypointName: "app"
 };
