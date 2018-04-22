@@ -59,9 +59,7 @@ function makeConfig(projectConfig) {
                 parallel: true
             }),
             new Webpack.DefinePlugin({
-                'process.env': {
-                    'NODE_ENV': "production"
-                }
+                'process.env.NODE_ENV': JSON.stringify('production')
             }),
             new CleanWebpackPlugin(projectConfig.buildPath, {
                 allowExternal: true

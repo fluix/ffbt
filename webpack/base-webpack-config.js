@@ -9,9 +9,15 @@ function makeConfig(options = {
 }) {
     const projectNodeModulesPath = path.resolve(options.projectRoot, "./node_modules");
     const sassImporter = importOnce.createImporterWithCustomNodeModules(projectNodeModulesPath);
+    const tsConfigPath = path.resolve(options.projectRoot, "tsconfig.json");
+    const tsConfig = require(tsConfigPath);
+
     const tsLoaderOptions = {
-        configFile: path.resolve(options.projectRoot, "tsconfig.json"),
-        transpileOnly: true
+        configFile: tsConfigPath,
+        transpileOnly: true,
+        compilerOptions: {
+            jsx: tsConfig.compilerOptions.jsx || "react"
+        }
     };
 
     return {
@@ -78,9 +84,9 @@ function makeConfig(options = {
             ]
         },
         resolve: {
-            extensions: [".ts", ".tsx", ".js"],
+            extensions: [".ts", ".tsx", ".js", ".json"],
         }
     }
-};
+}
 
 module.exports = makeConfig;

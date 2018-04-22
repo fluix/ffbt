@@ -1,6 +1,7 @@
 const chalk = require("chalk"),
     webpack = require("webpack"),
     WebpackDevServer = require("webpack-dev-server"),
+    open = require("opn"),
     addDevServerEntryPoints = require("webpack-dev-server/lib/util/addDevServerEntrypoints"),
     OptionsValidationError = require('webpack-dev-server/lib/OptionsValidationError'),
     Utils = require("../utils");
@@ -38,6 +39,8 @@ module.exports = function(webpackConfig) {
     console.log();
 
     server.listen(port, host);
+
+    open(url);
 
     ['SIGINT', 'SIGTERM'].forEach((sig) => {
         process.on(sig, () => {

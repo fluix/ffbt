@@ -23,9 +23,17 @@ function printAllWebpackStats(error, stats) {
     console.log(stats.toString("verbose"));
 }
 
+function webpackStatsHasErrors(error, stats) {
+    const hasCompilationErrors = stats.compilation
+        && stats.compilation.errors
+        && stats.compilation.errors.length;
+    return error || hasCompilationErrors;
+}
+
 module.exports = {
     printVerboseWebpackStats,
     printBriefWebpackStats,
     printColorError,
-    printAllWebpackStats
+    printAllWebpackStats,
+    webpackStatsHasErrors
 };

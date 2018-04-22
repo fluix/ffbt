@@ -6,6 +6,7 @@ const path = require("path"),
     WebpackConfigGenerator = require("../webpack/config-generator");
 
 const argv = require("minimist")(process.argv.slice(2)),
+    utils = require("../utils"),
     constants = require("../constants"),
     defaultConfig = require("../config/default");
 
@@ -20,8 +21,11 @@ if (!workdir) {
 const FFBT_ROOT_PATH = path.dirname(locate("node_modules", __dirname));
 const PROJECT_NODE_MODULES_PATH = locate("node_modules", workdir, false);
 const PROJECT_CONFIG_PATH = locate("config.js", workdir);
+const PROJECT_PACKAGE_JSON_PATH = locate("package.json", workdir, false);
 const PROJECT_ROOT_PATH = path.dirname(PROJECT_CONFIG_PATH);
-const ENTRYPOINT_PATH = path.resolve(workdir, constants.tsEntrypointName);
+const ENTRYPOINT_PATH = utils.locateEntrypoint(workdir);
+
+const PROJECT_PACKAGE_JSON = require(PROJECT_PACKAGE_JSON_PATH);
 
 function locate(name, cwd = '', raiseErrorIfNotExists = true) {
     const path = findUp.sync(name, {
@@ -81,7 +85,9 @@ function runCommand(command) {
     const webpackConfig = BuildConfigGenerator.makeBuildConfig(buildProfile, buildWorkdir, PROJECT_NODE_MODULES_PATH);
 
     const runBuildCommand = require(`./commands/${command}.js`);
-    runBuildCommand(webpackConfig);
+    runBuildCommand(webpackConfig, {
+        projectName: PROJECT_PACKAGE_JSON.name
+    });
 }
 
 function overrideConfigOptionsFromCli(projectConfig, argv) {
@@ -142,8 +148,8 @@ if (command === "lint-style" || command === "lint-ts") {
     const [, type] = command.split("-");
     runLintCommand(type);
 } else {
-    if (!fs.existsSync(ENTRYPOINT_PATH)) {
-        printCriticalError(`Can't locate ${constants.tsEntrypointName}`);
+    if (!ENTRYPOINT_PATH) {
+        printCriticalError(`Can't locate ${constants.tsEntrypointName}.ts(x)`);
     }
 
     runCommand(command);
