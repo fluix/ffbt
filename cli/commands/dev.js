@@ -2,21 +2,32 @@ const webpack = require("webpack"),
     Utils = require("../utils"),
     notifier = require("node-notifier");
 
-module.exports = function(webpackConfig) {
+function showCompileResultNotification(hasErrors, projectName) {
+    const title = projectName
+        ? `FFBT: ${projectName}`
+        : "FFBT";
+
+    if (hasErrors) {
+        notifier.notify({
+            title,
+            message: "An error occurred during compilation!",
+        });
+    } else {
+        notifier.notify({
+            title,
+            message: "Compiled successfully",
+            timeout: 2
+        });
+    }
+}
+
+module.exports = function(webpackConfig, data) {
     const compiler = webpack(webpackConfig);
     const watching = compiler.watch({}, function(error, stats) {
-        if (Utils.webpackStatsHasErrors(error, stats)) {
-            notifier.notify({
-                title: "FFBT",
-                message: "An error occurred during compilation!",
-            });
-        } else {
-            notifier.notify({
-                title: "FFBT",
-                message: "Compiled successfully",
-                timeout: 2
-            });
-        }
+        showCompileResultNotification(
+            Utils.webpackStatsHasErrors(error, stats),
+            data.projectName
+        );
 
         return Utils.printBriefWebpackStats(error, stats);
     });
