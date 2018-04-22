@@ -78,7 +78,7 @@ function makeConfig(options = {
             ]
         },
         resolve: {
-            extensions: [".ts", ".tsx", ".js"],
+            extensions: [".ts", ".tsx", ".js", ".json"],
         }
     }
 }
