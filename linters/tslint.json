@@ -81,6 +81,7 @@
     ],
     "align": [true, "parameters", "statements", "members", "elements"],
     "no-consecutive-blank-lines": true,
-    "interface-over-type-literal": true
+    "interface-over-type-literal": true,
+    "no-inferrable-types": [true, "ignore-params"]
   }
 }
