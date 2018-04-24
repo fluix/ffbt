@@ -38,7 +38,13 @@
     "no-shadowed-variable": true,
     "no-string-literal": true,
     "no-switch-case-fall-through": true,
-    "trailing-comma": true,
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "always",
+        "singleline": "never"
+      }
+    ],
     "no-trailing-whitespace": false,
     "no-unused-expression": true,
     "no-var-keyword": true,
@@ -75,6 +81,7 @@
     ],
     "align": [true, "parameters", "statements", "members", "elements"],
     "no-consecutive-blank-lines": true,
-    "interface-over-type-literal": true
+    "interface-over-type-literal": true,
+    "no-inferrable-types": [true, "ignore-params"]
   }
 }
