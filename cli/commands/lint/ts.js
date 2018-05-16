@@ -8,7 +8,7 @@ module.exports = function (ffbt_root, workdir, argv) {
     const runnerConfig = {
         config: path.resolve(ffbt_root, "./linters/tslint.json"),
         exclude: "node_modules/**/*",
-        files: path.resolve(workdir, "./**/*.ts"),
+        files: path.resolve(workdir, "./**/*.ts?(x)"),
         fix,
         force,
         format: "stylish"
