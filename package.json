@@ -11,7 +11,7 @@
   },
   "scripts": {
     "postinstall": "npm run compile-lint-rules",
-    "compile-lint-rules": "tsc -m commonjs -t es6 linters/ts-rules/*.ts"
+    "compile-lint-rules": "tsc -m commonjs -t es6 --typeRoots ./linters/ts-rules/*.ts"
   },
   "types": "./index.d.ts",
   "dependencies": {
