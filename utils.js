@@ -15,6 +15,11 @@ function locateEntrypoint(workdirPath) {
     }
 }
 
+function getLocalNodeModulesPath() {
+    return path.resolve(__dirname, "node_modules");
+}
+
 module.exports = {
-    locateEntrypoint
+    locateEntrypoint,
+    getLocalNodeModulesPath: getLocalNodeModulesPath
 };

@@ -52,7 +52,10 @@ class WebpackConfigGenerator {
         webpackConfig.resolve.alias = this.projectSettings.aliases;
 
         webpackConfig.resolveLoader = {
-            modules: ["node_modules"]
+            modules: [
+                utils.getLocalNodeModulesPath(),
+                "node_modules"
+            ]
         };
 
         if (projectNodeModulesDir) {
