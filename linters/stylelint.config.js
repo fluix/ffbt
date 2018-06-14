@@ -4,7 +4,12 @@ module.exports = {
         "indentation": 4,
         "string-quotes": "double",
         "max-empty-lines": 1,
-        "no-eol-whitespace": true,
+        "no-eol-whitespace": [
+            true,
+            {
+                ignore: ["empty-lines"]
+            }
+        ],
         "no-missing-end-of-source-newline": true,
         // Block
         "block-no-empty": true,
