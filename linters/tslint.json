@@ -2,7 +2,6 @@
   "rulesDirectory": "ts-rules",
   "rules": {
     "strict-alias-import": [true, "ui-kit"],
-    "no-underscore-property": true,
     "class-name": true,
     "comment-format": [
       true,
