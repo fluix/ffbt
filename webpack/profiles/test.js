@@ -6,7 +6,7 @@ const path = require("path"),
 function makePlugins(projectConfig) {
     const plugins = [
         new ExtractTextPlugin({
-            filename: 'build/[name].bundle.css',
+            filename: 'test/[name].bundle.css',
             allChunks: true
         })
     ];
@@ -26,7 +26,7 @@ function makeConfig(projectConfig) {
     return {
         webpackDevtool: 'eval-source-map',
         webpackOutputSettings: {
-            filename: "build/[name].bundle.js",
+            filename: "test/[name].bundle.js",
             chunkFilename: "[name].js",
         },
         // WARNING! Be careful, this object overrides the default plugins section

@@ -14,7 +14,7 @@ function makeConfig(projectConfig) {
             tsconfig: path.resolve(projectConfig.projectRoot, "tsconfig.json")
         }),
         new ExtractTextPlugin({
-            filename: 'build/[name].bundle.css',
+            filename: '[name].bundle.css',
             allChunks: true,
         }),
         new HtmlWebpackPlugin({
@@ -42,7 +42,7 @@ function makeConfig(projectConfig) {
     return {
         webpackDevtool: 'eval-source-map',
         webpackOutputSettings: {
-            filename: "build/[name].bundle.js",
+            filename: "[name].bundle.js",
             chunkFilename: "[name].js",
         },
         // WARNING! Be careful, this object overrides the default plugins section

@@ -47,7 +47,7 @@ function makeConfig(options = {
                     loader: {
                         loader: "url-loader",
                         options: {
-                            limit: Infinity,
+                            limit: 20480,
                         }
                     }
                 },
