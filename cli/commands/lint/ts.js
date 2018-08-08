@@ -7,9 +7,8 @@ module.exports = function (ffbt_root, workdir, argv, projectConfig, PROJECT_ROOT
     const force = (typeof argv.force === "undefined") ? false : Boolean(argv.force);
     let configPath = path.resolve(ffbt_root, "./linters/tslint.json");
 
-    if(projectConfig.tsLintConfigPath) {
+    if (projectConfig.tsLintConfigPath) {
         configPath = path.resolve(PROJECT_ROOT_PATH, projectConfig.tsLintConfigPath);
-        console.log("test", configPath);
     }
 
 
