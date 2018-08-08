@@ -2,9 +2,15 @@ const path = require("path"),
     stylelint = require("stylelint");
 
 let noErrorExitCode;
-module.exports = function (ffbt_root, workdir, argv) {
+module.exports = function (ffbt_root, workdir, argv, projectConfig, PROJECT_ROOT_PATH) {
     noErrorExitCode = argv && argv.force;
-    const configPath = path.resolve(ffbt_root, "./linters/stylelint.config.js");
+
+    let configPath = path.resolve(ffbt_root, "./linters/stylelint.config.js");
+
+    if (projectConfig.styleLintConfigPath) {
+        configPath = path.resolve(PROJECT_ROOT_PATH, projectConfig.styleLintConfigPath);
+    }
+
     const config = require(configPath);
 
     const lintStyles = stylelint.lint({

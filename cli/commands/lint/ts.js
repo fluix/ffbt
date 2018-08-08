@@ -1,12 +1,18 @@
 const path = require("path"),
     tslintRunner = require("tslint/lib/runner");
 
-module.exports = function (ffbt_root, workdir, argv) {
+module.exports = function (ffbt_root, workdir, argv, projectConfig, PROJECT_ROOT_PATH) {
     argv = argv || {};
     const fix = (typeof argv.fix === "undefined") ? false : Boolean(argv.fix);
     const force = (typeof argv.force === "undefined") ? false : Boolean(argv.force);
+    let configPath = path.resolve(ffbt_root, "./linters/tslint.json");
+
+    if (projectConfig.tsLintConfigPath) {
+        configPath = path.resolve(PROJECT_ROOT_PATH, projectConfig.tsLintConfigPath);
+    }
+    
     const runnerConfig = {
-        config: path.resolve(ffbt_root, "./linters/tslint.json"),
+        config: configPath,
         exclude: "node_modules/**/*",
         files: path.resolve(workdir, "./**/*.ts?(x)"),
         fix,

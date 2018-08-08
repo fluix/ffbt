@@ -1,4 +1,4 @@
-# FFBT: Fluix Frontend Build Tools 
+# FFBT: Fluix Frontend Build Tools
 CLI utility for compiling, testing and linting your TypeScript code.
 
 `npm i ffbt`
@@ -15,7 +15,7 @@ CLI utility for compiling, testing and linting your TypeScript code.
 
 ## What I need to do to build my project?
 - `npm i ffbt`
-- Create an entrypoint for your app. Call it `app.ts`. 
+- Create an entrypoint for your app. Call it `app.ts`.
 - Create a `config.js` file near the `package.json`.
 - `ffbt dev`
 
@@ -45,6 +45,10 @@ module.exports = {
     projectRoot: __dirname,
     buildPath: path.resolve(__dirname, "public") // absolute path to your dist directory
     // generally its path to your public directory
+
+    //You can specify the path to your custom lint config if the default config doesn't fit your needs
+    tsLintConfigPath: "",
+    styleLintConfigPath: "",
 };
 ```
 

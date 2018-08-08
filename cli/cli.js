@@ -111,9 +111,10 @@ function applyConfigDefaults(projectConfig) {
 }
 
 function runLintCommand(type) {
+    const projectConfig = require(PROJECT_CONFIG_PATH);
     const startLinter = require(`./commands/lint/${type}.js`);
 
-    startLinter(FFBT_ROOT_PATH, path.resolve(PROJECT_ROOT_PATH, workdir), argv);
+    startLinter(FFBT_ROOT_PATH, path.resolve(PROJECT_ROOT_PATH, workdir), argv, projectConfig, PROJECT_ROOT_PATH);
 }
 
 function getProfileForCommand(command) {
