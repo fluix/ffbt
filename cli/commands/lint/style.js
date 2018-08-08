@@ -7,7 +7,7 @@ module.exports = function (ffbt_root, workdir, argv, projectConfig, PROJECT_ROOT
 
     let configPath = path.resolve(ffbt_root, "./linters/stylelint.config.js");
 
-    if(projectConfig.styleLintConfigPath) {
+    if (projectConfig.styleLintConfigPath) {
         configPath = path.resolve(PROJECT_ROOT_PATH, projectConfig.styleLintConfigPath);
     }
 
