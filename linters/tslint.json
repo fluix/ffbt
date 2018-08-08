@@ -1,7 +1,6 @@
 {
   "rulesDirectory": "ts-rules",
   "rules": {
-    "strict-alias-import": [true, "ui-kit"],
     "no-underscore-property": true,
     "class-name": true,
     "comment-format": [
@@ -17,7 +16,6 @@
       true,
       120
     ],
-    "no-magic-numbers": [true, -1, 0, 1, 2, 3, 5, 6, 10, 100, 1000],
     "prefer-const": true,
     "no-arg": true,
     "no-bitwise": false,
