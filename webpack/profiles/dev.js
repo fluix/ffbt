@@ -6,8 +6,7 @@ const path = require("path"),
     configValidator = require("../../config/validator");
 
 function makeConfig(projectConfig) {
-    const gaId = projectConfig.profiles.dev
-        && projectConfig.profiles.dev.googleAnalyticsId;
+    const profileVariables = projectConfig.profiles.dev;
 
     const plugins = [
         new ForkTsCheckerWebpackPlugin({
@@ -21,8 +20,7 @@ function makeConfig(projectConfig) {
             inject: "body",
             hash: true,
             template: "index.ejs",
-            gaUA: gaId,
-            htmlBaseRoot: projectConfig.htmlBaseRoot
+            profileVariables: profileVariables,
         }),
         new Webpack.SourceMapDevToolPlugin({
             filename: 'dev.[name].js.map',

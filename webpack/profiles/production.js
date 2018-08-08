@@ -9,8 +9,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin"),
     configValidator = require("../../config/validator");
 
 function makeConfig(projectConfig) {
-    const gaId = projectConfig.profiles.production
-        && projectConfig.profiles.production.googleAnalyticsId;
+    const profileVariables = projectConfig.profiles.production;
 
     let additionalBundles = ["runtime"];
     if (configValidator.vendor(projectConfig.vendorContents)) {
@@ -48,8 +47,7 @@ function makeConfig(projectConfig) {
                     collapseWhitespace: true
                 },
                 template: "index.ejs",
-                gaUA: gaId,
-                htmlBaseRoot: projectConfig.htmlBaseRoot
+                profileVariables: profileVariables,
             }),
             new ScriptExtHtmlWebpackPlugin({
                 inline: 'runtime'
