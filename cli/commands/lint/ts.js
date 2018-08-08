@@ -10,8 +10,7 @@ module.exports = function (ffbt_root, workdir, argv, projectConfig, PROJECT_ROOT
     if (projectConfig.tsLintConfigPath) {
         configPath = path.resolve(PROJECT_ROOT_PATH, projectConfig.tsLintConfigPath);
     }
-
-
+    
     const runnerConfig = {
         config: configPath,
         exclude: "node_modules/**/*",
