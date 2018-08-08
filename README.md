@@ -46,7 +46,7 @@ module.exports = {
     buildPath: path.resolve(__dirname, "public") // absolute path to your dist directory
     // generally its path to your public directory
 
-    //set relative path to project root folder to stlyleLint and tsLint config
+    //You can specify the path to your custom lint config if the default config doesn't fit your needs
     tsLintConfigPath: "",
     styleLintConfigPath: "",
 };
