@@ -21,6 +21,7 @@ function makeConfig(projectConfig) {
             hash: true,
             template: "index.ejs",
             profileVariables: profileVariables,
+            envName: "dev",
         }),
         new Webpack.SourceMapDevToolPlugin({
             filename: 'dev.[name].js.map',

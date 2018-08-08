@@ -48,6 +48,7 @@ function makeConfig(projectConfig) {
                 },
                 template: "index.ejs",
                 profileVariables: profileVariables,
+                envName: "production",
             }),
             new ScriptExtHtmlWebpackPlugin({
                 inline: 'runtime'
