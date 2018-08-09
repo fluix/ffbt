@@ -1,14 +1,15 @@
-const path = require("path"),
-    Environment = require("../environment"),
-    karmaConstants = require('karma').constants;
+/* eslint-disable global-require */
+const path = require("path");
+const Environment = require("../environment");
+const karmaConstants = require("karma").constants;
 
 class ConfigGenerator {
-    makeConfig(ciMode, workingDirectory, webpackConfig) {
+    static makeConfig(ciMode, workingDirectory, webpackConfig) {
         const commonConfig = require("./common.config");
         const pathToEntry = path.resolve(workingDirectory, "spec.loader.js");
 
-        const newConfig = Object.assign({}, commonConfig),
-            ciConfig = require("./ci.config");
+        const newConfig = Object.assign({}, commonConfig);
+        const ciConfig = require("./ci.config");
 
         // list of files / patterns to load in the browser
         newConfig.files = [pathToEntry];
@@ -16,7 +17,7 @@ class ConfigGenerator {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         newConfig.preprocessors = {
-            [pathToEntry]: ["webpack", "sourcemap"]
+            [pathToEntry]: ["webpack", "sourcemap"],
         };
 
         newConfig.webpack = {
@@ -24,7 +25,7 @@ class ConfigGenerator {
             resolve: webpackConfig.resolve,
             module: webpackConfig.module,
             plugins: webpackConfig.plugins,
-            resolveLoader: webpackConfig.resolveLoader
+            resolveLoader: webpackConfig.resolveLoader,
         };
 
         // level of logging
@@ -36,11 +37,11 @@ class ConfigGenerator {
             : newConfig;
     }
 
-    makeEnvironmentConfig(buildConfig) {
-        const ciMode = Environment.ciModeEnabled(),
-            workDir = Environment.getTestWorkingDir();
-        
-        const testConfig = this.makeConfig(ciMode, workDir, buildConfig);
+    static makeEnvironmentConfig(buildConfig) {
+        const ciMode = Environment.ciModeEnabled();
+        const workDir = Environment.getTestWorkingDir();
+
+        const testConfig = ConfigGenerator.makeConfig(ciMode, workDir, buildConfig);
 
         return testConfig;
     }

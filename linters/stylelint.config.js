@@ -1,14 +1,14 @@
 module.exports = {
-    "rules": {
+    rules: {
         // General
-        "indentation": 4,
+        indentation: 4,
         "string-quotes": "double",
         "max-empty-lines": 1,
         "no-eol-whitespace": [
             true,
             {
-                ignore: ["empty-lines"]
-            }
+                ignore: ["empty-lines"],
+            },
         ],
         "no-missing-end-of-source-newline": true,
         // Block
@@ -28,12 +28,12 @@ module.exports = {
             "always",
             {
                 except: [
-                    "first-nested"
+                    "first-nested",
                 ],
                 ignore: [
-                    "stylelint-commands"
-                ]
-            }
+                    "stylelint-commands",
+                ],
+            },
         ],
         "comment-whitespace-inside": "always",
         // Declaration
@@ -74,12 +74,12 @@ module.exports = {
             "always-multi-line",
             {
                 except: [
-                    "first-nested"
+                    "first-nested",
                 ],
                 ignore: [
-                    "after-comment"
-                ]
-            }
+                    "after-comment",
+                ],
+            },
         ],
         // Selector
         "selector-combinator-space-after": "always",
@@ -93,12 +93,12 @@ module.exports = {
         "value-list-comma-space-before": "never",
 
         // Restrictions
-        "unit-no-unknown" : true,
+        "unit-no-unknown": true,
         "shorthand-property-no-redundant-values": true,
         "property-no-unknown": true,
         "declaration-block-no-duplicate-properties": true,
         "selector-pseudo-class-no-unknown": true,
         "selector-pseudo-element-no-unknown": true,
-        "value-no-vendor-prefix": true
-    }
-}
+        "value-no-vendor-prefix": true,
+    },
+};

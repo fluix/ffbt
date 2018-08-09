@@ -1,21 +1,21 @@
-const path = require("path"),
-    environment = require("../../environment"),
-    ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin'),
-    ExtractTextPlugin = require("extract-text-webpack-plugin");
+const path = require("path");
+const environment = require("../../environment");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 function makePlugins(projectConfig) {
     const plugins = [
         new ExtractTextPlugin({
-            filename: 'test/[name].bundle.css',
-            allChunks: true
-        })
+            filename: "test/[name].bundle.css",
+            allChunks: true,
+        }),
     ];
 
     if (!environment.ciModeEnabled()) {
         plugins.push(
             new ForkTsCheckerWebpackPlugin({
-                tsconfig: path.resolve(projectConfig.projectRoot, "tsconfig.json")
-            })
+                tsconfig: path.resolve(projectConfig.projectRoot, "tsconfig.json"),
+            }),
         );
     }
 
@@ -24,14 +24,14 @@ function makePlugins(projectConfig) {
 
 function makeConfig(projectConfig) {
     return {
-        webpackDevtool: 'eval-source-map',
+        webpackDevtool: "eval-source-map",
         webpackOutputSettings: {
             filename: "test/[name].bundle.js",
             chunkFilename: "[name].js",
         },
         // WARNING! Be careful, this object overrides the default plugins section
         // so don't put the plugins to the base config
-        webpackPlugins: makePlugins(projectConfig)
+        webpackPlugins: makePlugins(projectConfig),
     };
 }
 

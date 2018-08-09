@@ -1,7 +1,7 @@
-const webpack = require("webpack"),
-    Utils = require("../utils");
+const webpack = require("webpack");
+const Utils = require("../utils");
 
-module.exports = function(webpackConfig) {
+module.exports = (webpackConfig) => {
     const compiler = webpack(webpackConfig);
     compiler.run(Utils.printVerboseWebpackStats);
 };

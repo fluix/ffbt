@@ -1,14 +1,14 @@
 module.exports = {
     frameworks: ["jasmine"],
     exclude: [
-        "*.spec.ts"
+        "*.spec.ts",
     ],
     plugins: [
         "karma-jasmine",
         "karma-chrome-launcher",
         "karma-webpack",
         "karma-sourcemap-loader",
-        "karma-spec-reporter"
+        "karma-spec-reporter",
     ],
 
     // enable / disable watching file and executing tests whenever any file changes
@@ -24,11 +24,11 @@ module.exports = {
     reporters: ["spec"],
 
     specReporter: {
-        suppressSkipped: true      // do not print information about skipped tests
+        suppressSkipped: true, // do not print information about skipped tests
     },
 
     webpackServer: {
-        noInfo: true // prevent console spamming when running in Karma!
+        noInfo: true, // prevent console spamming when running in Karma!
     },
     port: 9876,
     colors: true,
@@ -39,6 +39,6 @@ module.exports = {
     captureTimeout: 120000,
 
     client: {
-        captureConsole: true
-    }
+        captureConsole: true,
+    },
 };

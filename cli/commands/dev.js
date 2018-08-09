@@ -1,6 +1,7 @@
-const webpack = require("webpack"),
-    Utils = require("../utils"),
-    notifier = require("node-notifier");
+const webpack = require("webpack");
+const notifier = require("node-notifier");
+const Utils = require("../utils");
+
 
 function showCompileResultNotification(hasErrors, projectName) {
     const title = projectName
@@ -16,23 +17,23 @@ function showCompileResultNotification(hasErrors, projectName) {
         notifier.notify({
             title,
             message: "Compiled successfully",
-            timeout: 2
+            timeout: 2,
         });
     }
 }
 
-module.exports = function(webpackConfig, data) {
+module.exports = (webpackConfig, data) => {
     const compiler = webpack(webpackConfig);
-    const watching = compiler.watch({}, function(error, stats) {
+    const watching = compiler.watch({}, (error, stats) => {
         showCompileResultNotification(
             Utils.webpackStatsHasErrors(error, stats),
-            data.projectName
+            data.projectName,
         );
 
         return Utils.printBriefWebpackStats(error, stats);
     });
 
-    ['SIGINT', 'SIGTERM'].forEach((sig) => {
+    ["SIGINT", "SIGTERM"].forEach((sig) => {
         process.on(sig, () => {
             watching.close();
             process.exit();
