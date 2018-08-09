@@ -4,7 +4,6 @@ const Environment = require("../environment");
 const karmaConstants = require("karma").constants;
 
 class ConfigGenerator {
-    // eslint-disable-next-line class-methods-use-this
     static makeConfig(ciMode, workingDirectory, webpackConfig) {
         const commonConfig = require("./common.config");
         const pathToEntry = path.resolve(workingDirectory, "spec.loader.js");
