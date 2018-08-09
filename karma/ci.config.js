@@ -8,8 +8,8 @@ module.exports = {
         "karma-phantomjs-launcher",
         "karma-webpack",
         "karma-sourcemap-loader",
-        "karma-teamcity-reporter"
+        "karma-teamcity-reporter",
     ],
     browsers: ["PhantomJS"],
-    reporters: ["teamcity"]
-}
+    reporters: ["teamcity"],
+};

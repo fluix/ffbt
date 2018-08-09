@@ -10,5 +10,5 @@ function vendor(vendorContents) {
 }
 
 module.exports = {
-    vendor
+    vendor,
 };

@@ -1,9 +1,8 @@
-const path = require("path"),
-    chalk = require("chalk"),
-    utils = require("../utils"),
-    env = require("../environment"),
-    BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin,
-    configValidator = require("../config/validator");
+const chalk = require("chalk");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const utils = require("../utils");
+const env = require("../environment");
+const configValidator = require("../config/validator");
 
 class WebpackConfigGenerator {
     constructor(projectSettings) {
@@ -21,27 +20,29 @@ class WebpackConfigGenerator {
 
         const normalizedProfileName = profileName.toLowerCase();
 
+        // eslint-disable-next-line global-require
         const baseWebpackConfig = require("./base-webpack-config")({
             projectRoot: this.projectSettings.projectRoot,
             autoprefixerConfig: {
-                browsers: this.projectSettings.supportedBrowsers
-            }
+                browsers: this.projectSettings.supportedBrowsers,
+            },
         });
 
+        // eslint-disable-next-line global-require
         const profileConfig = require(`./profiles/${normalizedProfileName}`)(this.projectSettings);
 
         // Build config in webpack format
         const webpackConfig = Object.assign(baseWebpackConfig, {
             context: workingDirectory,
             entry: {
-                app: utils.locateEntrypoint(workingDirectory)
+                app: utils.locateEntrypoint(workingDirectory),
             },
             output: {
                 path: this.projectSettings.buildPath,
                 filename: profileConfig.webpackOutputSettings.filename,
-                chunkFilename: profileConfig.webpackOutputSettings.chunkFilename
+                chunkFilename: profileConfig.webpackOutputSettings.chunkFilename,
             },
-            plugins: profileConfig.webpackPlugins
+            plugins: profileConfig.webpackPlugins,
         });
 
         if (configValidator.vendor(this.projectSettings.vendorContents)) {
@@ -54,8 +55,8 @@ class WebpackConfigGenerator {
         webpackConfig.resolveLoader = {
             modules: [
                 utils.getLocalNodeModulesPath(),
-                "node_modules"
-            ]
+                "node_modules",
+            ],
         };
 
         if (projectNodeModulesDir) {
@@ -75,13 +76,13 @@ class WebpackConfigGenerator {
             historyApiFallback: true,
             publicPath: "/",
             stats: {
-                colors: true
-            }
+                colors: true,
+            },
         };
 
         if (env.analyzeModeEnabled()) {
             webpackConfig.plugins.push(
-                new BundleAnalyzerPlugin()
+                new BundleAnalyzerPlugin(),
             );
         }
 
@@ -94,11 +95,14 @@ class WebpackConfigGenerator {
             ? `${profileName.toUpperCase()} (analyze bundle structure)`
             : profileName.toUpperCase();
 
+        // eslint-disable-next-line no-console
         console.log(chalk.yellow.bold("Build profile:"), chalk.green.bold(bigProfileName));
-
         if (!isTestWorkdirProvided) {
+            // eslint-disable-next-line no-console
             console.log(chalk.yellow("Working dir:"), chalk.green(wokingDirectory));
+            // eslint-disable-next-line no-console
             console.log(chalk.yellow("Output dir:"), chalk.green(this.projectSettings.buildPath));
+            // eslint-disable-next-line no-console
             console.log();
         }
     }

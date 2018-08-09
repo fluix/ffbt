@@ -1,6 +1,6 @@
-const path = require("path"),
-    fs = require("fs"),
-    constants = require("./constants");
+const path = require("path");
+const fs = require("fs");
+const constants = require("./constants");
 
 function locateEntrypoint(workdirPath) {
     const tsPath = path.resolve(workdirPath, `${constants.tsEntrypointName}.ts`);
@@ -8,11 +8,10 @@ function locateEntrypoint(workdirPath) {
 
     if (fs.existsSync(tsPath)) {
         return tsPath;
-    } else if (fs.existsSync(tsxPath)) {
+    } if (fs.existsSync(tsxPath)) {
         return tsxPath;
-    } else {
-        return null;
     }
+    return null;
 }
 
 function getLocalNodeModulesPath() {
@@ -21,5 +20,5 @@ function getLocalNodeModulesPath() {
 
 module.exports = {
     locateEntrypoint,
-    getLocalNodeModulesPath: getLocalNodeModulesPath
+    getLocalNodeModulesPath,
 };

@@ -5,5 +5,5 @@ module.exports = {
     supportedBrowsers: "last 2 versions",
     htmlBaseRoot: "/",
     buildPath: "dist",
-    profiles: {}
+    profiles: {},
 };

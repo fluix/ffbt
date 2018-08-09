@@ -1,26 +1,29 @@
+const chalk = require("chalk");
+
 function printBriefWebpackStats(error, stats) {
-    console.log(stats.toString({
+    console.log(stats.toString({ // eslint-disable-line no-console
         modules: false,
-        colors: true
+        colors: true,
     }));
 }
 
 function printVerboseWebpackStats(error, stats) {
+    // eslint-disable-next-line no-console
     console.log(stats.toString({
-        colors: true
+        colors: true,
     }));
 }
 
 function printColorError(useColor, error) {
     if (useColor) {
-        console.log(chalk.red(error));
+        console.log(chalk.red(error)); // eslint-disable-line no-console
     }
 
-    console.error(error);
+    console.error(error);// eslint-disable-line no-console
 }
 
 function printAllWebpackStats(error, stats) {
-    console.log(stats.toString("verbose"));
+    console.log(stats.toString("verbose")); // eslint-disable-line no-console
 }
 
 function webpackStatsHasErrors(error, stats) {
@@ -35,5 +38,5 @@ module.exports = {
     printBriefWebpackStats,
     printColorError,
     printAllWebpackStats,
-    webpackStatsHasErrors
+    webpackStatsHasErrors,
 };

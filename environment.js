@@ -13,5 +13,5 @@ function analyzeModeEnabled() {
 module.exports = {
     getTestWorkingDir,
     ciModeEnabled,
-    analyzeModeEnabled
+    analyzeModeEnabled,
 };

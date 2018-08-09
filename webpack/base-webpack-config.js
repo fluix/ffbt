@@ -1,11 +1,12 @@
-const path = require("path"),
-    ExtractTextPlugin = require("extract-text-webpack-plugin"),
-    importOnce = require("node-sass-import-once"),
-    autoprefixer = require("autoprefixer");
+/* eslint-disable global-require */
+const path = require("path");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const importOnce = require("node-sass-import-once");
+const autoprefixer = require("autoprefixer");
 
 function makeConfig(options = {
     projectRoot: void 0,
-    autoprefixerConfig: void 0
+    autoprefixerConfig: void 0,
 }) {
     const projectNodeModulesPath = path.resolve(options.projectRoot, "./node_modules");
     const sassImporter = importOnce.createImporterWithCustomNodeModules(projectNodeModulesPath);
@@ -16,8 +17,8 @@ function makeConfig(options = {
         configFile: tsConfigPath,
         transpileOnly: true,
         compilerOptions: {
-            jsx: tsConfig.compilerOptions.jsx || "react"
-        }
+            jsx: tsConfig.compilerOptions.jsx || "react",
+        },
     };
 
     return {
@@ -26,21 +27,21 @@ function makeConfig(options = {
                 {
                     test: /\.tsx?$/,
                     loader: "ts-loader",
-                    options: tsLoaderOptions
+                    options: tsLoaderOptions,
                 },
                 {
                     test: /\.worker\.tsx?$/,
                     use: [
-                        {loader: "worker-loader"},
+                        { loader: "worker-loader" },
                         {
                             loader: "ts-loader",
-                            options: tsLoaderOptions
-                        }
-                    ]
+                            options: tsLoaderOptions,
+                        },
+                    ],
                 },
                 {
                     test: /\.html$/,
-                    loader: "raw-loader"
+                    loader: "raw-loader",
                 },
                 {
                     test: /\.(jpe?g|png|gif|ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
@@ -48,8 +49,8 @@ function makeConfig(options = {
                         loader: "url-loader",
                         options: {
                             limit: 20480,
-                        }
-                    }
+                        },
+                    },
                 },
                 {
                     test: /\.(scss)$/,
@@ -57,16 +58,16 @@ function makeConfig(options = {
                         {
                             loader: "css-loader",
                             options: {
-                                minimize: process.env.NODE_ENV === "production"
-                            }
+                                minimize: process.env.NODE_ENV === "production",
+                            },
                         },
                         {
                             loader: "postcss-loader",
                             options: {
                                 plugins: [
-                                    autoprefixer(options.autoprefixerConfig)
-                                ]
-                            }
+                                    autoprefixer(options.autoprefixerConfig),
+                                ],
+                            },
                         },
                         {
                             loader: "sass-loader",
@@ -75,18 +76,18 @@ function makeConfig(options = {
                                 importOnce: {
                                     index: true,
                                     css: false,
-                                    bower: false
-                                }
-                            }
-                        }
-                    ])
-                }
-            ]
+                                    bower: false,
+                                },
+                            },
+                        },
+                    ]),
+                },
+            ],
         },
         resolve: {
             extensions: [".ts", ".tsx", ".js", ".json"],
-        }
-    }
+        },
+    };
 }
 
 module.exports = makeConfig;
