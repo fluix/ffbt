@@ -68,7 +68,7 @@ class WebpackConfigGenerator {
             webpackConfig.devtool = profileConfig.webpackDevtool;
         }
 
-        webpackConfig.devServer = {
+        const defaultDevServerConfig = {
             port: 9091,
             inline: true,
             contentBase: this.projectSettings.buildPath,
@@ -77,7 +77,12 @@ class WebpackConfigGenerator {
             publicPath: "/",
             stats: {
                 colors: true,
-            },
+            }
+        };
+
+        webpackConfig.devServer = {
+            ...defaultDevServerConfig,
+            ...this.projectSettings.devServer
         };
 
         if (env.analyzeModeEnabled()) {

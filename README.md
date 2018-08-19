@@ -42,13 +42,17 @@ module.exports = {
     noParse: [
         // list of absolute paths
     ],
-    projectRoot: __dirname,
-    buildPath: path.resolve(__dirname, "public") // absolute path to your dist directory
+    buildPath: path.resolve(__dirname, "public"), // absolute path to your dist directory
     // generally its path to your public directory
 
     //You can specify the path to your custom lint config if the default config doesn't fit your needs
     tsLintConfigPath: "",
     styleLintConfigPath: "",
+    devServer: {
+        // Here you can override DevServer's settings.
+        // FFBT proxies this object strictly to the Webpack config
+        // More info: https://webpack.js.org/configuration/dev-server
+    }
 };
 ```
 
