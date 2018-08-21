@@ -77,12 +77,12 @@ class WebpackConfigGenerator {
             publicPath: "/",
             stats: {
                 colors: true,
-            }
+            },
         };
 
         webpackConfig.devServer = {
             ...defaultDevServerConfig,
-            ...this.projectSettings.devServer
+            ...this.projectSettings.devServer,
         };
 
         if (env.analyzeModeEnabled()) {
