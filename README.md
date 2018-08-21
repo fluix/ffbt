@@ -50,7 +50,7 @@ module.exports = {
     styleLintConfigPath: "",
     devServer: {
         // Here you can override DevServer's settings.
-        // FFBT proxies this object strictly to the Webpack config
+        // FFBT proxies this object directly to the Webpack config
         // More info: https://webpack.js.org/configuration/dev-server
     }
 };
