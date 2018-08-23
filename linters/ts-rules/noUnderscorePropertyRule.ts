@@ -4,7 +4,7 @@ import * as Lint from "tslint";
 const propNameRegexp = /^_?[^_]+$/;
 
 export class Rule extends Lint.Rules.AbstractRule {
-    public static FAILURE_STRING(propName: string){
+    public static FAILURE_STRING(propName: string) {
         return `${propName} has illegal underscore`;
     }
 
