@@ -1,6 +1,7 @@
 {
   "rulesDirectory": "ts-rules",
   "rules": {
+    "spec-defocus": true,
     "no-underscore-property": true,
     "class-name": true,
     "comment-format": [
