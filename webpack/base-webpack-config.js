@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
 const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const importOnce = require("node-sass-import-once");
+const importOnce = require("../webpack/sass/node-sass-import-once");
 const autoprefixer = require("autoprefixer");
 
 function makeConfig(options = {
