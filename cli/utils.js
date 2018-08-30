@@ -22,21 +22,8 @@ function printColorError(useColor, error) {
     console.error(error);// eslint-disable-line no-console
 }
 
-function printAllWebpackStats(error, stats) {
-    console.log(stats.toString("verbose")); // eslint-disable-line no-console
-}
-
-function webpackStatsHasErrors(error, stats) {
-    const hasCompilationErrors = stats.compilation
-        && stats.compilation.errors
-        && stats.compilation.errors.length;
-    return error || hasCompilationErrors;
-}
-
 module.exports = {
     printVerboseWebpackStats,
     printBriefWebpackStats,
     printColorError,
-    printAllWebpackStats,
-    webpackStatsHasErrors,
 };

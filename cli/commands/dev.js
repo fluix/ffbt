@@ -1,37 +1,26 @@
 const webpack = require("webpack");
-const notifier = require("node-notifier");
 const Utils = require("../utils");
+const WebpackNotifierPlugin = require("webpack-notifier");
 
+function addNotificationPluginToWebpackConfig(webpackConfig, title) {
+    webpackConfig.plugins.push(new WebpackNotifierPlugin({
+        alwaysNotify: true,
+        contentImage: "",
+        title,
+    }));
+}
 
-function showCompileResultNotification(hasErrors, projectName) {
-    const title = projectName
-        ? `FFBT: ${projectName}`
+function getProjectTitle(data) {
+    const title = data.projectName
+        ? `FFBT: ${data.projectName}`
         : "FFBT";
-
-    if (hasErrors) {
-        notifier.notify({
-            title,
-            message: "An error occurred during compilation!",
-        });
-    } else {
-        notifier.notify({
-            title,
-            message: "Compiled successfully",
-            timeout: 2,
-        });
-    }
+    return title;
 }
 
 module.exports = (webpackConfig, data) => {
+    addNotificationPluginToWebpackConfig(webpackConfig, getProjectTitle(data));
     const compiler = webpack(webpackConfig);
-    const watching = compiler.watch({}, (error, stats) => {
-        showCompileResultNotification(
-            Utils.webpackStatsHasErrors(error, stats),
-            data.projectName,
-        );
-
-        return Utils.printBriefWebpackStats(error, stats);
-    });
+    const watching = compiler.watch({}, (error, stats) => Utils.printBriefWebpackStats(error, stats));
 
     ["SIGINT", "SIGTERM"].forEach((sig) => {
         process.on(sig, () => {
