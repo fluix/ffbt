@@ -1,0 +1,7 @@
+{
+  "extends": "./node_modules/ffbt/linters/tslint.json",
+  "rules": {
+    "strict-alias-import": [true, "ui-kit"],
+    "no-magic-numbers": [true, -1, 0, 1, 2, 3, 5, 6, 10, 100, 1000]
+  }
+}

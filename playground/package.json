@@ -1,0 +1,14 @@
+{
+  "name": "playground",
+  "version": "1.0.0",
+  "description": "puppet project",
+  "main": "app.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Drew McIntire",
+  "license": "ISC",
+  "dependencies": {
+    "ffbt": "^0.4.0"
+  }
+}
