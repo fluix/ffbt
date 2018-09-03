@@ -7,15 +7,34 @@ const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const configValidator = require("../../config/validator");
+const path = require("path");
 
 function makeConfig(projectConfig) {
     const profileVariables = projectConfig.profiles.production;
+    const { indexFilePath, projectRoot, buildPath } = projectConfig;
+
 
     let additionalBundles = ["runtime"];
     if (configValidator.vendor(projectConfig.vendorContents)) {
         additionalBundles = ["vendor", ...additionalBundles];
     }
 
+    const htmlWebpackOptions = {
+        inject: "body",
+        minify: {
+            collapseWhitespace: true,
+        },
+        template: "index.ejs",
+        profileVariables,
+        envName: "production",
+    };
+
+    if (indexFilePath) {
+        const absoluteBuildPath = path.resolve(projectRoot, buildPath);
+        const absoluteIndexPath = path.resolve(projectRoot, indexFilePath);
+
+        htmlWebpackOptions.filename = path.relative(absoluteBuildPath, absoluteIndexPath);
+    }
     return {
         webpackDevtool: "source-map",
         webpackOutputSettings: {
@@ -41,15 +60,7 @@ function makeConfig(projectConfig) {
                 filename: "[name].[chunkhash].bundle.css",
                 allChunks: true,
             }),
-            new HtmlWebpackPlugin({
-                inject: "body",
-                minify: {
-                    collapseWhitespace: true,
-                },
-                template: "index.ejs",
-                profileVariables,
-                envName: "production",
-            }),
+            new HtmlWebpackPlugin(htmlWebpackOptions),
             new ScriptExtHtmlWebpackPlugin({
                 inline: "runtime",
             }),
@@ -60,7 +71,7 @@ function makeConfig(projectConfig) {
             new Webpack.DefinePlugin({
                 "process.env.NODE_ENV": JSON.stringify("production"),
             }),
-            new CleanWebpackPlugin(projectConfig.buildPath, {
+            new CleanWebpackPlugin(buildPath, {
                 allowExternal: true,
             }),
         ],
