@@ -7,22 +7,33 @@ const configValidator = require("../../config/validator");
 
 function makeConfig(projectConfig) {
     const profileVariables = projectConfig.profiles.dev;
+    const { indexFilePath, projectRoot, buildPath } = projectConfig;
+
+    const htmlWebpackOptions = {
+        inject: "body",
+        hash: true,
+        template: "index.ejs",
+        profileVariables,
+        envName: "dev",
+    };
+
+    if (indexFilePath) {
+        const absoluteBuildPath = path.resolve(projectRoot, buildPath);
+        const absoluteIndexPath = path.resolve(projectRoot, indexFilePath);
+
+        htmlWebpackOptions.filename = path.relative(absoluteBuildPath, absoluteIndexPath);
+    }
+
 
     const plugins = [
         new ForkTsCheckerWebpackPlugin({
-            tsconfig: path.resolve(projectConfig.projectRoot, "tsconfig.json"),
+            tsconfig: path.resolve(projectRoot, "tsconfig.json"),
         }),
         new ExtractTextPlugin({
             filename: "dev.[name].bundle.css",
             allChunks: true,
         }),
-        new HtmlWebpackPlugin({
-            inject: "body",
-            hash: true,
-            template: "index.ejs",
-            profileVariables,
-            envName: "dev",
-        }),
+        new HtmlWebpackPlugin(htmlWebpackOptions),
         new Webpack.SourceMapDevToolPlugin({
             filename: "dev.[name].js.map",
             exclude: [/vendor/, /.css/],
