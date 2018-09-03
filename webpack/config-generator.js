@@ -72,7 +72,7 @@ class WebpackConfigGenerator {
             port: 9091,
             inline: true,
             contentBase: this.projectSettings.buildPath,
-            host: "127.0.0.1",
+            host: "0.0.0.0",
             historyApiFallback: true,
             publicPath: "/",
             stats: {
