@@ -1,6 +1,6 @@
 const webpack = require("webpack");
-const Utils = require("../utils");
 const WebpackNotifierPlugin = require("webpack-notifier");
+const Utils = require("../utils");
 
 function addNotificationPluginToWebpackConfig(webpackConfig, title) {
     webpackConfig.plugins.push(new WebpackNotifierPlugin({

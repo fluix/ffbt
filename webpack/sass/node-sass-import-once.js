@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign, no-console, no-buffer-constructor, global-require */
+
 /**
  * Shameless adapted from [Eyeglass](https://github.com/sass-eyeglass/eyeglass)
  *  because I wanted a general-use import-once importer for Node
@@ -6,12 +8,7 @@
 
 const fs = require("fs");
 
-
-const yaml = require("js-yaml");
-
-
 const path = require("path");
-
 
 const nodeModules = `${path.resolve(require.resolve("node-sass-import-once"), "../../")}/`;
 
@@ -188,11 +185,6 @@ const parseJSON = function parseJSON(data, filename) {
 
     data = data.toString();
 
-    if ([".yml", ".yaml"].indexOf(path.extname(filename)) !== -1) {
-        data = yaml.safeLoad(data);
-        data = JSON.stringify(data);
-    }
-
     data = data.replace(/\{/g, "(");
     data = data.replace(/\[/g, "(");
     data = data.replace(/\}/g, ")");
@@ -261,7 +253,7 @@ const readFirstFile = function readFirstFile(uri, filenames, css, cb, examinedFi
                 ));
             }
         } else {
-            if ([".js", ".json", ".yml", ".yaml"].indexOf(path.extname(filename)) !== -1) {
+            if ([".js", ".json"].indexOf(path.extname(filename)) !== -1) {
                 data = parseJSON(data, filename);
             }
             cb(null, {
