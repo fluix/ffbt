@@ -4,6 +4,7 @@
   "description": "puppet project",
   "main": "app.ts",
   "scripts": {
+    "start": "ffbt dev ./",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Drew McIntire",

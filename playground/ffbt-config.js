@@ -13,5 +13,6 @@ module.exports = {
         "iOS >= 8",
         "Safari >= 8.0",
     ],
-    buildPath: "./public/",
+    buildPath: "./public/dist",
+    indexFilePath: "./public/index.html",
 };
