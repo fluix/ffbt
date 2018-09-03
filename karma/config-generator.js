@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
 const path = require("path");
-const Environment = require("../environment");
 const karmaConstants = require("karma").constants;
+const Environment = require("../environment");
 
 class ConfigGenerator {
     static makeConfig(ciMode, workingDirectory, webpackConfig) {

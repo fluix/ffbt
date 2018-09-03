@@ -10,7 +10,6 @@
     "one-var-declaration-per-line": ["error", "always"],
     "one-var": ["error", "never"],
     "max-len": ["warn", 120],
-    "import/no-dynamic-require": "off",
-    "import/order": "off"
+    "import/no-dynamic-require": "off"
   }
 }

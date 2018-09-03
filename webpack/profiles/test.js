@@ -1,7 +1,7 @@
 const path = require("path");
-const environment = require("../../environment");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const environment = require("../../environment");
 
 function makePlugins(projectConfig) {
     const plugins = [

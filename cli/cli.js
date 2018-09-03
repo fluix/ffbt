@@ -3,9 +3,9 @@
 const path = require("path");
 const chalk = require("chalk");
 const findUp = require("find-up");
+const argv = require("minimist")(process.argv.slice(2));
 const WebpackConfigGenerator = require("../webpack/config-generator");
 
-const argv = require("minimist")(process.argv.slice(2));
 const utils = require("../utils");
 const constants = require("../constants");
 const defaultConfig = require("../config/default");
