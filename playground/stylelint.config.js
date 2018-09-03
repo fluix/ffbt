@@ -1,1 +1,1 @@
-module.exports = require("ffbt/linters/stylelint.config");
+module.exports = require("./node_modules/ffbt/linters/stylelint.config");

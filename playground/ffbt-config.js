@@ -11,7 +11,7 @@ module.exports = {
         "Firefox >= 40",
         "Explorer >= 11",
         "iOS >= 8",
-        "Safari >= 8.0"
+        "Safari >= 8.0",
     ],
     buildPath: "./public/",
 };
