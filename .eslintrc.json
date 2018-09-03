@@ -11,6 +11,7 @@
     "one-var": ["error", "never"],
     "max-len": ["warn", 120],
     "import/no-dynamic-require": "off",
-    "import/order": "off"
+    "import/order": "off",
+    "no-trailing-spaces": "off"
   }
 }
