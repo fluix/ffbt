@@ -10,7 +10,7 @@ const configValidator = require("../../config/validator");
 const path = require("path");
 
 function makeConfig(projectConfig, profileName) {
-    const profileVariables = projectConfig.profiles.production;
+    const profileVariables = projectConfig.profiles[profileName];
     const { indexFilePath, projectRoot, buildPath } = projectConfig;
 
 
@@ -26,7 +26,7 @@ function makeConfig(projectConfig, profileName) {
         },
         template: "index.ejs",
         profileVariables,
-        envName: "production",
+        envName: profileName,
     };
 
     if (indexFilePath) {
