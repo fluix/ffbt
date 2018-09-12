@@ -41,7 +41,6 @@
     "karma-webpack": "2.0.9",
     "minimist": "1.2.0",
     "node-sass": "4.9.3",
-    "node-sass-import-once": "github:readdle/node-sass-import-once#custom-importer",
     "opn": "5.3.0",
     "phantomjs-prebuilt": "2.1.16",
     "postcss-loader": "2.1.0",
