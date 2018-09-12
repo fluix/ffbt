@@ -83,7 +83,11 @@ function runCommand(_command) {
         ? path.resolve(PROJECT_ROOT_PATH, workdir)
         : PROJECT_ROOT_PATH;
 
-    const webpackConfig = BuildConfigGenerator.makeBuildConfig(buildProfile, buildWorkdir, PROJECT_NODE_MODULES_PATH);
+    const webpackConfig = BuildConfigGenerator.makeBuildConfig(
+        buildProfile,
+        buildWorkdir,
+        PROJECT_NODE_MODULES_PATH,
+    );
 
     const runBuildCommand = require(`./commands/${_command}.js`);
     runBuildCommand(webpackConfig, {

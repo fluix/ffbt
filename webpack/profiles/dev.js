@@ -5,8 +5,8 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const configValidator = require("../../config/validator");
 
-function makeConfig(projectConfig) {
-    const profileVariables = projectConfig.profiles.dev;
+function makeConfig(projectConfig, profileName) {
+    const profileVariables = projectConfig.profiles[profileName];
     const { indexFilePath, projectRoot, buildPath } = projectConfig;
 
     const htmlWebpackOptions = {
@@ -14,7 +14,7 @@ function makeConfig(projectConfig) {
         hash: true,
         template: "index.ejs",
         profileVariables,
-        envName: "dev",
+        envName: profileName,
     };
 
     if (indexFilePath) {
@@ -30,13 +30,16 @@ function makeConfig(projectConfig) {
             tsconfig: path.resolve(projectRoot, "tsconfig.json"),
         }),
         new ExtractTextPlugin({
-            filename: "dev.[name].bundle.css",
+            filename: `${profileName}.[name].bundle.css`,
             allChunks: true,
         }),
         new HtmlWebpackPlugin(htmlWebpackOptions),
         new Webpack.SourceMapDevToolPlugin({
-            filename: "dev.[name].js.map",
+            filename: `${profileName}.[name].js.map`,
             exclude: [/vendor/, /.css/],
+        }),
+        new Webpack.DefinePlugin({
+            "process.env.NODE_ENV": JSON.stringify(profileName),
         }),
     ];
 
@@ -52,8 +55,8 @@ function makeConfig(projectConfig) {
     return {
         webpackDevtool: "eval-source-map",
         webpackOutputSettings: {
-            filename: "dev.[name].bundle.js",
-            chunkFilename: "dev.chunk.[name].js",
+            filename: `${profileName}.[name].bundle.js`,
+            chunkFilename: `${profileName}.chunk.[name].js`,
         },
         // WARNING! Be careful, this object overrides the default plugins section
         // so don't put the plugins to the base config

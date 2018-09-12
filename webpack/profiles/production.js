@@ -9,8 +9,8 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 const configValidator = require("../../config/validator");
 const path = require("path");
 
-function makeConfig(projectConfig) {
-    const profileVariables = projectConfig.profiles.production;
+function makeConfig(projectConfig, profileName) {
+    const profileVariables = projectConfig.profiles[profileName];
     const { indexFilePath, projectRoot, buildPath } = projectConfig;
 
 
@@ -26,7 +26,7 @@ function makeConfig(projectConfig) {
         },
         template: "index.ejs",
         profileVariables,
-        envName: "production",
+        envName: profileName,
     };
 
     if (indexFilePath) {
@@ -69,7 +69,7 @@ function makeConfig(projectConfig) {
                 parallel: true,
             }),
             new Webpack.DefinePlugin({
-                "process.env.NODE_ENV": JSON.stringify("production"),
+                "process.env.NODE_ENV": JSON.stringify(profileName),
             }),
             new CleanWebpackPlugin(buildPath, {
                 allowExternal: true,
