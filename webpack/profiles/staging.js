@@ -1,7 +1,7 @@
 const productionConfigGenerator = require("./production");
 
-function makeConfig(projectConfig) {
-    const config = productionConfigGenerator(projectConfig);
+function makeConfig(projectConfig, profileName) {
+    const config = productionConfigGenerator(projectConfig, profileName);
     config.webpackDevtool = "source-map";
     return config;
 }

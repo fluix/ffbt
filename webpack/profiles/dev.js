@@ -5,7 +5,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const configValidator = require("../../config/validator");
 
-function makeConfig(projectConfig) {
+function makeConfig(projectConfig, profileName) {
     const profileVariables = projectConfig.profiles.dev;
     const { indexFilePath, projectRoot, buildPath } = projectConfig;
 
@@ -37,6 +37,9 @@ function makeConfig(projectConfig) {
         new Webpack.SourceMapDevToolPlugin({
             filename: "dev.[name].js.map",
             exclude: [/vendor/, /.css/],
+        }),
+        new Webpack.DefinePlugin({
+            "process.env.NODE_ENV": JSON.stringify(profileName),
         }),
     ];
 

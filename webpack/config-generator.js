@@ -29,7 +29,7 @@ class WebpackConfigGenerator {
         });
 
         // eslint-disable-next-line global-require
-        const profileConfig = require(`./profiles/${normalizedProfileName}`)(this.projectSettings);
+        const profileConfig = require(`./profiles/${normalizedProfileName}`)(this.projectSettings, profileName);
 
         // Build config in webpack format
         const webpackConfig = Object.assign(baseWebpackConfig, {

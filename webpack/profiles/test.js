@@ -2,12 +2,16 @@ const path = require("path");
 const environment = require("../../environment");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const Webpack = require("webpack");
 
-function makePlugins(projectConfig) {
+function makePlugins(projectConfig, profileName) {
     const plugins = [
         new ExtractTextPlugin({
             filename: "test/[name].bundle.css",
             allChunks: true,
+        }),
+        new Webpack.DefinePlugin({
+            "process.env.NODE_ENV": JSON.stringify(profileName),
         }),
     ];
 
