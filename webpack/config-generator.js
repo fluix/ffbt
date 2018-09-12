@@ -29,7 +29,7 @@ class WebpackConfigGenerator {
         });
 
         // eslint-disable-next-line global-require
-        const profileConfig = require(`./profiles/${normalizedProfileName}`)(this.projectSettings);
+        const profileConfig = require(`./profiles/${normalizedProfileName}`)(this.projectSettings, profileName);
 
         // Build config in webpack format
         const webpackConfig = Object.assign(baseWebpackConfig, {
@@ -72,7 +72,7 @@ class WebpackConfigGenerator {
             port: 9091,
             inline: true,
             contentBase: this.projectSettings.buildPath,
-            host: "127.0.0.1",
+            host: "0.0.0.0",
             historyApiFallback: true,
             publicPath: "/",
             stats: {

@@ -21,7 +21,7 @@ if (!workdir) {
 
 const FFBT_ROOT_PATH = path.dirname(locatePath("node_modules", __dirname));
 const PROJECT_NODE_MODULES_PATH = locatePath("node_modules", workdir, false);
-const PROJECT_CONFIG_PATH = locatePath("config.js", workdir);
+const PROJECT_CONFIG_PATH = locatePath("ffbt-config.js", workdir);
 const PROJECT_PACKAGE_JSON_PATH = locatePath("package.json", workdir, false);
 const PROJECT_ROOT_PATH = path.dirname(PROJECT_CONFIG_PATH);
 const ENTRYPOINT_PATH = utils.locateEntrypoint(workdir);
@@ -83,7 +83,11 @@ function runCommand(_command) {
         ? path.resolve(PROJECT_ROOT_PATH, workdir)
         : PROJECT_ROOT_PATH;
 
-    const webpackConfig = BuildConfigGenerator.makeBuildConfig(buildProfile, buildWorkdir, PROJECT_NODE_MODULES_PATH);
+    const webpackConfig = BuildConfigGenerator.makeBuildConfig(
+        buildProfile,
+        buildWorkdir,
+        PROJECT_NODE_MODULES_PATH,
+    );
 
     const runBuildCommand = require(`./commands/${_command}.js`);
     runBuildCommand(webpackConfig, {
