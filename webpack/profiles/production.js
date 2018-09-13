@@ -7,11 +7,10 @@ const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const configValidator = require("../../config/validator");
-const path = require("path");
 
 function makeConfig(projectConfig, profileName) {
     const profileVariables = projectConfig.profiles[profileName];
-    const { indexFilePath, projectRoot, buildPath } = projectConfig;
+    const { buildPath } = projectConfig;
 
 
     let additionalBundles = ["runtime"];
@@ -29,12 +28,6 @@ function makeConfig(projectConfig, profileName) {
         envName: profileName,
     };
 
-    if (indexFilePath) {
-        const absoluteBuildPath = path.resolve(projectRoot, buildPath);
-        const absoluteIndexPath = path.resolve(projectRoot, indexFilePath);
-
-        htmlWebpackOptions.filename = path.relative(absoluteBuildPath, absoluteIndexPath);
-    }
     return {
         webpackDevtool: "source-map",
         webpackOutputSettings: {

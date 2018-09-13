@@ -7,7 +7,7 @@ const configValidator = require("../../config/validator");
 
 function makeConfig(projectConfig, profileName) {
     const profileVariables = projectConfig.profiles[profileName];
-    const { indexFilePath, projectRoot, buildPath } = projectConfig;
+    const { projectRoot } = projectConfig;
 
     const htmlWebpackOptions = {
         inject: "body",
@@ -16,14 +16,6 @@ function makeConfig(projectConfig, profileName) {
         profileVariables,
         envName: profileName,
     };
-
-    if (indexFilePath) {
-        const absoluteBuildPath = path.resolve(projectRoot, buildPath);
-        const absoluteIndexPath = path.resolve(projectRoot, indexFilePath);
-
-        htmlWebpackOptions.filename = path.relative(absoluteBuildPath, absoluteIndexPath);
-    }
-
 
     const plugins = [
         new ForkTsCheckerWebpackPlugin({
