@@ -81,7 +81,7 @@ function makeConfig(options = {
                             },
                         },
                     ]),
-                }
+                },
             ],
         },
         resolve: {
