@@ -3,6 +3,7 @@
     "module": "commonjs",
     "target": "es5",
     "allowSyntheticDefaultImports": true,
+    "lib": ["dom", "es5", "scripthost", "es2015", "es2015.iterable"],
     "noImplicitAny": false,
     "jsx": "react"
   },
