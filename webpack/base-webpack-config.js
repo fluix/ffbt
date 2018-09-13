@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
 const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const importOnce = require("node-sass-import-once");
+const importOnce = require("../library/node-sass-import-once");
 const autoprefixer = require("autoprefixer");
 
 function makeConfig(options = {
@@ -9,7 +9,7 @@ function makeConfig(options = {
     autoprefixerConfig: void 0,
 }) {
     const projectNodeModulesPath = path.resolve(options.projectRoot, "./node_modules");
-    const sassImporter = importOnce.createImporterWithCustomNodeModules(projectNodeModulesPath);
+    const sassImporter = importOnce(projectNodeModulesPath);
     const tsConfigPath = path.resolve(options.projectRoot, "tsconfig.json");
     const tsConfig = require(tsConfigPath);
 
@@ -53,7 +53,7 @@ function makeConfig(options = {
                     },
                 },
                 {
-                    test: /\.(scss)$/,
+                    test: /\.(scss|css)$/,
                     loader: ExtractTextPlugin.extract([
                         {
                             loader: "css-loader",
