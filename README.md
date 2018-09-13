@@ -41,7 +41,6 @@ module.exports = {
         // list of absolute paths
     ],
     buildPath: "./public/build", // path to your dist directory
-    indexFilePath: "./public/index.html" // path to result html file (includes file name)
 
     //You can specify the path to your custom lint config if the default config doesn't fit your needs
     tsLintConfigPath: "",
