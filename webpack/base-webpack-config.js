@@ -53,7 +53,7 @@ function makeConfig(options = {
                     },
                 },
                 {
-                    test: /\.(scss)$/,
+                    test: /\.(scss|css)$/,
                     loader: ExtractTextPlugin.extract([
                         {
                             loader: "css-loader",
@@ -81,7 +81,7 @@ function makeConfig(options = {
                             },
                         },
                     ]),
-                },
+                }
             ],
         },
         resolve: {
