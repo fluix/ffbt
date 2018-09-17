@@ -16,13 +16,11 @@ CLI utility for compiling, testing and linting your TypeScript code.
 ## What I need to do to build my project?
 - `npm i ffbt`
 - Create an entrypoint for your app. Call it `app.ts`.
-- Create a `config.js` file near the `package.json`.
+- Create a `ffbt-config.js` file near the `package.json`.
 - `ffbt dev`
 
-### Config.js example
+### ffbt-config.js example
 ```javascript
-const path = require("path");
-
 module.exports = {
     profiles: {
         dev: {
@@ -42,8 +40,7 @@ module.exports = {
     noParse: [
         // list of absolute paths
     ],
-    buildPath: path.resolve(__dirname, "public"), // absolute path to your dist directory
-    // generally its path to your public directory
+    buildPath: "./public/build", // path to your dist directory
 
     //You can specify the path to your custom lint config if the default config doesn't fit your needs
     tsLintConfigPath: "",

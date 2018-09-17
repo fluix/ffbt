@@ -8,13 +8,25 @@ const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const configValidator = require("../../config/validator");
 
-function makeConfig(projectConfig) {
-    const profileVariables = projectConfig.profiles.production;
+function makeConfig(projectConfig, profileName) {
+    const profileVariables = projectConfig.profiles[profileName];
+    const { buildPath } = projectConfig;
+
 
     let additionalBundles = ["runtime"];
     if (configValidator.vendor(projectConfig.vendorContents)) {
         additionalBundles = ["vendor", ...additionalBundles];
     }
+
+    const htmlWebpackOptions = {
+        inject: "body",
+        minify: {
+            collapseWhitespace: true,
+        },
+        template: "index.ejs",
+        profileVariables,
+        envName: profileName,
+    };
 
     return {
         webpackDevtool: "source-map",
@@ -41,15 +53,7 @@ function makeConfig(projectConfig) {
                 filename: "[name].[chunkhash].bundle.css",
                 allChunks: true,
             }),
-            new HtmlWebpackPlugin({
-                inject: "body",
-                minify: {
-                    collapseWhitespace: true,
-                },
-                template: "index.ejs",
-                profileVariables,
-                envName: "production",
-            }),
+            new HtmlWebpackPlugin(htmlWebpackOptions),
             new ScriptExtHtmlWebpackPlugin({
                 inline: "runtime",
             }),
@@ -58,9 +62,9 @@ function makeConfig(projectConfig) {
                 parallel: true,
             }),
             new Webpack.DefinePlugin({
-                "process.env.NODE_ENV": JSON.stringify("production"),
+                "process.env.NODE_ENV": JSON.stringify(profileName),
             }),
-            new CleanWebpackPlugin(projectConfig.buildPath, {
+            new CleanWebpackPlugin(buildPath, {
                 allowExternal: true,
             }),
         ],
