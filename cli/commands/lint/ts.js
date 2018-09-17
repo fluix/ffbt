@@ -14,8 +14,8 @@ module.exports = (ffbtRoot, workDir, argv, projectConfig, PROJECT_ROOT_PATH) => 
 
     const runnerConfig = {
         config: configPath,
-        exclude: "node_modules/**/*",
-        files: path.resolve(workDir, "./**/*.ts?(x)"),
+        exclude: ["node_modules/**/*"],
+        files: [path.resolve(workDir, "./**/*.ts?(x)")],
         fix,
         force,
         format: "stylish",
