@@ -44,7 +44,7 @@
         "singleline": "never"
       }
     ],
-    "no-trailing-whitespace": false,
+    "no-trailing-whitespace": [true, "ignore-template-strings", "ignore-comments", "ignore-blank-lines"],
     "no-unused-expression": true,
     "no-var-keyword": true,
     "new-parens": true,
