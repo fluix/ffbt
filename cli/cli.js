@@ -9,6 +9,8 @@ const argv = require("minimist")(process.argv.slice(2));
 const utils = require("../utils");
 const constants = require("../constants");
 const defaultConfig = require("../config/default");
+const program = require("commander");
+const packageJson = require("../package.json");
 
 /* eslint-disable-next-line prefer-const */
 let [command, workdir] = argv._;
@@ -43,12 +45,6 @@ function printCriticalError(errorText) {
     // eslint-disable-next-line no-console
     console.error(chalk.red(errorText));
     process.exit(1);
-}
-
-function printAvailableCommands(availableCommands) {
-    console.log("Available commands:"); // eslint-disable-line no-console
-    // eslint-disable-next-line no-console
-    console.log(availableCommands.reduce((buffer, _command) => `${buffer} - ${_command}\n`, ""));
 }
 
 function setupEnvVariables(_command) {
@@ -141,24 +137,46 @@ const availableCommands = [
     "dev-server",
     "build",
     "test",
-    "lint-style",
-    "lint-ts",
 ];
 
-if (!availableCommands.includes(command)) {
-    // eslint-disable-next-line no-console
-    console.error(chalk.red(`Unknown command "${command}"`));
-    printAvailableCommands(availableCommands);
-    process.exit(1);
-}
+program
+    .command("lint <type>")
+    .description("run lint <type>")
+    .action((type) => {
+        runLintCommand(type);
+    })
+    .on("--help", () => {
+        console.log("");
+        console.log("Available option:");
+        console.log("");
+        console.log("\tstyle");
+        console.log("\tts");
+    });
 
-if (command === "lint-style" || command === "lint-ts") {
-    const [, type] = command.split("-");
-    runLintCommand(type);
-} else {
-    if (!ENTRYPOINT_PATH) {
-        printCriticalError(`Can't locate ${constants.tsEntrypointName}.ts(x)`);
-    }
+program
+    .command("lint-style")
+    .action(() => {
+        runLintCommand("style");
+    });
 
-    runCommand(command);
-}
+program
+    .command("lint-ts")
+    .action(() => {
+        runLintCommand("ts");
+    });
+
+availableCommands.forEach((cmd) => {
+    program
+        .command(cmd)
+        .action(() => {
+            if (!ENTRYPOINT_PATH) {
+                printCriticalError(`Can't locate ${constants.tsEntrypointName}.ts(x)`);
+            }
+            runCommand(cmd);
+        });
+});
+
+
+program
+    .version(packageJson.version)
+    .parse(process.argv);
