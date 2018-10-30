@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 /* eslint-disable no-use-before-define,global-require */
+/* eslint-disable no-console */
 const path = require("path");
 const chalk = require("chalk");
 const findUp = require("find-up");
@@ -13,7 +14,7 @@ const program = require("commander");
 const packageJson = require("../package.json");
 
 /* eslint-disable-next-line prefer-const */
-let [command, workdir] = argv._;
+let [workdir] = argv._;
 const ciMode = argv.ci === true;
 const analyzeMode = argv.analyze === true;
 
@@ -42,7 +43,6 @@ function locatePath(name, cwd = "", raiseErrorIfNotExists = true) {
 }
 
 function printCriticalError(errorText) {
-    // eslint-disable-next-line no-console
     console.error(chalk.red(errorText));
     process.exit(1);
 }
