@@ -7,11 +7,10 @@ const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const configValidator = require("../../config/validator");
+const { getArtifactsDirectory, makePathToArtifact } = require("../../config/helpers");
 
 function makeConfig(projectConfig, profileName) {
     const profileVariables = projectConfig.profiles[profileName];
-    const { buildPath } = projectConfig;
-
 
     let additionalBundles = ["runtime"];
     if (configValidator.vendor(projectConfig.vendorContents)) {
@@ -31,8 +30,8 @@ function makeConfig(projectConfig, profileName) {
     return {
         webpackDevtool: "source-map",
         webpackOutputSettings: {
-            filename: "[name].[chunkhash].bundle.js",
-            chunkFilename: "[name].[chunkhash].js",
+            filename: makePathToArtifact("[name].[chunkhash].bundle.js", projectConfig),
+            chunkFilename: makePathToArtifact("[name].[chunkhash].js", projectConfig),
         },
         // WARNING! Be careful, this object overrides the default plugins section
         // so don't put the plugins to the base config
@@ -40,7 +39,7 @@ function makeConfig(projectConfig, profileName) {
             new Webpack.HashedModuleIdsPlugin(),
             new WebpackChunkHash(),
             new ChunkManifestPlugin({
-                filename: "webpack-manifest.json",
+                filename: makePathToArtifact("webpack-manifest.json", projectConfig),
                 manifestVariable: "webpackManifest",
                 inlineManifest: true,
             }),
@@ -50,7 +49,7 @@ function makeConfig(projectConfig, profileName) {
             }),
             new Webpack.optimize.ModuleConcatenationPlugin(),
             new ExtractTextPlugin({
-                filename: "[name].[chunkhash].bundle.css",
+                filename: makePathToArtifact("[name].[chunkhash].bundle.css", projectConfig),
                 allChunks: true,
             }),
             new HtmlWebpackPlugin(htmlWebpackOptions),
@@ -64,8 +63,9 @@ function makeConfig(projectConfig, profileName) {
             new Webpack.DefinePlugin({
                 "process.env.NODE_ENV": JSON.stringify(profileName),
             }),
-            new CleanWebpackPlugin(buildPath, {
+            new CleanWebpackPlugin(getArtifactsDirectory(projectConfig), {
                 allowExternal: true,
+                verbose: true,
             }),
         ],
     };
