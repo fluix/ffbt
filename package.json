@@ -58,7 +58,7 @@
     "webpack-bundle-analyzer": "2.13.1",
     "webpack-chunk-hash": "0.6.0",
     "webpack-dev-server": "2.11.3",
-    "webpack-notifier": "1.6.0",
+    "webpack-notifier": "1.7.0",
     "worker-loader": "1.1.0"
   },
   "devDependencies": {
