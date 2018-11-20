@@ -1,6 +1,12 @@
 function getArtifactsDirectory(config, absolute = false) {
-    const absBuildPath = absolute ? config.buildPath : "";
-    const artifactsDirName = `${config.moveBuildArtifactsToSubfolder}/` || "";
+    const absBuildPath = absolute
+        ? `${config.buildPath}/`
+        : "";
+
+    const artifactsDirName = config.moveBuildArtifactsToSubfolder
+        ? `${config.moveBuildArtifactsToSubfolder}/`
+        : "";
+
     return absBuildPath + artifactsDirName;
 }
 

@@ -63,7 +63,7 @@ function makeConfig(projectConfig, profileName) {
             new Webpack.DefinePlugin({
                 "process.env.NODE_ENV": JSON.stringify(profileName),
             }),
-            new CleanWebpackPlugin(getArtifactsDirectory(projectConfig), {
+            new CleanWebpackPlugin(getArtifactsDirectory(projectConfig, true), {
                 allowExternal: true,
                 verbose: true,
             }),
