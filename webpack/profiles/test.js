@@ -3,11 +3,12 @@ const environment = require("../../environment");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const Webpack = require("webpack");
+const { makePathToArtifact } = require("../../config/helpers");
 
 function makePlugins(projectConfig, profileName) {
     const plugins = [
         new ExtractTextPlugin({
-            filename: "test/[name].bundle.css",
+            filename: makePathToArtifact("test/[name].bundle.css", projectConfig),
             allChunks: true,
         }),
         new Webpack.DefinePlugin({
@@ -30,8 +31,8 @@ function makeConfig(projectConfig) {
     return {
         webpackDevtool: "eval-source-map",
         webpackOutputSettings: {
-            filename: "test/[name].bundle.js",
-            chunkFilename: "[name].js",
+            filename: makePathToArtifact("test/[name].bundle.js", projectConfig),
+            chunkFilename: makePathToArtifact("[name].js", projectConfig),
         },
         // WARNING! Be careful, this object overrides the default plugins section
         // so don't put the plugins to the base config

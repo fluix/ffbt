@@ -49,7 +49,8 @@ module.exports = {
         // Here you can override DevServer's settings.
         // FFBT proxies this object directly to the Webpack config
         // More info: https://webpack.js.org/configuration/dev-server
-    }
+    },
+    moveBuildArtifactsToSubfolder: "build" // you can move your compiled js, css and images to the subdirectory
 };
 ```
 
