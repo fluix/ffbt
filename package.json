@@ -55,7 +55,7 @@
     "uglifyjs-webpack-plugin": "1.1.8",
     "url-loader": "0.6.2",
     "webpack": "3.11.0",
-    "webpack-bundle-analyzer": "2.13.1",
+    "webpack-bundle-analyzer": "3.0.3",
     "webpack-chunk-hash": "0.6.0",
     "webpack-dev-server": "2.11.3",
     "webpack-notifier": "1.7.0",
