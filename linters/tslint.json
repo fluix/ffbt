@@ -100,7 +100,6 @@
       "timeEnd",
       "trace"
     ],
-    // override airbnb
     "ter-indent": [
       true,
       4,
@@ -122,9 +121,8 @@
         "protected-method-regex": "^[a-z$][\\w\\d]+$",
         "static-method-regex": "^[a-z$][\\w\\d]+$"
       }
-      // 23.1
     ],
-    "no-this-assignment": [false, "allow-destructuring"], // 23.5
+    "no-this-assignment": [false, "allow-destructuring"],
     "ter-prefer-arrow-callback": [false],
     "ter-arrow-parens": [false],
     "no-duplicate-imports": false
