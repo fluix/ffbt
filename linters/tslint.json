@@ -1,4 +1,5 @@
 {
+  "extends": "tslint-config-airbnb",
   "rulesDirectory": "ts-rules",
   "rules": {
     "spec-defocus": true,
@@ -57,7 +58,10 @@
     ],
     "quotemark": [
       true,
-      "double"
+      "double",
+      "avoid-escape",
+      "avoid-template",
+      "jsx-double"
     ],
     "radix": true,
     "semicolon": [
@@ -81,6 +85,46 @@
     "align": [true, "parameters", "statements", "members", "elements"],
     "no-consecutive-blank-lines": true,
     "interface-over-type-literal": true,
-    "no-inferrable-types": [true, "ignore-params"]
+    "no-inferrable-types": [true, "ignore-params"],
+    "no-trailing-whitespace": [
+      true,
+      "ignore-template-strings",
+      "ignore-comments",
+      "ignore-blank-lines"
+    ],
+    "no-console": [
+      true,
+      "log",
+      "debug",
+      "time",
+      "timeEnd",
+      "trace"
+    ],
+    "ter-indent": [
+      true,
+      4,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "prefer-array-literal": false,
+    "import-name": false,
+    "object-curly-spacing": [
+      false
+    ],
+    "function-name": [
+      true,
+      {
+        "function-regex": "^[A-Za-z$][\\w\\d]+$",
+        "method-regex": "^[a-z$][\\w\\d]+$",
+        "private-method-regex": "^[a-z$][\\w\\d]+$",
+        "protected-method-regex": "^[a-z$][\\w\\d]+$",
+        "static-method-regex": "^[a-z$][\\w\\d]+$"
+      }
+    ],
+    "no-this-assignment": [false, "allow-destructuring"],
+    "ter-prefer-arrow-callback": [false],
+    "ter-arrow-parens": [false],
+    "no-duplicate-imports": false
   }
 }
