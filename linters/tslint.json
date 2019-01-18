@@ -125,6 +125,7 @@
     "no-this-assignment": [false, "allow-destructuring"],
     "ter-prefer-arrow-callback": [false],
     "ter-arrow-parens": [false],
-    "no-duplicate-imports": false
+    "no-duplicate-imports": false,
+    "void-zero": true
   }
 }
