@@ -12,7 +12,6 @@ const defaultConfig = require("../config/default");
 
 /* eslint-disable-next-line prefer-const */
 let [command, workdir] = argv._;
-const ciMode = argv.ci === true;
 const analyzeMode = argv.analyze === true;
 
 if (!workdir) {
@@ -59,15 +58,7 @@ function setupEnvVariables(_command) {
         process.env.FFBT_ANALYZE_MODE = true;
     }
 
-    if (_command === "test") {
-        process.env.TEST_DIR = workdir;
-    } else {
-        process.env.BUILD_WORKDIR = workdir;
-    }
-
-    if (ciMode) {
-        process.env.TEST_CI_MODE = true;
-    }
+    process.env.BUILD_WORKDIR = workdir;
 }
 
 function runCommand(_command) {
@@ -128,8 +119,6 @@ function getProfileForCommand(_command) {
     case "dev":
     case "dev-server":
         return "dev";
-    case "test":
-        return "test";
     case "build":
     default:
         return "production";
@@ -140,7 +129,6 @@ const availableCommands = [
     "dev",
     "dev-server",
     "build",
-    "test",
     "lint-style",
     "lint-ts",
 ];
