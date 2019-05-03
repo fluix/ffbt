@@ -10,13 +10,13 @@ function makeConfig(projectConfig, profileName) {
     const profileVariables = projectConfig.profiles[profileName];
     const { projectRoot } = projectConfig;
 
-    const htmlWebpackOptions = {
+    const htmlWebpackOptions = Object.assign({
         inject: "body",
         hash: true,
         template: "index.ejs",
         profileVariables,
         envName: profileName,
-    };
+    }, projectConfig.webpackPlugins.htmlWebpackPlugin);
 
     const plugins = [
         new ForkTsCheckerWebpackPlugin({

@@ -45,12 +45,19 @@ module.exports = {
     //You can specify the path to your custom lint config if the default config doesn't fit your needs
     tsLintConfigPath: "",
     styleLintConfigPath: "",
-    devServer: {
-        // Here you can override DevServer's settings.
-        // FFBT proxies this object directly to the Webpack config
-        // More info: https://webpack.js.org/configuration/dev-server
-    },
-    moveBuildArtifactsToSubfolder: "build" // you can move your compiled js, css and images to the subdirectory
+    moveBuildArtifactsToSubfolder: "build", // you can move your compiled js, css and images to the subdirectory
+    webpackPlugins: {
+        // You can override settings for HTMLWebpackPlugin and WebpackDevServer 
+        // See docs for corresponding plugin for more info
+        // https://github.com/jantimon/html-webpack-plugin
+        // https://webpack.js.org/configuration/dev-server
+        htmlWebpackPlugin: {
+            inject: false,
+        },
+        devServer: {
+            port: 9999,
+        }
+    }
 };
 ```
 
