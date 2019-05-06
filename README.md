@@ -4,8 +4,7 @@ CLI utility for compiling, testing and linting your TypeScript code.
 `npm i ffbt`
 
 ### What's inside?
-- Webpack (With preconfigured cache busting for production builds)
-- Webpack Dev Server
+- Webpack + Webpack Dev Server
 - Typescript
 - Node-Sass with import-once plugin
 - Autoprefixer

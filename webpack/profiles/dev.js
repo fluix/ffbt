@@ -46,7 +46,7 @@ function makeConfig(projectConfig, profileName) {
     }
 
     return {
-        webpackDevtool: "eval-source-map",
+        webpackDevtool: "inline-source-map",
         webpackOutputSettings: {
             filename: makePathToArtifact(`${profileName}.[name].bundle.js`, projectConfig),
             chunkFilename: makePathToArtifact(`${profileName}.chunk.[name].js`, projectConfig),
