@@ -23,7 +23,10 @@ CLI utility for compiling, testing and linting your TypeScript code.
 module.exports = {
     profiles: {
         dev: {
-            // custom variables for index.html in DEV profile
+            // You can set variables which will be available in index.ejs template
+            myVariable: 123,
+            // Also you can override some webpack settings. Now only source map type is supported
+            sourceMapType: "inline-source-map",
         },
         production: {
             // custom variables for index.html in PRODUCTION profile
@@ -40,7 +43,6 @@ module.exports = {
         // list of absolute paths
     ],
     buildPath: "./public/build", // path to your dist directory
-
     //You can specify the path to your custom lint config if the default config doesn't fit your needs
     tsLintConfigPath: "",
     styleLintConfigPath: "",

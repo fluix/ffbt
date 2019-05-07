@@ -4,10 +4,10 @@ const Webpack = require("webpack");
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const configValidator = require("../../config/validator");
-const { getArtifactsDirectory, makePathToArtifact } = require("../../config/helpers");
+const { getArtifactsDirectory, makePathToArtifact, getProfileVariables } = require("../../config/helpers");
 
 function makeConfig(projectConfig, profileName) {
-    const profileVariables = projectConfig.profiles[profileName];
+    const profileVariables = getProfileVariables(profileName, projectConfig);
 
     let additionalBundles = ["runtime"];
     if (configValidator.vendor(projectConfig.vendorContents)) {
@@ -25,7 +25,7 @@ function makeConfig(projectConfig, profileName) {
     }, projectConfig.webpackPlugins.htmlWebpackPlugin);
 
     return {
-        webpackDevtool: "cheap-module-source-map",
+        webpackDevtool: profileVariables.sourceMapType,
         webpackOutputSettings: {
             filename: makePathToArtifact("[name].[chunkhash].bundle.js", projectConfig),
             chunkFilename: makePathToArtifact("[name].[chunkhash].js", projectConfig),
