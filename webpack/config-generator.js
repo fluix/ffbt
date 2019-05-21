@@ -80,9 +80,14 @@ class WebpackConfigGenerator {
             },
         };
 
+        if (this.projectSettings.devServer) {
+            utils.printDeprecationWarning("devServer config value", "webpackPlugins.devServer");
+        }
+
         webpackConfig.devServer = {
             ...defaultDevServerConfig,
             ...this.projectSettings.devServer,
+            ...this.projectSettings.webpackPlugins.devServer,
         };
 
         if (env.analyzeModeEnabled()) {

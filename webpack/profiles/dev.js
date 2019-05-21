@@ -4,19 +4,19 @@ const Webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const configValidator = require("../../config/validator");
-const { makePathToArtifact } = require("../../config/helpers");
+const { makePathToArtifact, getProfileVariables } = require("../../config/helpers");
 
 function makeConfig(projectConfig, profileName) {
-    const profileVariables = projectConfig.profiles[profileName];
+    const profileVariables = getProfileVariables(profileName, projectConfig);
     const { projectRoot } = projectConfig;
 
-    const htmlWebpackOptions = {
+    const htmlWebpackOptions = Object.assign({
         inject: "body",
         hash: true,
         template: "index.ejs",
         profileVariables,
         envName: profileName,
-    };
+    }, projectConfig.webpackPlugins.htmlWebpackPlugin);
 
     const plugins = [
         new ForkTsCheckerWebpackPlugin({
@@ -46,7 +46,7 @@ function makeConfig(projectConfig, profileName) {
     }
 
     return {
-        webpackDevtool: "eval-source-map",
+        webpackDevtool: profileVariables.sourceMapType,
         webpackOutputSettings: {
             filename: makePathToArtifact(`${profileName}.[name].bundle.js`, projectConfig),
             chunkFilename: makePathToArtifact(`${profileName}.chunk.[name].js`, projectConfig),

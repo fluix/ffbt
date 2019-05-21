@@ -4,8 +4,7 @@ CLI utility for compiling and linting your TypeScript code.
 `npm i ffbt`
 
 ### What's inside?
-- Webpack (With preconfigured cache busting for production builds)
-- Webpack Dev Server
+- Webpack + Webpack Dev Server
 - Typescript
 - Node-Sass with import-once plugin
 - Autoprefixer
@@ -23,7 +22,10 @@ CLI utility for compiling and linting your TypeScript code.
 module.exports = {
     profiles: {
         dev: {
-            // custom variables for index.html in DEV profile
+            // You can set variables which will be available in index.ejs template
+            myVariable: 123,
+            // Also you can override some webpack settings. Now only source map type is supported
+            sourceMapType: "inline-source-map",
         },
         production: {
             // custom variables for index.html in PRODUCTION profile
@@ -40,16 +42,22 @@ module.exports = {
         // list of absolute paths
     ],
     buildPath: "./public/build", // path to your dist directory
-
     //You can specify the path to your custom lint config if the default config doesn't fit your needs
     tsLintConfigPath: "",
     styleLintConfigPath: "",
-    devServer: {
-        // Here you can override DevServer's settings.
-        // FFBT proxies this object directly to the Webpack config
-        // More info: https://webpack.js.org/configuration/dev-server
-    },
-    moveBuildArtifactsToSubfolder: "build" // you can move your compiled js, css and images to the subdirectory
+    moveBuildArtifactsToSubfolder: "build", // you can move your compiled js, css and images to the subdirectory
+    webpackPlugins: {
+        // You can override settings for HTMLWebpackPlugin and WebpackDevServer 
+        // See docs for corresponding plugin for more info
+        // https://github.com/jantimon/html-webpack-plugin
+        // https://webpack.js.org/configuration/dev-server
+        htmlWebpackPlugin: {
+            inject: false,
+        },
+        devServer: {
+            port: 9999,
+        }
+    }
 };
 ```
 

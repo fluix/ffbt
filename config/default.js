@@ -6,4 +6,5 @@ module.exports = {
     htmlBaseRoot: "/",
     buildPath: "dist",
     profiles: {},
+    webpackPlugins: {},
 };
