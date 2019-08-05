@@ -17,12 +17,9 @@ function makePathToArtifact(artifactName, config) {
 }
 
 function getProfileVariables(profileName, projectConfig) {
-    const variables = projectConfig.profiles[profileName];
+    const profiles = projectConfig.profiles || {};
+    const variables = profiles[profileName];
     const defaultVariables = defaultProfileConfig[profileName];
-
-    if (!variables) {
-        throw new Error(`Can't find profile '${profileName}'`);
-    }
 
     return Object.assign({}, defaultVariables, variables);
 }
