@@ -3,7 +3,7 @@ const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const importOnce = require("../library/node-sass-import-once");
 const autoprefixer = require("autoprefixer");
-const { locatePath } = require("../utils");
+const { locateTsConfigFile } = require("../utils");
 
 function makeConfig(options = {
     projectRoot: void 0,
@@ -12,7 +12,7 @@ function makeConfig(options = {
     const projectNodeModulesPath = path.resolve(options.projectRoot, "./node_modules");
     const sassImporter = importOnce(projectNodeModulesPath);
     // TODO: Need default tsconfig
-    const tsConfigPath = locatePath("tsconfig.json", options.projectRoot);
+    const tsConfigPath = locateTsConfigFile(options.projectRoot);
     const tsConfig = require(tsConfigPath);
 
     const tsLoaderOptions = {

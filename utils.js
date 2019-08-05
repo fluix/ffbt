@@ -33,6 +33,10 @@ function locateEntrypoint(workdirPath) {
     return null;
 }
 
+function locateTsConfigFile(projectRoot) {
+    return locatePath("tsconfig.json", projectRoot);
+}
+
 function getLocalNodeModulesPath() {
     return path.resolve(__dirname, "node_modules");
 }
@@ -48,4 +52,5 @@ module.exports = {
     getLocalNodeModulesPath,
     printDeprecationWarning,
     printCriticalError,
+    locateTsConfigFile,
 };
