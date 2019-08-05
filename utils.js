@@ -1,7 +1,25 @@
 const path = require("path");
 const chalk = require("chalk");
+const findUp = require("find-up");
 const fs = require("fs");
 const constants = require("./constants");
+
+function printCriticalError(errorText) {
+    // eslint-disable-next-line no-console
+    console.error(chalk.red(errorText));
+    process.exit(1);
+}
+
+function locatePath(name, cwd = "", raiseErrorIfNotExists = true) {
+    const locatedPath = findUp.sync(name, {
+        cwd,
+    });
+    if (!locatedPath && raiseErrorIfNotExists) {
+        printCriticalError(`Can't locate ${name}`);
+    }
+
+    return locatedPath || "";
+}
 
 function locateEntrypoint(workdirPath) {
     const tsPath = path.resolve(workdirPath, `${constants.tsEntrypointName}.ts`);
@@ -25,7 +43,9 @@ function printDeprecationWarning(deprecatedName, newName) {
 }
 
 module.exports = {
+    locatePath,
     locateEntrypoint,
     getLocalNodeModulesPath,
     printDeprecationWarning,
+    printCriticalError,
 };
