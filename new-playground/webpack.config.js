@@ -18,4 +18,7 @@ const baseConfig = {
     ],
 };
 
-module.exports = merge.smart(baseConfig, tsLayer);
+module.exports = merge.smart(
+    baseConfig,
+    tsLayer,
+);

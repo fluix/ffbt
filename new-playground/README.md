@@ -4,11 +4,12 @@ TODO:
 - [ ] Compile TS
     - [x] Add layer, base compile case
     - [x] Move type checker into the separate process 
-    - [ ] Sourcemaps
+    - [x] Sourcemaps
     - [ ] Code splitting
     - [ ] Compile notifier
-- [ ] Продумать файловую структуру для слоев
-    - [ ] Что делать с энвайроментами?
+- [ ] Move all common code to the common chunk (https://webpack.js.org/plugins/split-chunks-plugin/)
+- [x] Продумать файловую структуру для слоев
+    - [x] Что делать с энвайроментами?
 - TBD...    
 
 Jobs to be done:
