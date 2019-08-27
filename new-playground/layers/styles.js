@@ -2,7 +2,10 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const importOnce = require("../../library/node-sass-import-once");
 const autoprefixer = require("autoprefixer");
 
-const sassImporter = importOnce("");
+const nodeModulesPath = "";
+const autoprefixerConfig = "last 2 versions";
+
+const sassImporter = importOnce(nodeModulesPath);
 
 module.exports = {
     module: {
@@ -16,7 +19,7 @@ module.exports = {
                         loader: "postcss-loader",
                         options: {
                             plugins: [
-                                autoprefixer("last 2 versions"),
+                                autoprefixer(autoprefixerConfig),
                             ],
                         },
                     },
