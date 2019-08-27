@@ -1,4 +1,7 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const importOnce = require("../../library/node-sass-import-once");
+
+const sassImporter = importOnce("");
 
 module.exports = {
     module: {
@@ -8,7 +11,17 @@ module.exports = {
                 use: [
                     MiniCssExtractPlugin.loader,
                     "css-loader",
-                    "sass-loader",
+                    {
+                        loader: "sass-loader",
+                        options: {
+                            importer: sassImporter,
+                            importOnce: {
+                                index: true,
+                                css: false,
+                                bower: false,
+                            },
+                        },
+                    },
                 ],
             },
         ],
