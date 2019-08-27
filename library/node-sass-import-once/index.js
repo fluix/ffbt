@@ -222,7 +222,7 @@ const readAbstractFile = function readAbstractFile(uri, abstractName, cb) {
  * */
 function createImporter(nodeModules) {
     return function importer(uri, prev, done) {
-        if (uri[0] === "~") {
+        if (uri[0] === "~" && nodeModules) {
             uri = nodeModules + uri.slice(1);
         }
 

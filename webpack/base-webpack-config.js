@@ -1,16 +1,15 @@
 /* eslint-disable global-require */
-const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const importOnce = require("../library/node-sass-import-once");
 const autoprefixer = require("autoprefixer");
-const { locateTsConfigFile } = require("../utils");
+const { locateTsConfigFile, locatePath } = require("../utils");
 
 function makeConfig(options = {
     projectRoot: void 0,
     autoprefixerConfig: void 0,
 }) {
-    const projectNodeModulesPath = path.resolve(options.projectRoot, "./node_modules");
-    const sassImporter = importOnce(projectNodeModulesPath);
+    const closestNodeModulesPath = locatePath("node_modules", options.projectRoot);
+    const sassImporter = importOnce(closestNodeModulesPath);
     // TODO: Need default tsconfig
     const tsConfigPath = locateTsConfigFile(options.projectRoot);
     const tsConfig = require(tsConfigPath);
