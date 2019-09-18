@@ -26,12 +26,14 @@ module.exports = {
                     {
                         loader: "sass-loader",
                         options: {
-                            importer: sassImporter,
-                            importOnce: {
-                                index: true,
-                                css: false,
-                                bower: false,
-                            },
+                            sassOptions: {
+                                importer: sassImporter,
+                                importOnce: {
+                                    index: true,
+                                    css: false,
+                                    bower: false,
+                                },
+                            }
                         },
                     },
                 ],
