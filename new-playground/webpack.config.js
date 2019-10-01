@@ -2,6 +2,7 @@ const path = require("path");
 const merge = require("webpack-merge");
 const tsLayer = require("./layers/typescript");
 const stylesLayer = require("./layers/styles");
+const htmlLayer = require("./layers/html");
 
 const baseConfig = {
     mode: "none",
@@ -23,4 +24,5 @@ module.exports = merge.smart(
     baseConfig,
     tsLayer,
     stylesLayer,
+    htmlLayer
 );
