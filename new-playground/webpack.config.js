@@ -22,5 +22,6 @@ module.exports = merge.smart(
     require("./layers/typescript"),
     require("./layers/styles"),
     require("./layers/index-file"),
-    require("./layers/html-include"),
+    require("./layers/include-html"),
+    require("./layers/assets"),
 );
