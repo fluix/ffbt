@@ -25,4 +25,5 @@ module.exports = merge.smart(
     require("./layers/include-html"),
     require("./layers/assets"),
     require("./layers/dev-server"),
+    // require("./layers/bundle-analyze"),
 );
