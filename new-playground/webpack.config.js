@@ -5,6 +5,8 @@ const baseConfig = {
     mode: "none",
     context: __dirname,
     output: {
+        filename: '[name].bundle.js',
+        chunkFilename: '[name].chunk.js',
         path: path.resolve(__dirname, "dist"),
     },
     module: {
@@ -15,6 +17,11 @@ const baseConfig = {
     plugins: [
         // Put plugins here
     ],
+    optimization: {
+        splitChunks: {
+            chunks: "all",
+        }
+    }
 };
 
 module.exports = merge.smart(
