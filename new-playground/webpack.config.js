@@ -24,6 +24,8 @@ module.exports = merge.smart(
     require("./layers/index-file"),
     require("./layers/include-html"),
     require("./layers/assets"),
+    require("./layers/globals"),
+
     require("./layers/dev-server"),
     // require("./layers/bundle-analyze"),
 );
