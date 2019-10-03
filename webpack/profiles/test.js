@@ -1,9 +1,9 @@
-const path = require("path");
 const environment = require("../../environment");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const Webpack = require("webpack");
 const { makePathToArtifact } = require("../../config/helpers");
+const { locateTsConfigFile } = require("../../utils");
 
 function makePlugins(projectConfig, profileName) {
     const plugins = [
@@ -19,7 +19,7 @@ function makePlugins(projectConfig, profileName) {
     if (!environment.ciModeEnabled()) {
         plugins.push(
             new ForkTsCheckerWebpackPlugin({
-                tsconfig: path.resolve(projectConfig.projectRoot, "tsconfig.json"),
+                tsconfig: locateTsConfigFile(projectConfig.projectRoot),
             }),
         );
     }

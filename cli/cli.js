@@ -2,11 +2,9 @@
 /* eslint-disable no-use-before-define,global-require */
 const path = require("path");
 const chalk = require("chalk");
-const findUp = require("find-up");
 const WebpackConfigGenerator = require("../webpack/config-generator");
-
 const argv = require("minimist")(process.argv.slice(2));
-const utils = require("../utils");
+const { locateEntrypoint, locatePath, printCriticalError } = require("../utils");
 const constants = require("../constants");
 const defaultConfig = require("../config/default");
 
@@ -14,35 +12,22 @@ const defaultConfig = require("../config/default");
 let [command, workdir] = argv._;
 const analyzeMode = argv.analyze === true;
 
-if (!workdir) {
-    workdir = process.cwd();
+function getAbsoluteWorkdir(workdirPath) {
+    return workdirPath
+        ? path.resolve(process.cwd(), workdirPath)
+        : process.cwd();
 }
+
+workdir = getAbsoluteWorkdir(workdir);
 
 const FFBT_ROOT_PATH = path.dirname(locatePath("node_modules", __dirname));
 const PROJECT_NODE_MODULES_PATH = locatePath("node_modules", workdir, false);
 const PROJECT_CONFIG_PATH = locatePath("ffbt-config.js", workdir);
-const PROJECT_PACKAGE_JSON_PATH = locatePath("package.json", workdir, false);
+const PROJECT_PACKAGE_JSON_PATH = locatePath("package.json", workdir);
 const PROJECT_ROOT_PATH = path.dirname(PROJECT_CONFIG_PATH);
-const ENTRYPOINT_PATH = utils.locateEntrypoint(workdir);
+const ENTRYPOINT_PATH = locateEntrypoint(workdir);
 
 const PROJECT_PACKAGE_JSON = require(PROJECT_PACKAGE_JSON_PATH);
-
-function locatePath(name, cwd = "", raiseErrorIfNotExists = true) {
-    const locatedPath = findUp.sync(name, {
-        cwd,
-    });
-    if (!locatedPath && raiseErrorIfNotExists) {
-        printCriticalError(`Can't locate ${name}`);
-    }
-
-    return locatedPath || "";
-}
-
-function printCriticalError(errorText) {
-    // eslint-disable-next-line no-console
-    console.error(chalk.red(errorText));
-    process.exit(1);
-}
 
 function printAvailableCommands(availableCommands) {
     console.log("Available commands:"); // eslint-disable-line no-console

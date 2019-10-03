@@ -8,6 +8,8 @@ const { getArtifactsDirectory, makePathToArtifact, getProfileVariables } = requi
 
 function makeConfig(projectConfig, profileName) {
     const profileVariables = getProfileVariables(profileName, projectConfig);
+    const distPath = getArtifactsDirectory(projectConfig, true);
+    const distFilesMask = `${distPath}*`;
 
     let additionalBundles = ["runtime"];
     if (configValidator.vendor(projectConfig.vendorContents)) {
@@ -50,7 +52,7 @@ function makeConfig(projectConfig, profileName) {
             new Webpack.DefinePlugin({
                 "process.env.NODE_ENV": JSON.stringify(profileName),
             }),
-            new CleanWebpackPlugin(getArtifactsDirectory(projectConfig, true), {
+            new CleanWebpackPlugin(distFilesMask, {
                 allowExternal: true,
                 verbose: true,
             }),

@@ -1,10 +1,10 @@
-const path = require("path");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const configValidator = require("../../config/validator");
 const { makePathToArtifact, getProfileVariables } = require("../../config/helpers");
+const { locateTsConfigFile } = require("../../utils");
 
 function makeConfig(projectConfig, profileName) {
     const profileVariables = getProfileVariables(profileName, projectConfig);
@@ -20,7 +20,7 @@ function makeConfig(projectConfig, profileName) {
 
     const plugins = [
         new ForkTsCheckerWebpackPlugin({
-            tsconfig: path.resolve(projectRoot, "tsconfig.json"),
+            tsconfig: locateTsConfigFile(projectRoot),
         }),
         new ExtractTextPlugin({
             filename: makePathToArtifact(`${profileName}.[name].bundle.css`, projectConfig),
