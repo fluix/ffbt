@@ -100,21 +100,18 @@ class WebpackConfigGenerator {
     }
 
     printHeading(profileName, wokingDirectory) {
-        const isTestWorkdirProvided = Boolean(process.env.TEST_DIR);
         const bigProfileName = env.analyzeModeEnabled()
             ? `${profileName.toUpperCase()} (analyze bundle structure)`
             : profileName.toUpperCase();
 
         // eslint-disable-next-line no-console
         console.log(chalk.yellow.bold("Build profile:"), chalk.green.bold(bigProfileName));
-        if (!isTestWorkdirProvided) {
-            // eslint-disable-next-line no-console
-            console.log(chalk.yellow("Working dir:"), chalk.green(wokingDirectory));
-            // eslint-disable-next-line no-console
-            console.log(chalk.yellow("Output dir:"), chalk.green(this.projectSettings.buildPath));
-            // eslint-disable-next-line no-console
-            console.log();
-        }
+        // eslint-disable-next-line no-console
+        console.log(chalk.yellow("Working dir:"), chalk.green(wokingDirectory));
+        // eslint-disable-next-line no-console
+        console.log(chalk.yellow("Output dir:"), chalk.green(this.projectSettings.buildPath));
+        // eslint-disable-next-line no-console
+        console.log();
     }
 }
 
