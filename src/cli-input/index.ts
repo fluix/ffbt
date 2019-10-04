@@ -1,5 +1,5 @@
-import {Profile} from "../../core/ProfileRegistry/ProfileRegistry";
-import {AllMaybeUndefined} from "../../core/utility-types";
+import {Profile} from "../core/profile-registry";
+import {AllMaybeUndefined} from "../core/utility-types";
 
 interface CliInputAttributes {
     analyze: Partial<boolean>;

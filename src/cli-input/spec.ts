@@ -1,4 +1,4 @@
-import {CliInput} from "./CliInput";
+import {CliInput} from "./index";
 
 describe("Cli Input model", () => {
     test("normalize all CliInput values", () => {

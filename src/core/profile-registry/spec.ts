@@ -1,4 +1,4 @@
-import {Profile, ProfileRegistry} from "./ProfileRegistry";
+import {Profile, ProfileRegistry} from "./index";
 
 interface TestBuildProfile extends Profile {
     a?: any;
