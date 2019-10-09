@@ -54,15 +54,11 @@ export default class RunWebpackCommand extends Command {
     async run() {
         const {args, flags} = this.parse(RunWebpackCommand);
 
-        console.log("Profile: ", args[Arguments.profileName].toUpperCase());
-        console.log("Optimize: ", flags.optimize);
-        flags.output && console.log("Output: ", flags.output);
-
         const workdir = getAbsoluteWorkdirPath(args[Arguments.workingDirectory]);
         const projectConfig = ProjectConfig.loadFromFile(workdir);
-        const bundler = new ProjectBundler({});
+        const bundler = new ProjectBundler(projectConfig);
 
-        console.log(inspect(projectConfig, {showHidden: false, depth: null}));
+        console.log(inspect(bundler, {showHidden: false, depth: null}));
 
         bundler.run();
     }

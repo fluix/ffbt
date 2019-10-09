@@ -98,6 +98,8 @@ describe("Build Profile", () => {
             })
         });
 
+        test.todo("if extends is empty - extends from default");
+
         // TODO: make error snapshot
         test("throw error if profile trying to extend itself", () => {
             expect(() => {
