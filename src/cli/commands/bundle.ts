@@ -2,8 +2,8 @@ import {Command, flags} from "@oclif/command";
 import * as Parser from "@oclif/parser";
 import {ProjectBundler} from "../../project-bundler";
 import {ProjectConfig} from "../../project-config";
-import {inspect} from "util";
 import * as path from "path";
+import {isNil, omitBy} from 'lodash';
 
 enum Arguments {
     profileName = "profile_name",
@@ -41,16 +41,26 @@ export default class CreateBundleCommand extends Command {
         const {args, flags} = this.parse(CreateBundleCommand);
 
         const workdir = getAbsoluteWorkdirPath(args[Arguments.workingDirectory]);
-        const projectConfig = ProjectConfig.loadFromFile(workdir);
-        const bundler = new ProjectBundler(projectConfig);
-
-        // console.log(inspect(bundler, {showHidden: false, depth: null}));
-
         const profileName = args[Arguments.profileName];
 
-        bundler.run(profileName, workdir, {
+        const projectConfig = this.createProjectConfig(workdir, profileName, flags);
+        const bundler = new ProjectBundler(projectConfig);
+
+        bundler.run(workdir);
+    }
+
+    private createProjectConfig(workdir: string, profileName: string, flags: Record<string, any>): ProjectConfig {
+        const projectConfig = ProjectConfig.loadFromFile(workdir);
+        projectConfig.setCurrentProfileName(profileName);
+
+        // Skip all null and undefined values, they'll be replaced by default values later
+        const optionsWithValue = omitBy({
             outputPath: flags.output,
             analyzeBundle: flags.analyze,
-        });
+        }, isNil);
+
+        projectConfig.overrideProfileSettings(optionsWithValue);
+
+        return projectConfig;
     }
 }
