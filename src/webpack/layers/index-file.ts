@@ -1,6 +1,8 @@
+import * as webpack from "webpack";
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
+export const indexFileConfigLayer: webpack.Configuration = {
     plugins: [
         new HtmlWebpackPlugin({
             title: "Hello, new FFBT!",

@@ -1,4 +1,6 @@
-module.exports = {
+import * as webpack from "webpack";
+
+export const includeHtmlConfigLayer: webpack.Configuration = {
     module: {
         rules: [
             {

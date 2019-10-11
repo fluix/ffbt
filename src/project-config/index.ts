@@ -1,7 +1,7 @@
 import {Prop} from "../core/prop";
 import {defaultConfig, IProjectConfig} from "./default";
 import {merge} from "lodash";
-import {locatePath} from "../utils/path";
+import {locatePath} from "../core/utils/path";
 import {Profile, ProfileRegistry} from "../core/profile-registry";
 import * as webpack from "webpack";
 

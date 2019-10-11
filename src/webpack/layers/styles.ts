@@ -1,3 +1,5 @@
+import * as webpack from "webpack";
+
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const importOnce = require("../../library/node-sass-import-once");
 const autoprefixer = require("autoprefixer");
@@ -7,7 +9,7 @@ const autoprefixerConfig = "last 2 versions";
 
 const sassImporter = importOnce(nodeModulesPath);
 
-module.exports = {
+export const stylesConfigLayer: webpack.Configuration = {
     module: {
         rules: [
             {

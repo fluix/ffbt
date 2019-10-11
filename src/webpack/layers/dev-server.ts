@@ -1,4 +1,5 @@
-module.exports = {
+// TODO: Provide dev server types
+export const devServerConfigLayer = {
     devServer: {
         open: true,
         overlay: true,

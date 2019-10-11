@@ -1,7 +1,8 @@
-const { BundleStatsWebpackPlugin } = require("bundle-stats");
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+import * as webpack from "webpack";
+import * as BundleStatsWebpackPlugin from "bundle-stats";
+import * as BundleAnalyzerPlugin from "webpack-bundle-analyzer";
 
-module.exports = {
+export const bundleAnalyzeConfigLayer: webpack.Configuration = {
     plugins: [
         new BundleAnalyzerPlugin({
             analyzerMode: "static",

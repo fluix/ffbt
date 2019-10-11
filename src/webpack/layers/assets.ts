@@ -1,7 +1,9 @@
+import * as webpack from "webpack";
+
 // TODO: separate limit for fonts?
 //  or add ability to setup separate limit for each kind of file
 //  or for different subfolders?
-module.exports = {
+export const assetsConfigLayer: webpack.Configuration = {
     module: {
         rules: [
             {
