@@ -3,11 +3,12 @@ import {defaultConfig, IProjectConfig} from "./default";
 import {merge} from "lodash";
 import {locatePath} from "../utils/path";
 import {Profile, ProfileRegistry} from "../core/profile-registry";
+import * as webpack from "webpack";
 
 export interface ProjectProfileProperties {
     outputPath: string;
-    supportedBrowsers: any; // TODO: Add types for browserlist
-    sourceMapType: string; // TODO: add strict type
+    browserlist: string | Array<string>; // See https://github.com/browserslist/browserslist for syntax
+    sourceMapType: "(none)" | webpack.Options.Devtool;
 }
 
 export interface ProjectProfile extends Profile, ProjectProfileProperties {

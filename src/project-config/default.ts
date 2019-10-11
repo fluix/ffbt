@@ -12,7 +12,7 @@ export interface IProjectConfig {
 export const defaultConfig: IProjectConfig = {
     profiles: {
         default: {
-            supportedBrowsers: "last 2 versions",
+            browserlist: "last 2 versions",
             outputPath: "dist",
             sourceMapType: "(none)",
         },
