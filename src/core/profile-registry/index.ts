@@ -19,6 +19,12 @@ export class ProfileRegistry<TProfile extends Profile> {
         return newProfile;
     }
 
+    addMany(profiles: Record<string, TProfile>) {
+        Object.keys(profiles).forEach((profileName) => {
+            this.add(profileName, profiles[profileName]);
+        });
+    }
+
     private extendProfile(profile: TProfile): TProfile {
         if (!profile._extends) {
             return profile;

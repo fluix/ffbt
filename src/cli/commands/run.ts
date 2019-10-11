@@ -28,7 +28,7 @@ export default class RunWebpackCommand extends Command {
     ];
 
     static flags: flags.Input<any> = {
-        optimize: flags.boolean({
+        analyze: flags.boolean({
             default: false,
         }),
         output: flags.string({
@@ -36,30 +36,21 @@ export default class RunWebpackCommand extends Command {
         })
     };
 
-
-
-// const FFBT_ROOT_PATH = path.dirname(locatePath("node_modules", __dirname));
-// const PROJECT_NODE_MODULES_PATH = locatePath("node_modules", workdir, false);
-
-// const PROJECT_PACKAGE_JSON_PATH = locatePath("package.json", workdir);
-// const PROJECT_ROOT_PATH = path.dirname(PROJECT_CONFIG_PATH);
-// const ENTRYPOINT_PATH = locateEntrypoint(workdir);
-//
-// const PROJECT_PACKAGE_JSON = require(PROJECT_PACKAGE_JSON_PATH);
-//
-// const BUILD_WORKDIR = workdir
-//     ? path.resolve(PROJECT_ROOT_PATH, workdir)
-//     : PROJECT_ROOT_PATH;
-
     async run() {
+        // TODO: Provide interface for arugments and flags
         const {args, flags} = this.parse(RunWebpackCommand);
 
         const workdir = getAbsoluteWorkdirPath(args[Arguments.workingDirectory]);
         const projectConfig = ProjectConfig.loadFromFile(workdir);
         const bundler = new ProjectBundler(projectConfig);
 
-        console.log(inspect(bundler, {showHidden: false, depth: null}));
+        // console.log(inspect(bundler, {showHidden: false, depth: null}));
 
-        bundler.run();
+        const profileName = args[Arguments.profileName];
+
+        bundler.run(profileName, workdir, {
+            outputPath: flags.output,
+            analyzeBundle: flags.analyze,
+        });
     }
 }

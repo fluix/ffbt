@@ -3,6 +3,13 @@ import {defaultConfig, IProjectConfig} from "./default";
 import {merge} from "lodash";
 import {locatePath} from "../utils/path";
 import {loadJSON} from "../utils/file";
+import {Profile} from "../core/profile-registry";
+
+export interface ProjectProfile extends Profile {
+    outputPath: string;
+    supportedBrowsers: any; // TODO: Add types for browserlist
+    sourceMapType: string; // TODO: add strict type
+}
 
 export class ProjectConfig {
     private props: IProjectConfig;

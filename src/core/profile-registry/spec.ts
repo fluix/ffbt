@@ -13,10 +13,6 @@ describe("Build Profile", () => {
          profiles = new ProfileRegistry();
     });
 
-    test.todo("add array");
-    test.todo("add array in proper order");
-    test.todo("add array and handle circular dependencies");
-
     describe("register/get profile", () => {
         test("profile can be registered by name", () => {
             expect(profiles.size).toBe(0);
@@ -47,6 +43,20 @@ describe("Build Profile", () => {
                 profiles.get("profileThatDoesntExist");
             }).toThrowError();
         });
+
+        test("add many profiles", () => {
+            profiles.addMany({
+                p1: {},
+                p2: {}
+            });
+
+            expect(profiles.size).toBe(2);
+            expect(profiles.get("p1")._displayName).toBe("p1");
+            expect(profiles.get("p2")._displayName).toBe("p2");
+        });
+
+        test.todo("add many in proper order");
+        test.todo("add many and handle circular dependencies");
     });
 
     describe("extension", () => {

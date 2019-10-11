@@ -1,7 +1,10 @@
-import {Profile} from "../core/profile-registry";
+import {ProjectProfile} from "./index";
 
 export interface IProjectConfig {
-    profiles: Record<string, Profile>;
+    profiles: {
+        default: ProjectProfile;
+        [key: string]: Partial<ProjectProfile>;
+    }
     aliases: any;
     noParse: any;
 }
@@ -9,17 +12,16 @@ export interface IProjectConfig {
 export const defaultConfig: IProjectConfig = {
     profiles: {
         default: {
-            // supportedBrowsers: "last 2 versions",
-            // buildPath: "dist",
-            // webpackPlugins: {},
+            supportedBrowsers: "last 2 versions",
+            outputPath: "dist",
+            sourceMapType: "(none)",
         },
         "default:development": {
             _extends: "default",
-            // sourceMapType: "(none)",
         },
         "default:production": {
             _extends: "default",
-            // sourceMapType: "nosources-source-map",
+            sourceMapType: "nosources-source-map",
         },
         development: {
             _extends: "default:development"
