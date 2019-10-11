@@ -16,7 +16,7 @@ function getAbsoluteWorkdirPath(workdirPath: string) {
         : process.cwd();
 }
 
-export default class RunWebpackCommand extends Command {
+export default class CreateBundleCommand extends Command {
     static args: Array<Parser.args.IArg> = [
         {
             name: Arguments.profileName,
@@ -38,7 +38,7 @@ export default class RunWebpackCommand extends Command {
 
     async run() {
         // TODO: Provide interface for arugments and flags
-        const {args, flags} = this.parse(RunWebpackCommand);
+        const {args, flags} = this.parse(CreateBundleCommand);
 
         const workdir = getAbsoluteWorkdirPath(args[Arguments.workingDirectory]);
         const projectConfig = ProjectConfig.loadFromFile(workdir);
