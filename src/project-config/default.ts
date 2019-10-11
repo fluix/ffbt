@@ -1,10 +1,9 @@
 import {ProjectProfile} from "./index";
 
 export interface IProjectConfig {
-    profiles: {
+    profiles: Record<string, Partial<ProjectProfile>> & {
         default: ProjectProfile;
-        [key: string]: Partial<ProjectProfile>;
-    }
+    };
     aliases: any;
     noParse: any;
 }

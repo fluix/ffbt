@@ -25,8 +25,7 @@ export class ProjectConfig {
     constructor(projectConfig: Partial<IProjectConfig>) {
         this.props = this.applyDefaultsToConfig(projectConfig);
 
-        // TODO: fix any
-        this.profiles.addMany(this.props.profiles as any);
+        this.profiles.addMany(this.props.profiles);
     }
 
     setCurrentProfileName(currentProfileName: string) {
