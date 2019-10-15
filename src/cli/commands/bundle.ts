@@ -33,6 +33,9 @@ export default class CreateBundleCommand extends Command {
         }),
         output: flags.string({
             default: undefined,
+        }),
+        buildVersion: flags.string({
+            default: undefined,
         })
     };
 
@@ -57,6 +60,7 @@ export default class CreateBundleCommand extends Command {
         const optionsWithValue = omitBy({
             outputPath: flags.output,
             analyzeBundle: flags.analyze,
+            buildVersion: flags.buildVersion,
         }, isNil);
 
         projectConfig.overrideProfileSettings(optionsWithValue);

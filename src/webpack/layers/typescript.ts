@@ -2,11 +2,11 @@ import * as ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import * as ForkTsCheckerNotifierWebpackPlugin from "fork-ts-checker-notifier-webpack-plugin";
 import {WebpackLayerConfigurator} from "../types";
 
-export const typescriptConfigLayer: WebpackLayerConfigurator = () => {
+export const typescriptConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
     return {
-        devtool: "inline-source-map",
+        devtool: projectConfig.profile.sourceMapType as any, // Webpack doesn't have "(none)" value in typings
         entry: {
-            main: "./src/test.ts",
+            main: paths.project.entrypoint,
         },
         resolve: {
             extensions: [".ts", ".tsx", ".js"],

@@ -14,6 +14,7 @@ export const defaultConfig: IProjectConfig = {
             browserlist: "last 2 versions",
             outputPath: "dist",
             sourceMapType: "(none)",
+            buildVersion: "--not-specified--",
         },
         "default:development": {
             _extends: "default",

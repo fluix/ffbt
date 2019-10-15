@@ -29,6 +29,6 @@ export class ProjectBundler {
         const config = webpackMerge.smart(...configuredWebpackLayers);
 
         // console.log("Webpack Config", inspect(config, {showHidden: false, depth: null}));
-        console.log("Webpack Config", config, paths);
+        console.log("Webpack Config", config);
     }
 }

@@ -3,12 +3,7 @@ import * as autoprefixer from "autoprefixer";
 import * as importOnce from "../../node-sass-import-once";
 import {WebpackLayerConfigurator} from "../types";
 
-const nodeModulesPath = "";
-const autoprefixerConfig = "last 2 versions";
-
-const sassImporter = importOnce(nodeModulesPath);
-
-export const stylesConfigLayer: WebpackLayerConfigurator = () => {
+export const stylesConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
     return {
         module: {
             rules: [
@@ -21,7 +16,7 @@ export const stylesConfigLayer: WebpackLayerConfigurator = () => {
                             loader: "postcss-loader",
                             options: {
                                 plugins: [
-                                    autoprefixer(autoprefixerConfig),
+                                    autoprefixer(projectConfig.profile.browserlist),
                                 ],
                             },
                         },
@@ -29,7 +24,7 @@ export const stylesConfigLayer: WebpackLayerConfigurator = () => {
                             loader: "sass-loader",
                             options: {
                                 sassOptions: {
-                                    importer: sassImporter,
+                                    importer: importOnce(paths.project.nodeModules),
                                     importOnce: {
                                         index: true,
                                         css: false,
