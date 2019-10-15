@@ -1,20 +1,8 @@
 import {ProjectConfig} from "../project-config";
 import {inspect} from "util";
 import webpackMerge = require("webpack-merge");
-import {ProjectPaths, WebpackLayerConfigurator} from "../webpack/types";
-
-// const FFBT_ROOT_PATH = path.dirname(locatePath("node_modules", __dirname));
-// const PROJECT_NODE_MODULES_PATH = locatePath("node_modules", workdir, false);
-
-// const PROJECT_PACKAGE_JSON_PATH = locatePath("package.json", workdir);
-// const PROJECT_ROOT_PATH = path.dirname(PROJECT_CONFIG_PATH);
-// const ENTRYPOINT_PATH = locateEntrypoint(workdir);
-//
-// const PROJECT_PACKAGE_JSON = require(PROJECT_PACKAGE_JSON_PATH);
-//
-// const BUILD_WORKDIR = workdir
-//     ? path.resolve(PROJECT_ROOT_PATH, workdir)
-//     : PROJECT_ROOT_PATH;
+import {WebpackLayerConfigurator} from "../webpack/types";
+import {calculateProjectPaths, ProjectPaths} from "../paths";
 
 export class ProjectBundler {
     constructor(private config: ProjectConfig) {
@@ -36,14 +24,11 @@ export class ProjectBundler {
             // require("../webpack/layers/bundle-analyze").bundleAnalyzeConfigLayer,
         ];
 
-        const paths: ProjectPaths = {
-            workingDirectory,
-        };
-
+        const paths = calculateProjectPaths(workingDirectory);
         const configuredWebpackLayers = layers.map(layer => layer(this.config, paths));
         const config = webpackMerge.smart(...configuredWebpackLayers);
 
         // console.log("Webpack Config", inspect(config, {showHidden: false, depth: null}));
-        console.log("Webpack Config", config);
+        console.log("Webpack Config", config, paths);
     }
 }

@@ -2,9 +2,10 @@ import * as path from "path";
 import * as fs from "fs";
 import * as findUp from "find-up";
 
-export function locatePath(name: string, cwd = "", raiseErrorIfNotExists = true): string {
+export function locateFile(name: string, cwd = "", raiseErrorIfNotExists = true): string {
     const locatedPath = findUp.sync(name, {
         cwd,
+        type: "file",
     });
     if (!locatedPath && raiseErrorIfNotExists) {
         throw new Error(`Can't locate ${name}`);
@@ -13,7 +14,19 @@ export function locatePath(name: string, cwd = "", raiseErrorIfNotExists = true)
     return locatedPath || "";
 }
 
-export function locateEntrypoint(workdirPath: string, tsEntrypointName: string): string | null {
+export function locateDirectory(name: string, cwd = "", raiseErrorIfNotExists = true): string {
+    const locatedPath = findUp.sync(name, {
+        cwd,
+        type: "directory",
+    });
+    if (!locatedPath && raiseErrorIfNotExists) {
+        throw new Error(`Can't locate ${name}`);
+    }
+
+    return locatedPath || "";
+}
+
+export function locateEntrypoint(workdirPath: string, tsEntrypointName: string): string {
     const tsPath = path.resolve(workdirPath, `${tsEntrypointName}.ts`);
     const tsxPath = path.resolve(workdirPath, `${tsEntrypointName}.tsx`);
 
@@ -22,9 +35,10 @@ export function locateEntrypoint(workdirPath: string, tsEntrypointName: string):
     } if (fs.existsSync(tsxPath)) {
         return tsxPath;
     }
-    return null;
+
+    throw new Error(`Can't find entrypoint by path ${tsPath}(x)`);
 }
 
 export function locateTsConfigFile(projectRoot: string): string {
-    return locatePath("tsconfig.json", projectRoot);
+    return locateFile("tsconfig.json", projectRoot);
 }
