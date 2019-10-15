@@ -1,7 +1,6 @@
 import * as webpack from "webpack";
-
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const ForkTsCheckerNotifierWebpackPlugin = require("fork-ts-checker-notifier-webpack-plugin");
+import * as ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
+import * as ForkTsCheckerNotifierWebpackPlugin from "fork-ts-checker-notifier-webpack-plugin";
 
 export const typescriptConfigLayer: webpack.Configuration = {
     devtool: "inline-source-map",

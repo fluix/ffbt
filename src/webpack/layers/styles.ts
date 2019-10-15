@@ -1,8 +1,7 @@
 import * as webpack from "webpack";
-
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const importOnce = require("../../library/node-sass-import-once");
-const autoprefixer = require("autoprefixer");
+import * as MiniCssExtractPlugin from "mini-css-extract-plugin";
+import * as autoprefixer from "autoprefixer";
+import * as importOnce from "../../node-sass-import-once";
 
 const nodeModulesPath = "";
 const autoprefixerConfig = "last 2 versions";

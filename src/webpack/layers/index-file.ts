@@ -1,6 +1,5 @@
 import * as webpack from "webpack";
-
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import * as HtmlWebpackPlugin from "html-webpack-plugin";
 
 export const indexFileConfigLayer: webpack.Configuration = {
     plugins: [
