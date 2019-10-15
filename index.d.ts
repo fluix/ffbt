@@ -1,3 +1,0 @@
-interface WebpackWorker {
-    new(): Worker;
-}
