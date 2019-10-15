@@ -25,7 +25,9 @@ export const typescriptConfigLayer: WebpackLayerConfigurator = (projectConfig, p
             ],
         },
         plugins: [
-            new ForkTsCheckerWebpackPlugin(),
+            new ForkTsCheckerWebpackPlugin({
+                tsconfig: paths.project.tsConfig,
+            }),
             new ForkTsCheckerNotifierWebpackPlugin({
                 title: "FFBT",
                 excludeWarnings: true

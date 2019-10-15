@@ -1,9 +1,9 @@
 import {Prop} from "../core/prop";
 import {defaultConfig, IProjectConfig} from "./default";
 import {merge} from "lodash";
-import {locateFile} from "../core/utils/path";
 import {Profile, ProfileRegistry} from "../core/profile-registry";
 import * as webpack from "webpack";
+import {locateFile} from "../paths";
 
 export interface ProjectProfileProperties {
     outputPath: string;

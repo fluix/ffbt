@@ -1,8 +1,8 @@
 import {ProjectConfig} from "../project-config";
-import {inspect} from "util";
-import webpackMerge = require("webpack-merge");
 import {WebpackLayerConfigurator} from "../webpack/types";
-import {calculateProjectPaths, ProjectPaths} from "../paths";
+import {calculateProjectPaths} from "../paths";
+import * as webpack from "webpack";
+import webpackMerge = require("webpack-merge");
 
 export class ProjectBundler {
     constructor(private config: ProjectConfig) {
@@ -11,6 +11,22 @@ export class ProjectBundler {
     run(workingDirectory: string) {
         // console.log("RUN BUILD", inspect(this.config, {showHidden: false, depth: null}));
 
+        const config = this.createWebpackConfig(workingDirectory);
+
+        // console.log("Webpack Config", inspect(config, {showHidden: false, depth: null}));
+        // console.log("Webpack Config", config);
+
+        const compiler = webpack(config);
+
+        compiler.run((error, stats) => {
+            // eslint-disable-next-line no-console
+            console.log(stats.toString({
+                colors: true,
+            }));
+        });
+    }
+
+    private createWebpackConfig(workingDirectory: string): webpack.Configuration {
         const layers: Array<WebpackLayerConfigurator> = [
             require("../webpack/layers/base").baseConfigLayer,
             require("../webpack/layers/typescript").typescriptConfigLayer,
@@ -26,9 +42,7 @@ export class ProjectBundler {
 
         const paths = calculateProjectPaths(workingDirectory);
         const configuredWebpackLayers = layers.map(layer => layer(this.config, paths));
-        const config = webpackMerge.smart(...configuredWebpackLayers);
 
-        // console.log("Webpack Config", inspect(config, {showHidden: false, depth: null}));
-        console.log("Webpack Config", config);
+        return webpackMerge.smart(...configuredWebpackLayers);
     }
 }
