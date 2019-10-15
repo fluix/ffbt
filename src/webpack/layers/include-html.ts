@@ -1,15 +1,17 @@
-import * as webpack from "webpack";
+import {WebpackLayerConfigurator} from "../types";
 
-export const includeHtmlConfigLayer: webpack.Configuration = {
-    module: {
-        rules: [
-            {
-                test: /\.html$/,
-                loader: "html-loader",
-                options: {
-                    minimize: true,
-                }
-            },
-        ],
-    },
+export const includeHtmlConfigLayer: WebpackLayerConfigurator = () => {
+    return {
+        module: {
+            rules: [
+                {
+                    test: /\.html$/,
+                    loader: "html-loader",
+                    options: {
+                        minimize: true,
+                    }
+                },
+            ],
+        },
+    };
 };

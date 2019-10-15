@@ -1,6 +1,7 @@
 import {ProjectConfig} from "../project-config";
 import {inspect} from "util";
 import webpackMerge = require("webpack-merge");
+import {ProjectPaths, WebpackLayerConfigurator} from "../webpack/types";
 
 // const FFBT_ROOT_PATH = path.dirname(locatePath("node_modules", __dirname));
 // const PROJECT_NODE_MODULES_PATH = locatePath("node_modules", workdir, false);
@@ -22,18 +23,25 @@ export class ProjectBundler {
     run(workingDirectory: string) {
         // console.log("RUN BUILD", inspect(this.config, {showHidden: false, depth: null}));
 
-        const config = webpackMerge.smart(
-            require("../webpack/layers/base"),
-            require("../webpack/layers/typescript"),
-            require("../webpack/layers/styles"),
-            require("../webpack/layers/index-file"),
-            require("../webpack/layers/include-html"),
-            require("../webpack/layers/assets"),
-            require("../webpack/layers/globals"),
+        const layers: Array<WebpackLayerConfigurator> = [
+            require("../webpack/layers/base").baseConfigLayer,
+            require("../webpack/layers/typescript").typescriptConfigLayer,
+            require("../webpack/layers/styles").stylesConfigLayer,
+            require("../webpack/layers/index-file").indexFileConfigLayer,
+            require("../webpack/layers/include-html").includeHtmlConfigLayer,
+            require("../webpack/layers/assets").assetsConfigLayer,
+            require("../webpack/layers/globals").globalsConfigLayer,
 
-            require("../webpack/layers/dev-server"),
-            // require("../webpack/layers/bundle-analyze"),
-        );
+            require("../webpack/layers/dev-server").devServerConfigLayer,
+            // require("../webpack/layers/bundle-analyze").bundleAnalyzeConfigLayer,
+        ];
+
+        const paths: ProjectPaths = {
+            workingDirectory,
+        };
+
+        const configuredWebpackLayers = layers.map(layer => layer(this.config, paths));
+        const config = webpackMerge.smart(...configuredWebpackLayers);
 
         // console.log("Webpack Config", inspect(config, {showHidden: false, depth: null}));
         console.log("Webpack Config", config);
