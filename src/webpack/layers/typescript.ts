@@ -30,6 +30,7 @@ export const typescriptConfigLayer: WebpackLayerConfigurator = (projectConfig, p
                         compilerOptions: {
                             jsx: tsConfig.compilerOptions.jsx || "react",
                         },
+                        experimentalWatchApi: true,
                         // disable type checker - we will use it in fork plugin
                         transpileOnly: true,
                     },
