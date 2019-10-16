@@ -12,6 +12,7 @@ export interface ProjectProfileProperties {
     buildVersion: string;
     staticFilesSizeThresholdKb: number;
     optimizeBundle: boolean;
+    analyzeBundle: boolean;
 }
 
 export interface ProjectProfile extends Profile, ProjectProfileProperties {

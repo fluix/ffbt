@@ -18,6 +18,7 @@ export const defaultConfig: IProjectConfig = {
             buildVersion: String(Date()),
             staticFilesSizeThresholdKb: 8,
             optimizeBundle: false,
+            analyzeBundle: false,
         },
         "default:development": {
             _extends: "default",
