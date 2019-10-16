@@ -1,11 +1,12 @@
 import {ProjectProfile} from "./index";
+import * as webpack from "webpack";
 
 export interface IProjectConfig {
     profiles: Record<string, Partial<ProjectProfile>> & {
         default: ProjectProfile;
     };
-    aliases: any;
-    noParse: any;
+    aliases?: Pick<webpack.Resolve, "alias">;
+    noParse?: Pick<webpack.Module, "noParse">;
 }
 
 export const defaultConfig: IProjectConfig = {
@@ -31,5 +32,5 @@ export const defaultConfig: IProjectConfig = {
         }
     },
     noParse: undefined,
-    aliases: [],
+    aliases: {},
 };

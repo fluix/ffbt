@@ -13,7 +13,7 @@ export const assetsConfigLayer: WebpackLayerConfigurator = () => {
                     loader: {
                         loader: "url-loader",
                         options: {
-                            limit: 8192,
+                            limit: 20480,
                         },
                     },
                 }

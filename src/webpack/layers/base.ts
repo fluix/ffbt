@@ -15,6 +15,13 @@ export const baseConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) 
             splitChunks: {
                 chunks: "all",
             }
+        },
+        module: {
+            noParse: projectConfig.noParse,
+            rules: [],
+        },
+        resolve: {
+            alias: projectConfig.aliases,
         }
     };
 };
