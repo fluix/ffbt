@@ -15,7 +15,8 @@ export const defaultConfig: IProjectConfig = {
             browserlist: "last 2 versions",
             outputPath: "dist",
             sourceMapType: "(none)",
-            buildVersion: "--not-specified--",
+            buildVersion: String(Date()),
+            staticFilesSizeThreshold: 8192,
         },
         "default:development": {
             _extends: "default",

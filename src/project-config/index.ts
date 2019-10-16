@@ -10,6 +10,7 @@ export interface ProjectProfileProperties {
     browserlist: string | Array<string>; // See https://github.com/browserslist/browserslist for syntax
     sourceMapType: "(none)" | webpack.Options.Devtool;
     buildVersion: string;
+    staticFilesSizeThreshold: number;
 }
 
 export interface ProjectProfile extends Profile, ProjectProfileProperties {
