@@ -12,7 +12,7 @@ export const baseConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) 
     }
 
     return {
-        mode: "none",
+        mode: projectConfig.profile.optimizeBundle ? "production" : "development",
         context: paths.project.workingDirectory,
         output: {
             filename: '[name].bundle.js',

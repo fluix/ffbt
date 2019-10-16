@@ -16,7 +16,8 @@ export const defaultConfig: IProjectConfig = {
             outputPath: "dist",
             sourceMapType: "(none)",
             buildVersion: String(Date()),
-            staticFilesSizeThreshold: 8192,
+            staticFilesSizeThresholdKb: 8,
+            optimizeBundle: false,
         },
         "default:development": {
             _extends: "default",
@@ -24,6 +25,7 @@ export const defaultConfig: IProjectConfig = {
         "default:production": {
             _extends: "default",
             sourceMapType: "nosources-source-map",
+            optimizeBundle: true,
         },
         development: {
             _extends: "default:development"

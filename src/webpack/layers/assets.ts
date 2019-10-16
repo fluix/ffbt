@@ -5,6 +5,8 @@ import {WebpackLayerConfigurator} from "../types";
 //  or for different subfolders?
 
 export const assetsConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
+    const thresholdInBytes = projectConfig.profile.staticFilesSizeThresholdKb * 1024;
+
     return {
         module: {
             rules: [
@@ -13,7 +15,7 @@ export const assetsConfigLayer: WebpackLayerConfigurator = (projectConfig, paths
                     loader: {
                         loader: "url-loader",
                         options: {
-                            limit: projectConfig.profile.staticFilesSizeThreshold,
+                            limit: thresholdInBytes,
                         },
                     },
                 }

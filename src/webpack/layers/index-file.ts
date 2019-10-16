@@ -20,7 +20,13 @@ export const indexFileConfigLayer: WebpackLayerConfigurator = (projectConfig, pa
 
     return {
         plugins: [
-            new HtmlWebpackPlugin(pluginSettings)
+            new HtmlWebpackPlugin({
+                ...pluginSettings,
+                minify: projectConfig.profile.optimizeBundle && {
+                    collapseWhitespace: true,
+                    removeComments: true,
+                },
+            })
         ]
     };
 };
