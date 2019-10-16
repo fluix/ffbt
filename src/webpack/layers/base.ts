@@ -2,6 +2,15 @@ import {resolve} from "path";
 import {WebpackLayerConfigurator} from "../types";
 
 export const baseConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
+    const whereToSearchLoaders = [
+        "node_modules",
+        resolve(paths.ffbtRoot, "node_modules"),
+    ];
+
+    if (paths.project.nodeModules) {
+        whereToSearchLoaders.push(paths.project.nodeModules);
+    }
+
     return {
         mode: "none",
         context: paths.project.workingDirectory,
@@ -22,6 +31,9 @@ export const baseConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) 
         },
         resolve: {
             alias: projectConfig.aliases,
+        },
+        resolveLoader: {
+            modules: whereToSearchLoaders,
         }
     };
 };
