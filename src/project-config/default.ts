@@ -19,6 +19,7 @@ export const defaultConfig: IProjectConfig = {
             staticFilesSizeThresholdKb: 8,
             optimizeBundle: false,
             analyzeBundle: false,
+            verboseMode: false,
         },
         "default:development": {
             _extends: "default",

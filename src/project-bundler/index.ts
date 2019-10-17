@@ -37,6 +37,7 @@ export class ProjectBundler {
             require("../webpack/layers/globals").globalsConfigLayer,
 
             require("../webpack/layers/dev-server").devServerConfigLayer,
+            require("../webpack/layers/clean-dist").cleanDistFolderConfigLayer,
         ];
 
         if (this.config.profile.analyzeBundle) {

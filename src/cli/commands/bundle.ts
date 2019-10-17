@@ -36,6 +36,9 @@ export default class CreateBundleCommand extends Command {
         }),
         buildVersion: flags.string({
             default: undefined,
+        }),
+        verbose: flags.boolean({
+            default: false,
         })
     };
 
@@ -61,6 +64,7 @@ export default class CreateBundleCommand extends Command {
             outputPath: flags.output,
             analyzeBundle: flags.analyze,
             buildVersion: flags.buildVersion,
+            verboseMode: flags.verbose,
         }, isNil);
 
         projectConfig.overrideProfileSettings(optionsWithValue);
