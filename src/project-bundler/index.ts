@@ -46,6 +46,10 @@ export class ProjectBundler {
             layers.push(require("../webpack/layers/clean-dist").cleanDistFolderConfigLayer);
         }
 
+        if (this.config.profile.moveLibrariesToSeparateBundle) {
+            layers.push(require("../webpack/layers/vendor-bundle").vendorBundleConfigLayer);
+        }
+
         if (this.config.profile.optimizeBundle) {
             layers.push(require("../webpack/layers/caching").cachingConfigLayer);
         }

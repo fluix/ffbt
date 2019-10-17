@@ -9,18 +9,9 @@ export const cachingConfigLayer: WebpackLayerConfigurator = (projectConfig, path
             // See layers/styles.ts for the CSS related stuff
         },
         optimization: {
-            runtimeChunk: "single",
-            moduleIds: "hashed",
-            splitChunks: {
-                cacheGroups: {
-                    vendor: {
-                        test: /[\\/]node_modules[\\/]/,
-                        name: 'vendor',
-                        chunks: 'all',
-                        enforce: true,
-                    }
-                }
-            }
+            runtimeChunk: "single", // move runtime code and manifest to the separate bundle
+            moduleIds: "hashed", // use content hash instead of module IDs to provide consistent hashing behavior
+            // Read more: https://webpack.js.org/guides/caching/
         }
     };
 };

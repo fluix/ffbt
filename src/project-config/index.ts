@@ -15,6 +15,7 @@ export interface ProjectProfileProperties {
     analyzeBundle: boolean;
     verboseMode: boolean;
     cleanDistFolderBeforeBuild: boolean;
+    moveLibrariesToSeparateBundle: boolean;
 }
 
 export interface ProjectProfile extends Profile, ProjectProfileProperties {
