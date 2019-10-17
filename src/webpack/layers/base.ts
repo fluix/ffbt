@@ -17,7 +17,6 @@ export const baseConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) 
         output: {
             filename: '[name].bundle.js',
             chunkFilename: '[name].chunk.js',
-            // TODO: move paths to project config, calculate output path via getter
             path: resolve(paths.project.root, projectConfig.profile.outputPath),
         },
         optimization: {

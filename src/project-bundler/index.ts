@@ -46,9 +46,17 @@ export class ProjectBundler {
             layers.push(require("../webpack/layers/clean-dist").cleanDistFolderConfigLayer);
         }
 
+        if (this.config.profile.optimizeBundle) {
+            layers.push(require("../webpack/layers/caching").cachingConfigLayer);
+        }
+
         const paths = calculateProjectPaths(workingDirectory);
         const configuredWebpackLayers = layers.map(layer => layer(this.config, paths));
 
-        return webpackMerge.smart(...configuredWebpackLayers);
+        const config = webpackMerge.smart(...configuredWebpackLayers);
+
+        // console.log(config);
+
+        return config;
     }
 }
