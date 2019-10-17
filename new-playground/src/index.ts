@@ -1,5 +1,7 @@
 import "./index.scss";
 import {hello} from "./constants";
+// @ts-ignore
+import * as leftpad from "leftpad";
 
 console.log(hello);
 console.log(require("./test.html"));
@@ -18,5 +20,7 @@ setTimeout(() => {
         printModule.default();
     })
 }, 1000);
+
+console.log(leftpad("hello", 20, "_"));
 
 // console.log(FFBT_BUILD_VERSION);

@@ -21,6 +21,7 @@ export const defaultConfig: IProjectConfig = {
             analyzeBundle: false,
             verboseMode: false,
             cleanDistFolderBeforeBuild: false,
+            moveLibrariesToSeparateBundle: true,
         },
         "default:development": {
             _extends: "default",
