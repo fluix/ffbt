@@ -1,8 +1,8 @@
 import * as ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import * as ForkTsCheckerNotifierWebpackPlugin from "fork-ts-checker-notifier-webpack-plugin";
-import {WebpackLayerConfigurator} from "../types";
-import {readJson} from "../../core/read-json";
+import {WebpackLayerConfigurator} from "../index";
 import {CompilerOptions} from "typescript";
+import {readJson} from "../../../../core/read-json";
 
 interface TsConfig {
     compilerOptions: CompilerOptions;

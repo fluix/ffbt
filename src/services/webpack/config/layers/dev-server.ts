@@ -1,4 +1,4 @@
-import {WebpackLayerConfigurator} from "../types";
+import {WebpackLayerConfigurator} from "../index";
 import * as WebpackDevServer from "webpack-dev-server";
 
 export const devServerConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {

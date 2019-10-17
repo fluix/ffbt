@@ -1,4 +1,4 @@
-import {WebpackLayerConfigurator} from "../types";
+import {WebpackLayerConfigurator} from "../index";
 import {CleanWebpackPlugin} from "clean-webpack-plugin";
 
 export const cleanDistFolderConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {

@@ -1,5 +1,5 @@
 import {resolve} from "path";
-import {WebpackLayerConfigurator} from "../types";
+import {WebpackLayerConfigurator} from "../index";
 
 export const baseConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
     const whereToSearchLoaders = [

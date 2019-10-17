@@ -1,5 +1,5 @@
 import * as HtmlWebpackPlugin from "html-webpack-plugin";
-import {WebpackLayerConfigurator} from "../types";
+import {WebpackLayerConfigurator} from "../index";
 import {resolve} from "path";
 import {existsSync} from "fs";
 
