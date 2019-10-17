@@ -3,6 +3,8 @@ import * as autoprefixer from "autoprefixer";
 import * as importOnce from "../../node-sass-import-once";
 import {WebpackLayerConfigurator} from "../types";
 
+// TODO: run in a separate process via thread-loader
+//   https://webpack.js.org/guides/build-performance/#sass
 export const stylesConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
     return {
         module: {

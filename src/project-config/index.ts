@@ -10,6 +10,11 @@ export interface ProjectProfileProperties {
     browserlist: string | Array<string>; // See https://github.com/browserslist/browserslist for syntax
     sourceMapType: "(none)" | webpack.Options.Devtool;
     buildVersion: string;
+    staticFilesSizeThresholdKb: number;
+    optimizeBundle: boolean;
+    analyzeBundle: boolean;
+    verboseMode: boolean;
+    cleanDistFolderBeforeBuild: boolean;
 }
 
 export interface ProjectProfile extends Profile, ProjectProfileProperties {
@@ -20,8 +25,11 @@ export class ProjectConfig {
     private readonly profiles = new ProfileRegistry<ProjectProfile>();
     private currentProfileName: string = "default";
 
-    @Prop() aliases!: Pick<IProjectConfig, "aliases">;
-    @Prop() noParse!: Pick<IProjectConfig, "noParse">;
+    // We don't care about types in this getters, just proxy values which comes from props
+    // If you try to specify types you'll get a lot of type errors in webpack layers
+    // TODO: try th handle these problems and specify types
+    @Prop() aliases!: any;
+    @Prop() noParse!: any;
 
     constructor(projectConfig: Partial<IProjectConfig>) {
         this.props = this.applyDefaultsToConfig(projectConfig);

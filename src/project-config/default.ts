@@ -1,11 +1,12 @@
 import {ProjectProfile} from "./index";
+import * as webpack from "webpack";
 
 export interface IProjectConfig {
     profiles: Record<string, Partial<ProjectProfile>> & {
         default: ProjectProfile;
     };
-    aliases: any;
-    noParse: any;
+    aliases?: Pick<webpack.Resolve, "alias">;
+    noParse?: Pick<webpack.Module, "noParse">;
 }
 
 export const defaultConfig: IProjectConfig = {
@@ -14,7 +15,12 @@ export const defaultConfig: IProjectConfig = {
             browserlist: "last 2 versions",
             outputPath: "dist",
             sourceMapType: "(none)",
-            buildVersion: "--not-specified--",
+            buildVersion: String(Date()),
+            staticFilesSizeThresholdKb: 8,
+            optimizeBundle: false,
+            analyzeBundle: false,
+            verboseMode: false,
+            cleanDistFolderBeforeBuild: false,
         },
         "default:development": {
             _extends: "default",
@@ -22,6 +28,8 @@ export const defaultConfig: IProjectConfig = {
         "default:production": {
             _extends: "default",
             sourceMapType: "nosources-source-map",
+            optimizeBundle: true,
+            cleanDistFolderBeforeBuild: true,
         },
         development: {
             _extends: "default:development"
@@ -31,5 +39,5 @@ export const defaultConfig: IProjectConfig = {
         }
     },
     noParse: undefined,
-    aliases: [],
+    aliases: {},
 };

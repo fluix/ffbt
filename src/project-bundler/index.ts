@@ -35,10 +35,16 @@ export class ProjectBundler {
             require("../webpack/layers/include-html").includeHtmlConfigLayer,
             require("../webpack/layers/assets").assetsConfigLayer,
             require("../webpack/layers/globals").globalsConfigLayer,
-
             require("../webpack/layers/dev-server").devServerConfigLayer,
-            // require("../webpack/layers/bundle-analyze").bundleAnalyzeConfigLayer,
         ];
+
+        if (this.config.profile.analyzeBundle) {
+            layers.push(require("../webpack/layers/bundle-analyze").bundleAnalyzeConfigLayer);
+        }
+
+        if (this.config.profile.cleanDistFolderBeforeBuild) {
+            layers.push(require("../webpack/layers/clean-dist").cleanDistFolderConfigLayer);
+        }
 
         const paths = calculateProjectPaths(workingDirectory);
         const configuredWebpackLayers = layers.map(layer => layer(this.config, paths));
