@@ -20,6 +20,7 @@ export const defaultConfig: IProjectConfig = {
             optimizeBundle: false,
             analyzeBundle: false,
             verboseMode: false,
+            cleanDistFolderBeforeBuild: false,
         },
         "default:development": {
             _extends: "default",
@@ -28,6 +29,7 @@ export const defaultConfig: IProjectConfig = {
             _extends: "default",
             sourceMapType: "nosources-source-map",
             optimizeBundle: true,
+            cleanDistFolderBeforeBuild: true,
         },
         development: {
             _extends: "default:development"
