@@ -1,20 +1,16 @@
+import {Command, flags} from "@oclif/command";
 import * as Parser from "@oclif/parser";
 import {BaseWebpackCommand} from "../base-webpack-command";
-import {MakeBundleStrategy} from "../../services/webpack/runner/make-bundle";
 import {ServiceRunStrategy} from "../../services/webpack/runner";
+import {RunWebpackDevServerStrategy} from "../../services/webpack/runner/run-webpack-dev-server";
 import * as webpack from "webpack";
 
 enum Arguments {
-    profileName = "profile_name",
     workingDirectory = "working_directory",
 }
 
-export default class BundleCommand extends BaseWebpackCommand {
+export default class DevCommand extends BaseWebpackCommand {
     static args: Array<Parser.args.IArg> = [
-        {
-            name: Arguments.profileName,
-            required: true,
-        },
         {
             name: Arguments.workingDirectory
         }
@@ -23,15 +19,13 @@ export default class BundleCommand extends BaseWebpackCommand {
     static flags = BaseWebpackCommand.flags;
 
     getWebpackRunner(webpackConfig: webpack.Configuration): ServiceRunStrategy {
-        return new MakeBundleStrategy(webpackConfig);
+        return new RunWebpackDevServerStrategy(webpackConfig);
     }
 
     async run() {
-        const {args, flags} = this.parse(BundleCommand);
-
+        const {args, flags} = this.parse(DevCommand);
         const workdir = args[Arguments.workingDirectory];
-        const profileName = args[Arguments.profileName];
 
-        this.runWebpack(workdir, profileName, flags);
+        this.runWebpack(workdir, "development", flags);
     }
 }

@@ -1,6 +1,6 @@
 import {BundleStatsWebpackPlugin} from "bundle-stats";
 import {BundleAnalyzerPlugin} from "webpack-bundle-analyzer";
-import {WebpackLayerConfigurator} from "../types";
+import {WebpackLayerConfigurator} from "../index";
 import {resolve} from "path";
 
 export const bundleAnalyzeConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {

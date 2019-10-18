@@ -1,5 +1,5 @@
 import * as webpack from "webpack";
-import {WebpackLayerConfigurator} from "../types";
+import {WebpackLayerConfigurator} from "../index";
 
 export const globalsConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
     return {

@@ -1,4 +1,4 @@
-import {WebpackLayerConfigurator} from "../types";
+import {WebpackLayerConfigurator} from "../index";
 
 export const cachingConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
     return {

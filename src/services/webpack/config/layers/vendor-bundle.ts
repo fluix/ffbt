@@ -1,4 +1,4 @@
-import {WebpackLayerConfigurator} from "../types";
+import {WebpackLayerConfigurator} from "../index";
 
 export const vendorBundleConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
     return {

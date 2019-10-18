@@ -1,8 +1,4 @@
-import {WebpackLayerConfigurator} from "../types";
-
-// TODO: separate limit for fonts?
-//  or add ability to setup separate limit for each kind of file
-//  or for different subfolders?
+import {WebpackLayerConfigurator} from "../index";
 
 export const assetsConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
     const thresholdInBytes = projectConfig.profile.staticFilesSizeThresholdKb * 1024;
