@@ -6,10 +6,12 @@
     "importHelpers": true,
     "experimentalDecorators": true,
     "outDir": "dist",
-    "allowJs": true
+    "allowJs": true,
+    "resolveJsonModule": true
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "src/services/tslint/tslint.json"
   ],
   "exclude": [
     "node_modules",
