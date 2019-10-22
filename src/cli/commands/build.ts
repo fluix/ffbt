@@ -1,4 +1,4 @@
-import {BaseWebpackCommand} from "../base-webpack-command";
+import {BaseWebpackCommand, BaseWebpackFlags} from "../base-webpack-command";
 import {MakeBundleStrategy} from "../../services/webpack/runner/make-bundle";
 import {ServiceRunStrategy} from "../../services/webpack/runner";
 import * as webpack from "webpack";
@@ -14,7 +14,7 @@ export default class BuildCommand extends BaseWebpackCommand {
     }
 
     async run() {
-        const {flags} = this.parse(BuildCommand);
+        const {flags} = this.parse<BaseWebpackFlags, any>(BuildCommand);
         const workdir = this.getSourcesDirectory();
 
         this.runWebpack(workdir, "production", flags);

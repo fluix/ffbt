@@ -1,5 +1,5 @@
 import {flags} from "@oclif/command";
-import {BaseCommand} from "./base-command";
+import {BaseCommand, BaseFlags} from "./base-command";
 import {ProjectConfig} from "../project-config";
 import {isNil, omitBy} from 'lodash';
 import * as path from "path";
@@ -8,7 +8,13 @@ import {ServiceRunStrategy} from "../services/webpack/runner";
 import * as webpack from "webpack";
 import * as Parser from "@oclif/parser";
 
-enum BaseWebpackCommandArguments {
+export interface BaseWebpackFlags extends BaseFlags {
+    output: string | undefined;
+    buildVersion: string | undefined;
+    analyze: boolean;
+}
+
+enum Arguments {
     sourcesDirectory = "sources_directory",
 }
 
@@ -21,12 +27,12 @@ function getAbsoluteWorkdirPath(workdirPath: string) {
 export abstract class BaseWebpackCommand extends BaseCommand {
     static args: Array<Parser.args.IArg> = [
         {
-            name: BaseWebpackCommandArguments.sourcesDirectory,
+            name: Arguments.sourcesDirectory,
             description: "directory with sources of the application",
         }
     ];
 
-    static flags: flags.Input<any> = {
+    static flags: flags.Input<BaseWebpackFlags> = {
         output: flags.string({
             default: undefined,
             description: "a directory where to put the bundled app",
@@ -54,7 +60,7 @@ export abstract class BaseWebpackCommand extends BaseCommand {
 
     protected getSourcesDirectory(): string {
         const {args} = this.parse(BaseWebpackCommand);
-        return args[BaseWebpackCommandArguments.sourcesDirectory];
+        return args[Arguments.sourcesDirectory];
     }
 
     protected createProjectConfig(workdir: string, environmentName: string, flags: Record<string, any>): ProjectConfig {
