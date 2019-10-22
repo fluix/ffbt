@@ -7,21 +7,14 @@ import * as webpack from "webpack";
 import {BaseCommand} from "../base-command";
 import {RunWebpackCompileWatcherStrategy} from "../../services/webpack/runner/run-compile-watcher";
 
-enum Arguments {
-    workingDirectory = "working_directory",
-}
-
 export default class DevCommand extends BaseWebpackCommand {
-    static args: Array<Parser.args.IArg> = [
-        {
-            name: Arguments.workingDirectory
-        }
-    ];
+    static description = "start developing the application";
 
+    static args: Array<Parser.args.IArg> = BaseWebpackCommand.args;
     static flags: flags.Input<any> = {
         server: flags.boolean({
             default: false,
-            description: "Run a Development Server"
+            description: "run a development server"
         }),
         ...BaseCommand.flags,
     };
@@ -37,8 +30,8 @@ export default class DevCommand extends BaseWebpackCommand {
     }
 
     async run() {
-        const {args, flags} = this.parse(DevCommand);
-        const workdir = args[Arguments.workingDirectory];
+        const {flags} = this.parse(DevCommand);
+        const workdir = this.getSourcesDirectory();
 
         this.runWebpack(workdir, "development", flags);
     }

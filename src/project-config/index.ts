@@ -38,7 +38,7 @@ export class ProjectConfig {
         this.profiles.addMany(this.props.profiles);
     }
 
-    setCurrentProfileName(currentProfileName: string) {
+    setCurrentEnvironmentName(currentProfileName: string) {
         this.currentProfileName = currentProfileName;
     }
 
@@ -46,7 +46,7 @@ export class ProjectConfig {
         return this.profiles.get(this.currentProfileName);
     }
 
-    overrideProfileSettings(optionsWithValue: Partial<ProjectProfileProperties>) {
+    overrideEnvironmentSettings(optionsWithValue: Partial<ProjectProfileProperties>) {
         merge(this.profile, optionsWithValue);
     }
 
