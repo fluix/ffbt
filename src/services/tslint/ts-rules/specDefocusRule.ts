@@ -4,7 +4,7 @@ import * as ts from "typescript";
 const bannedFunctions = ["fdescribe", "fit"];
 
 export class Rule extends Lint.Rules.AbstractRule {
-    public static FAILURE_STRING(propName: string) {
+    public static failureString(propName: string) {
         return `${propName} calls are not allowed`;
     }
 
@@ -21,7 +21,7 @@ class NoFocusTestWalker extends Lint.RuleWalker {
 
         // create a failure at the current position if call is banned
         if (bannedFunctions.indexOf(functionName) !== -1) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING(functionName)));
+            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.failureString(functionName)));
         }
 
         // call the base version of this visitor to actually parse this node

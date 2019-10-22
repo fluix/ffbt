@@ -1,11 +1,22 @@
 import {flags} from "@oclif/command";
-import {BaseCommand} from "./base-command";
+import {BaseCommand, BaseFlags} from "./base-command";
 import {ProjectConfig} from "../project-config";
 import {isNil, omitBy} from 'lodash';
 import * as path from "path";
 import {createWebpackConfig} from "../services/webpack/config";
 import {ServiceRunStrategy} from "../services/webpack/runner";
 import * as webpack from "webpack";
+import * as Parser from "@oclif/parser";
+
+export interface BaseWebpackFlags extends BaseFlags {
+    output: string | undefined;
+    buildVersion: string | undefined;
+    analyze: boolean;
+}
+
+enum Arguments {
+    sourcesDirectory = "sources_directory",
+}
 
 function getAbsoluteWorkdirPath(workdirPath: string) {
     return workdirPath
@@ -14,32 +25,47 @@ function getAbsoluteWorkdirPath(workdirPath: string) {
 }
 
 export abstract class BaseWebpackCommand extends BaseCommand {
-    static flags: flags.Input<any> = {
+    static args: Array<Parser.args.IArg> = [
+        {
+            name: Arguments.sourcesDirectory,
+            description: "directory with sources of the application",
+        }
+    ];
+
+    static flags: flags.Input<BaseWebpackFlags> = {
         output: flags.string({
             default: undefined,
+            description: "a directory where to put the bundled app",
         }),
         buildVersion: flags.string({
             default: undefined,
+            description: "string represents version of the build. Can be used for CI needs",
         }),
         analyze: flags.boolean({
             default: false,
+            description: "run bundle analyze tools",
         }),
         ...BaseCommand.flags,
     };
 
     abstract getWebpackRunner(webpackConfig: webpack.Configuration): ServiceRunStrategy;
 
-    runWebpack(relativeWorkdir: string, profileName: string, flags: any) {
+    runWebpack(relativeWorkdir: string, environmentName: string, flags: any) {
         const workdir = getAbsoluteWorkdirPath(relativeWorkdir);
-        const projectConfig = this.createProjectConfig(workdir, profileName, flags);
+        const projectConfig = this.createProjectConfig(workdir, environmentName, flags);
         const webpackConfig = createWebpackConfig(projectConfig, workdir);
 
         this.getWebpackRunner(webpackConfig).run();
     }
 
-    protected createProjectConfig(workdir: string, profileName: string, flags: Record<string, any>): ProjectConfig {
+    protected getSourcesDirectory(): string {
+        const {args} = this.parse(BaseWebpackCommand);
+        return args[Arguments.sourcesDirectory];
+    }
+
+    protected createProjectConfig(workdir: string, environmentName: string, flags: Record<string, any>): ProjectConfig {
         const projectConfig = ProjectConfig.loadFromFile(workdir);
-        projectConfig.setCurrentProfileName(profileName);
+        projectConfig.setCurrentEnvironmentName(environmentName);
 
         // Skip all null and undefined values, they'll be replaced by default values later
         const optionsWithValue = omitBy({
@@ -49,7 +75,7 @@ export abstract class BaseWebpackCommand extends BaseCommand {
             verboseMode: flags.verbose,
         }, isNil);
 
-        projectConfig.overrideProfileSettings(optionsWithValue);
+        projectConfig.overrideEnvironmentSettings(optionsWithValue);
 
         return projectConfig;
     }

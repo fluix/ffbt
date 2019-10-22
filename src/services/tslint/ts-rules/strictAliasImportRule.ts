@@ -4,7 +4,7 @@ import * as Lint from "tslint";
 let wrongImports: Array<any>;
 
 export class Rule extends Lint.Rules.AbstractRule {
-    public static FAILURE_STRING(alias) {
+    public static failureString(alias: string) {
         return `import ${alias} by relative path is forbidden`;
     }
 
@@ -39,7 +39,7 @@ class StrictAliasImportWalker extends Lint.RuleWalker {
                 nodeWidth,
                 nodeText.replace(matchedAlias.regexp, matchedAlias.alias),
             );
-            this.addFailure(this.createFailure(nodeStart, nodeWidth, Rule.FAILURE_STRING(matchedAlias.alias), fix));
+            this.addFailure(this.createFailure(nodeStart, nodeWidth, Rule.failureString(matchedAlias.alias), fix));
         }
 
         // call the base version of this visitor to actually parse this node

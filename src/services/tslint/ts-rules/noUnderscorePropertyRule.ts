@@ -4,7 +4,7 @@ import * as Lint from "tslint";
 const propNameRegexp = /^_?[^_]+$/;
 
 export class Rule extends Lint.Rules.AbstractRule {
-    public static FAILURE_STRING(propName: string) {
+    public static failureString(propName: string) {
         return `${propName} has illegal underscore`;
     }
 
@@ -22,7 +22,7 @@ class NoUnderscoresPropsWalker extends Lint.RuleWalker {
 
         // create a failure at the current position if regex not matches
         if (!propNameRegexp.test(propName)) {
-            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING(propName)));
+            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.failureString(propName)));
         }
 
         // call the base version of this visitor to actually parse this node

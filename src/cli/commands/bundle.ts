@@ -1,23 +1,24 @@
 import * as Parser from "@oclif/parser";
-import {BaseWebpackCommand} from "../base-webpack-command";
+import {BaseWebpackCommand, BaseWebpackFlags} from "../base-webpack-command";
 import {MakeBundleStrategy} from "../../services/webpack/runner/make-bundle";
 import {ServiceRunStrategy} from "../../services/webpack/runner";
 import * as webpack from "webpack";
 
 enum Arguments {
-    profileName = "profile_name",
+    environmentName = "environment_name",
     workingDirectory = "working_directory",
 }
 
 export default class BundleCommand extends BaseWebpackCommand {
+    static description = "create application bundle for specific environment";
+
     static args: Array<Parser.args.IArg> = [
         {
-            name: Arguments.profileName,
+            name: Arguments.environmentName,
             required: true,
+            description: "a name of environment configured in ffbt-config.js"
         },
-        {
-            name: Arguments.workingDirectory
-        }
+        ...BaseWebpackCommand.args,
     ];
 
     static flags = BaseWebpackCommand.flags;
@@ -26,12 +27,16 @@ export default class BundleCommand extends BaseWebpackCommand {
         return new MakeBundleStrategy(webpackConfig);
     }
 
+    private getEnvironmentName(): string {
+        const {args} = this.parse(BundleCommand);
+        return args[Arguments.environmentName];
+    }
+
     async run() {
-        const {args, flags} = this.parse(BundleCommand);
+        const {flags} = this.parse<BaseWebpackFlags, any>(BundleCommand);
+        const workdir = this.getSourcesDirectory();
+        const environmentName = this.getEnvironmentName();
 
-        const workdir = args[Arguments.workingDirectory];
-        const profileName = args[Arguments.profileName];
-
-        this.runWebpack(workdir, profileName, flags);
+        this.runWebpack(workdir, environmentName, flags);
     }
 }

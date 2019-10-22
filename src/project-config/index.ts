@@ -3,7 +3,7 @@ import {defaultConfig, IProjectConfig} from "./default";
 import {merge} from "lodash";
 import {Profile, ProfileRegistry} from "../core/profile-registry";
 import * as webpack from "webpack";
-import {locateFile} from "../paths";
+import {locateFile} from "../core/locate";
 
 export interface ProjectProfileProperties {
     outputPath: string;
@@ -28,7 +28,7 @@ export class ProjectConfig {
 
     // We don't care about types in this getters, just proxy values which comes from props
     // If you try to specify types you'll get a lot of type errors in webpack layers
-    // TODO: try th handle these problems and specify types
+    // TODO: try to handle these problems and specify types
     @Prop() aliases!: any;
     @Prop() noParse!: any;
 
@@ -38,7 +38,7 @@ export class ProjectConfig {
         this.profiles.addMany(this.props.profiles);
     }
 
-    setCurrentProfileName(currentProfileName: string) {
+    setCurrentEnvironmentName(currentProfileName: string) {
         this.currentProfileName = currentProfileName;
     }
 
@@ -46,7 +46,7 @@ export class ProjectConfig {
         return this.profiles.get(this.currentProfileName);
     }
 
-    overrideProfileSettings(optionsWithValue: Partial<ProjectProfileProperties>) {
+    overrideEnvironmentSettings(optionsWithValue: Partial<ProjectProfileProperties>) {
         merge(this.profile, optionsWithValue);
     }
 

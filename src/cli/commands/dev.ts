@@ -1,30 +1,41 @@
-import {Command, flags} from "@oclif/command";
+import {flags} from "@oclif/command";
 import * as Parser from "@oclif/parser";
-import {BaseWebpackCommand} from "../base-webpack-command";
+import {BaseWebpackCommand, BaseWebpackFlags} from "../base-webpack-command";
 import {ServiceRunStrategy} from "../../services/webpack/runner";
 import {RunWebpackDevServerStrategy} from "../../services/webpack/runner/run-webpack-dev-server";
 import * as webpack from "webpack";
+import {RunWebpackCompileWatcherStrategy} from "../../services/webpack/runner/run-compile-watcher";
 
-enum Arguments {
-    workingDirectory = "working_directory",
+interface Flags extends BaseWebpackFlags {
+    server: boolean;
 }
 
 export default class DevCommand extends BaseWebpackCommand {
-    static args: Array<Parser.args.IArg> = [
-        {
-            name: Arguments.workingDirectory
-        }
-    ];
+    static description = "start developing the application";
 
-    static flags = BaseWebpackCommand.flags;
+    static args: Array<Parser.args.IArg> = BaseWebpackCommand.args;
+    static flags: flags.Input<Flags> = {
+        server: flags.boolean({
+            default: false,
+            description: "run a development server",
+            exclusive: ["output"]
+        }),
+        ...BaseWebpackCommand.flags,
+    };
 
     getWebpackRunner(webpackConfig: webpack.Configuration): ServiceRunStrategy {
-        return new RunWebpackDevServerStrategy(webpackConfig);
+        const {flags} = this.parse<Flags, any>(DevCommand);
+
+        if (flags.server) {
+            return new RunWebpackDevServerStrategy(webpackConfig);
+        }
+
+        return new RunWebpackCompileWatcherStrategy(webpackConfig);
     }
 
     async run() {
-        const {args, flags} = this.parse(DevCommand);
-        const workdir = args[Arguments.workingDirectory];
+        const {flags} = this.parse(DevCommand);
+        const workdir = this.getSourcesDirectory();
 
         this.runWebpack(workdir, "development", flags);
     }
