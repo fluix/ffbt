@@ -1,12 +1,15 @@
 const path = require("path");
 const tslintRunner = require("tslint/lib/runner");
 
+const { locateTsConfigFile } = require("../../../utils");
+
 module.exports = (ffbtRoot, workDir, argv, projectConfig, PROJECT_ROOT_PATH) => {
     // eslint-disable-next-line no-param-reassign
     argv = argv || {};
     const fix = (typeof argv.fix === "undefined") ? false : Boolean(argv.fix);
     const force = (typeof argv.force === "undefined") ? false : Boolean(argv.force);
     let configPath = path.resolve(ffbtRoot, "./linters/tslint.json");
+    const tsConfigPath = locateTsConfigFile(PROJECT_ROOT_PATH);
 
     if (projectConfig.tsLintConfigPath) {
         configPath = path.resolve(PROJECT_ROOT_PATH, projectConfig.tsLintConfigPath);
@@ -19,6 +22,7 @@ module.exports = (ffbtRoot, workDir, argv, projectConfig, PROJECT_ROOT_PATH) => 
         fix,
         force,
         format: "stylish",
+        project: tsConfigPath,
     };
 
     tslintRunner.run(runnerConfig, {
