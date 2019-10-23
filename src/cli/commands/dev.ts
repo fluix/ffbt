@@ -23,20 +23,17 @@ export default class DevCommand extends BaseWebpackCommand {
         ...BaseWebpackCommand.flags,
     };
 
-    getWebpackRunner(webpackConfig: webpack.Configuration): ServiceRunStrategy {
-        const {flags} = this.parse<Flags, any>(DevCommand);
+    protected getEnvironment(): string {
+        return "development";
+    }
+
+    protected getWebpackRunner(webpackConfig: webpack.Configuration): ServiceRunStrategy {
+        const flags = this.getFlags<Flags>();
 
         if (flags.server) {
             return new RunWebpackDevServerStrategy(webpackConfig);
         }
 
         return new RunWebpackCompileWatcherStrategy(webpackConfig);
-    }
-
-    async run() {
-        const {flags} = this.parse(DevCommand);
-        const workdir = this.getSourcesDirectory();
-
-        this.runWebpack(workdir, "development", flags);
     }
 }

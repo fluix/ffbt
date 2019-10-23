@@ -18,17 +18,15 @@ enum Arguments {
     sourcesDirectory = "sources_directory",
 }
 
-function getAbsoluteWorkdirPath(workdirPath: string) {
-    return workdirPath
-        ? path.resolve(process.cwd(), workdirPath)
-        : process.cwd();
-}
-
+/**
+ * Parent class to run any webpack command. Just extend from it and enjoy
+ */
 export abstract class BaseWebpackCommand extends BaseCommand {
     static args: Array<Parser.args.IArg> = [
         {
             name: Arguments.sourcesDirectory,
             description: "directory with sources of the application",
+            required: false,
         }
     ];
 
@@ -48,18 +46,23 @@ export abstract class BaseWebpackCommand extends BaseCommand {
         ...BaseCommand.flags,
     };
 
-    abstract getWebpackRunner(webpackConfig: webpack.Configuration): ServiceRunStrategy;
+    protected abstract getWebpackRunner(webpackConfig: webpack.Configuration): ServiceRunStrategy;
+    protected abstract getEnvironment(): string;
 
-    runWebpack(relativeWorkdir: string, environmentName: string, flags: any) {
-        const workdir = getAbsoluteWorkdirPath(relativeWorkdir);
-        const projectConfig = this.createProjectConfig(workdir, environmentName, flags);
-        const webpackConfig = createWebpackConfig(projectConfig, workdir);
+    async run() {
+        const flags = this.getFlags<BaseWebpackFlags>();
+
+        const sourcesDirectory = this.getAbsoluteSourcesDirectory(this.getSourcesDirectory());
+        const environment = this.getEnvironment();
+
+        const projectConfig = this.createProjectConfig(sourcesDirectory, environment, flags);
+        const webpackConfig = createWebpackConfig(projectConfig, sourcesDirectory);
 
         this.getWebpackRunner(webpackConfig).run();
     }
 
     protected getSourcesDirectory(): string {
-        const {args} = this.parse(BaseWebpackCommand);
+        const args = this.getArguments<any>();
         return args[Arguments.sourcesDirectory];
     }
 
@@ -78,5 +81,11 @@ export abstract class BaseWebpackCommand extends BaseCommand {
         projectConfig.overrideEnvironmentSettings(optionsWithValue);
 
         return projectConfig;
+    }
+
+    private getAbsoluteSourcesDirectory(workdirPath: string) {
+        return workdirPath
+            ? path.resolve(process.cwd(), workdirPath)
+            : process.cwd();
     }
 }

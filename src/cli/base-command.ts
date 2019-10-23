@@ -10,4 +10,14 @@ export abstract class BaseCommand extends Command {
             default: false,
         })
     };
+
+    protected getArguments<TArgs>() {
+        const {args} = this.parse<any, TArgs>(this.constructor as any);
+        return args;
+    }
+
+    protected getFlags<TFlags>() {
+        const {flags} = this.parse<TFlags, any>(this.constructor as any);
+        return flags;
+    }
 }

@@ -1,5 +1,5 @@
 import * as Parser from "@oclif/parser";
-import {BaseWebpackCommand, BaseWebpackFlags} from "../base-webpack-command";
+import {BaseWebpackCommand} from "../base-webpack-command";
 import {MakeBundleStrategy} from "../../services/webpack/runner/make-bundle";
 import {ServiceRunStrategy} from "../../services/webpack/runner";
 import * as webpack from "webpack";
@@ -23,20 +23,12 @@ export default class BundleCommand extends BaseWebpackCommand {
 
     static flags = BaseWebpackCommand.flags;
 
-    getWebpackRunner(webpackConfig: webpack.Configuration): ServiceRunStrategy {
-        return new MakeBundleStrategy(webpackConfig);
-    }
-
-    private getEnvironmentName(): string {
-        const {args} = this.parse(BundleCommand);
+    protected getEnvironment(): string {
+        const args = this.getArguments<any>();
         return args[Arguments.environmentName];
     }
 
-    async run() {
-        const {flags} = this.parse<BaseWebpackFlags, any>(BundleCommand);
-        const workdir = this.getSourcesDirectory();
-        const environmentName = this.getEnvironmentName();
-
-        this.runWebpack(workdir, environmentName, flags);
+    protected getWebpackRunner(webpackConfig: webpack.Configuration): ServiceRunStrategy {
+        return new MakeBundleStrategy(webpackConfig);
     }
 }
