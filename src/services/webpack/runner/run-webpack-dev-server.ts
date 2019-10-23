@@ -1,7 +1,7 @@
-import {ServiceRunStrategy} from "./index";
 import * as webpack from "webpack";
 import * as WebpackDevServer from "webpack-dev-server";
 import {cleanupIfError} from "../../../core/cleanup";
+import {ServiceRunStrategy} from "../../run-strategy";
 
 export class RunWebpackDevServerStrategy implements ServiceRunStrategy {
     constructor(private webpackConfig: webpack.Configuration) {

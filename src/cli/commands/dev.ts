@@ -1,10 +1,10 @@
 import {flags} from "@oclif/command";
 import * as Parser from "@oclif/parser";
 import {BaseWebpackCommand, BaseWebpackFlags} from "../base-webpack-command";
-import {ServiceRunStrategy} from "../../services/webpack/runner";
 import {RunWebpackDevServerStrategy} from "../../services/webpack/runner/run-webpack-dev-server";
 import * as webpack from "webpack";
 import {RunWebpackCompileWatcherStrategy} from "../../services/webpack/runner/run-compile-watcher";
+import {ServiceRunStrategy} from "../../services/run-strategy";
 
 interface Flags extends BaseWebpackFlags {
     server: boolean;
@@ -23,20 +23,17 @@ export default class DevCommand extends BaseWebpackCommand {
         ...BaseWebpackCommand.flags,
     };
 
-    getWebpackRunner(webpackConfig: webpack.Configuration): ServiceRunStrategy {
-        const {flags} = this.parse<Flags, any>(DevCommand);
+    protected getEnvironment(): string {
+        return "development";
+    }
+
+    protected getWebpackRunner(webpackConfig: webpack.Configuration): ServiceRunStrategy {
+        const flags = this.getFlags<Flags>();
 
         if (flags.server) {
             return new RunWebpackDevServerStrategy(webpackConfig);
         }
 
         return new RunWebpackCompileWatcherStrategy(webpackConfig);
-    }
-
-    async run() {
-        const {flags} = this.parse(DevCommand);
-        const workdir = this.getSourcesDirectory();
-
-        this.runWebpack(workdir, "development", flags);
     }
 }
