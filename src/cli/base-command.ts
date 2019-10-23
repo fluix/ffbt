@@ -8,6 +8,7 @@ export abstract class BaseCommand extends Command {
     static flags: flags.Input<BaseFlags> = {
         verbose: flags.boolean({
             default: false,
+            description: "shows details about the results of running command",
         })
     };
 
