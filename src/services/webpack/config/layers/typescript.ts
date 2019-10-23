@@ -43,7 +43,6 @@ export const typescriptConfigLayer: WebpackLayerConfigurator = (projectConfig, p
             }),
             new ForkTsCheckerNotifierWebpackPlugin({
                 title: "FFBT",
-                excludeWarnings: true
             }),
         ],
     };
