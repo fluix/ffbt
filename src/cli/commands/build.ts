@@ -1,7 +1,7 @@
 import {BaseWebpackCommand} from "../base-webpack-command";
 import {MakeBundleStrategy} from "../../services/webpack/runner/make-bundle";
-import {ServiceRunStrategy} from "../../services/webpack/runner";
 import * as webpack from "webpack";
+import {ServiceRunStrategy} from "../../services/run-strategy";
 
 export default class BuildCommand extends BaseWebpackCommand {
     static description = "build application for production";

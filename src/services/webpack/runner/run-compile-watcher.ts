@@ -1,7 +1,7 @@
-import {ServiceRunStrategy} from "./index";
 import * as webpack from "webpack";
 import {cleanupIfError} from "../../../core/cleanup";
 import {printVerboseWebpackStats} from "../utils/output";
+import {ServiceRunStrategy} from "../../run-strategy";
 
 export class RunWebpackCompileWatcherStrategy implements ServiceRunStrategy {
     constructor(private webpackConfig: webpack.Configuration) {

@@ -1,8 +1,8 @@
 import * as Parser from "@oclif/parser";
 import {BaseWebpackCommand} from "../base-webpack-command";
 import {MakeBundleStrategy} from "../../services/webpack/runner/make-bundle";
-import {ServiceRunStrategy} from "../../services/webpack/runner";
 import * as webpack from "webpack";
+import {ServiceRunStrategy} from "../../services/run-strategy";
 
 enum Arguments {
     environmentName = "environment_name",

@@ -1,10 +1,10 @@
 import {flags} from "@oclif/command";
 import * as Parser from "@oclif/parser";
 import {BaseWebpackCommand, BaseWebpackFlags} from "../base-webpack-command";
-import {ServiceRunStrategy} from "../../services/webpack/runner";
 import {RunWebpackDevServerStrategy} from "../../services/webpack/runner/run-webpack-dev-server";
 import * as webpack from "webpack";
 import {RunWebpackCompileWatcherStrategy} from "../../services/webpack/runner/run-compile-watcher";
+import {ServiceRunStrategy} from "../../services/run-strategy";
 
 interface Flags extends BaseWebpackFlags {
     server: boolean;

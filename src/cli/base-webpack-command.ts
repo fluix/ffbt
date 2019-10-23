@@ -4,9 +4,9 @@ import {ProjectConfig} from "../project-config";
 import {isNil, omitBy} from 'lodash';
 import * as path from "path";
 import {createWebpackConfig} from "../services/webpack/config";
-import {ServiceRunStrategy} from "../services/webpack/runner";
 import * as webpack from "webpack";
 import * as Parser from "@oclif/parser";
+import {ServiceRunStrategy} from "../services/run-strategy";
 
 export interface BaseWebpackFlags extends BaseFlags {
     output: string | undefined;
