@@ -1,4 +1,6 @@
 import "./index.scss";
+// import "./bad-styles.scss";
+// import "./file-that-doesnt-exist.scss";
 import {hello} from "./constants";
 // @ts-ignore
 import * as leftpad from "leftpad";
@@ -20,6 +22,10 @@ setTimeout(() => {
         printModule.default();
     })
 }, 1000);
+
+// // Produce type error
+// const a = 1;
+// a = 2;
 
 console.log(leftpad("hello", 20, "_"));
 
