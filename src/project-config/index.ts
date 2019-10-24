@@ -1,11 +1,11 @@
 import {Prop} from "../core/prop";
 import {defaultConfig, IProjectConfig} from "./default";
 import {merge} from "lodash";
-import {Profile, ProfileRegistry} from "../core/profile-registry";
+import {Environment, EnvironmentRegistry} from "../core/environment-registry";
 import * as webpack from "webpack";
 import {locateFile} from "../core/locate";
 
-export interface ProjectProfileProperties {
+export interface ProjectEnvProperties {
     outputPath: string;
     browserlist: string | Array<string>; // See https://github.com/browserslist/browserslist for syntax
     sourceMapType: "(none)" | webpack.Options.Devtool;
@@ -18,13 +18,13 @@ export interface ProjectProfileProperties {
     moveLibrariesToSeparateBundle: boolean;
 }
 
-export interface ProjectProfile extends Profile, ProjectProfileProperties {
+export interface ProjectEnv extends Environment, ProjectEnvProperties {
 }
 
 export class ProjectConfig {
     private props: IProjectConfig;
-    private readonly profiles = new ProfileRegistry<ProjectProfile>();
-    private currentProfileName: string = "default";
+    private readonly environments = new EnvironmentRegistry<ProjectEnv>();
+    private currentEnvName: string = "default";
 
     // We don't care about types in this getters, just proxy values which comes from props
     // If you try to specify types you'll get a lot of type errors in webpack layers
@@ -35,19 +35,19 @@ export class ProjectConfig {
     constructor(projectConfig: Partial<IProjectConfig>) {
         this.props = this.applyDefaultsToConfig(projectConfig);
 
-        this.profiles.addMany(this.props.profiles);
+        this.environments.addMany(this.props.environments);
     }
 
-    setCurrentEnvironmentName(currentProfileName: string) {
-        this.currentProfileName = currentProfileName;
+    setCurrentEnvironmentName(currentEnvName: string) {
+        this.currentEnvName = currentEnvName;
     }
 
-    get profile(): ProjectProfile {
-        return this.profiles.get(this.currentProfileName);
+    get env(): ProjectEnv {
+        return this.environments.get(this.currentEnvName);
     }
 
-    overrideEnvironmentSettings(optionsWithValue: Partial<ProjectProfileProperties>) {
-        merge(this.profile, optionsWithValue);
+    overrideEnvironmentSettings(optionsWithValue: Partial<ProjectEnvProperties>) {
+        merge(this.env, optionsWithValue);
     }
 
     private applyDefaultsToConfig(config: Partial<IProjectConfig>): IProjectConfig {

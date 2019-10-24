@@ -7,7 +7,7 @@ export const devServerConfigLayer: WebpackLayerConfigurator = (projectConfig, pa
         overlay: true,
         port: 9393,
         inline: true,
-        contentBase: projectConfig.profile.outputPath,
+        contentBase: projectConfig.env.outputPath,
         host: "0.0.0.0",
         historyApiFallback: true,
         publicPath: "/",

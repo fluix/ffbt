@@ -18,7 +18,7 @@ export const stylesConfigLayer: WebpackLayerConfigurator = (projectConfig, paths
                             loader: "postcss-loader",
                             options: {
                                 plugins: [
-                                    autoprefixer(projectConfig.profile.browserlist),
+                                    autoprefixer(projectConfig.env.browserlist),
                                 ],
                             },
                         },
@@ -41,8 +41,8 @@ export const stylesConfigLayer: WebpackLayerConfigurator = (projectConfig, paths
         },
         plugins: [
             new MiniCssExtractPlugin({
-                filename: projectConfig.profile.optimizeBundle ? "[name].[contenthash].css" : "[name].css",
-                chunkFilename: projectConfig.profile.optimizeBundle ? "[id].[contenthash].css" : "[id].css",
+                filename: projectConfig.env.optimizeBundle ? "[name].[contenthash].css" : "[name].css",
+                chunkFilename: projectConfig.env.optimizeBundle ? "[id].[contenthash].css" : "[id].css",
             }),
         ],
     };

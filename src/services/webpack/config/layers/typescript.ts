@@ -12,7 +12,7 @@ export const typescriptConfigLayer: WebpackLayerConfigurator = (projectConfig, p
     const tsConfig = readJson<TsConfig>(tsConfigPath);
 
     return {
-        devtool: projectConfig.profile.sourceMapType as any, // Webpack doesn't have "(none)" value in typings
+        devtool: projectConfig.env.sourceMapType as any, // Webpack doesn't have "(none)" value in typings
         entry: {
             main: paths.project.entrypoint,
         },

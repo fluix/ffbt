@@ -18,19 +18,19 @@ export function createWebpackConfig(projectConfig: ProjectConfig, workingDirecto
         require("./layers/build-notfications").buildNotificationsConfigLayer,
     ];
 
-    if (projectConfig.profile.analyzeBundle) {
+    if (projectConfig.env.analyzeBundle) {
         layers.push(require("./layers/bundle-analyze").bundleAnalyzeConfigLayer);
     }
 
-    if (projectConfig.profile.cleanDistFolderBeforeBuild) {
+    if (projectConfig.env.cleanDistFolderBeforeBuild) {
         layers.push(require("./layers/clean-dist").cleanDistFolderConfigLayer);
     }
 
-    if (projectConfig.profile.moveLibrariesToSeparateBundle) {
+    if (projectConfig.env.moveLibrariesToSeparateBundle) {
         layers.push(require("./layers/vendor-bundle").vendorBundleConfigLayer);
     }
 
-    if (projectConfig.profile.optimizeBundle) {
+    if (projectConfig.env.optimizeBundle) {
         layers.push(require("./layers/caching").cachingConfigLayer);
     }
 
