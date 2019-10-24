@@ -1,12 +1,29 @@
-import {ProjectEnv} from "./index";
 import * as webpack from "webpack";
+import {Environment} from "../core/environment-registry";
 
 export interface IProjectConfig {
     environments: Record<string, Partial<ProjectEnv>> & {
         default: ProjectEnv;
     };
-    aliases?: Pick<webpack.Resolve, "alias">;
-    noParse?: Pick<webpack.Module, "noParse">;
+    // copied from webpack typings because "PickProp" works bad in this case, I don't know why
+    aliases?: Record<string, string>;
+    noParse?: RegExp | RegExp[] | ((content: string) => boolean);
+}
+
+export interface ProjectEnv extends Environment, ProjectEnvProperties {
+}
+
+export interface ProjectEnvProperties {
+    outputPath: string;
+    browserlist: string | Array<string>; // See https://github.com/browserslist/browserslist for syntax
+    sourceMapType: "(none)" | webpack.Options.Devtool;
+    buildVersion: string;
+    staticFilesSizeThresholdKb: number;
+    optimizeBundle: boolean;
+    analyzeBundle: boolean;
+    verboseMode: boolean;
+    cleanDistFolderBeforeBuild: boolean;
+    moveLibrariesToSeparateBundle: boolean;
 }
 
 export const defaultConfig: IProjectConfig = {
@@ -23,20 +40,14 @@ export const defaultConfig: IProjectConfig = {
             cleanDistFolderBeforeBuild: false,
             moveLibrariesToSeparateBundle: true,
         },
-        "default:development": {
+        development: {
             _extends: "default",
         },
-        "default:production": {
+        production: {
             _extends: "default",
             sourceMapType: "nosources-source-map",
             optimizeBundle: true,
             cleanDistFolderBeforeBuild: true,
-        },
-        development: {
-            _extends: "default:development"
-        },
-        production: {
-            _extends: "default:production"
         }
     },
     noParse: undefined,

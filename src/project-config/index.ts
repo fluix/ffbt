@@ -1,25 +1,9 @@
 import {Prop} from "../core/prop";
-import {defaultConfig, IProjectConfig} from "./default";
+import {defaultConfig, IProjectConfig, ProjectEnv, ProjectEnvProperties} from "./default";
 import {merge} from "lodash";
-import {Environment, EnvironmentRegistry} from "../core/environment-registry";
-import * as webpack from "webpack";
+import {EnvironmentRegistry} from "../core/environment-registry";
 import {locateFile} from "../core/locate";
-
-export interface ProjectEnvProperties {
-    outputPath: string;
-    browserlist: string | Array<string>; // See https://github.com/browserslist/browserslist for syntax
-    sourceMapType: "(none)" | webpack.Options.Devtool;
-    buildVersion: string;
-    staticFilesSizeThresholdKb: number;
-    optimizeBundle: boolean;
-    analyzeBundle: boolean;
-    verboseMode: boolean;
-    cleanDistFolderBeforeBuild: boolean;
-    moveLibrariesToSeparateBundle: boolean;
-}
-
-export interface ProjectEnv extends Environment, ProjectEnvProperties {
-}
+import {DeepPartial} from "utility-types";
 
 export class ProjectConfig {
     private props: IProjectConfig;
@@ -28,12 +12,12 @@ export class ProjectConfig {
 
     // We don't care about types in this getters, just proxy values which comes from props
     // If you try to specify types you'll get a lot of type errors in webpack layers
-    // TODO: try to handle these problems and specify types
     @Prop() aliases!: any;
     @Prop() noParse!: any;
 
-    constructor(projectConfig: Partial<IProjectConfig>) {
-        this.props = this.applyDefaultsToConfig(projectConfig);
+    constructor(projectConfig: DeepPartial<IProjectConfig> = {}) {
+        this.props = merge({} as IProjectConfig, defaultConfig, projectConfig);
+        this.fixIncorrectConfigValuesForWebpack();
 
         this.environments.addMany(this.props.environments);
     }
@@ -50,8 +34,14 @@ export class ProjectConfig {
         merge(this.env, optionsWithValue);
     }
 
-    private applyDefaultsToConfig(config: Partial<IProjectConfig>): IProjectConfig {
-        return merge({} as IProjectConfig, defaultConfig, config);
+    // Normalize some values that seems to be correct but webpack interprets them as incorrect
+    private fixIncorrectConfigValuesForWebpack() {
+        const noParseIsEmptyArray = Array.isArray(this.noParse) && !this.noParse.length;
+        const noParseIsNull = this.noParse === null;
+
+        if (noParseIsEmptyArray || noParseIsNull) {
+            this.props.noParse = undefined;
+        }
     }
 
     static loadFromFile(workingDirectory: string): ProjectConfig {

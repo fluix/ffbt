@@ -66,7 +66,7 @@ export abstract class BaseWebpackCommand extends BaseCommand {
         return args[Arguments.sourcesDirectory];
     }
 
-    protected createProjectConfig(workdir: string, environmentName: string, flags: Record<string, any>): ProjectConfig {
+    private createProjectConfig(workdir: string, environmentName: string, flags: Record<string, any>): ProjectConfig {
         const projectConfig = ProjectConfig.loadFromFile(workdir);
         projectConfig.setCurrentEnvironmentName(environmentName);
 

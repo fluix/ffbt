@@ -48,10 +48,10 @@
     "typescript": "^3.5.3",
     "url-loader": "^2.1.0",
     "webpack": "^4.41.0",
-    "webpack-build-notifier": "2.0.0",
     "webpack-bundle-analyzer": "^3.5.2",
     "webpack-dev-server": "^3.8.1",
-    "webpack-merge": "^4.2.1"
+    "webpack-merge": "^4.2.1",
+    "webpack-notifier": "1.8.0"
   },
   "devDependencies": {
     "@oclif/dev-cli": "1.22.2",
