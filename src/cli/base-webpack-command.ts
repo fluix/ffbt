@@ -7,6 +7,7 @@ import {createWebpackConfig} from "../services/webpack/config";
 import * as webpack from "webpack";
 import * as Parser from "@oclif/parser";
 import {ServiceRunStrategy} from "../services/run-strategy";
+import {ProjectEnvProperties} from "../project-config/default";
 
 export interface BaseWebpackFlags extends BaseFlags {
     output: string | undefined;
@@ -70,14 +71,14 @@ export abstract class BaseWebpackCommand extends BaseCommand {
         const projectConfig = ProjectConfig.loadFromFile(workdir);
         projectConfig.setCurrentEnvironmentName(environmentName);
 
-        // Skip all null and undefined values, they'll be replaced by default values later
-        const optionsWithValue = omitBy({
+        const flagsMappedToEnvFields: Partial<ProjectEnvProperties> = {
             outputPath: flags.output,
             analyzeBundle: flags.analyze,
             buildVersion: flags.buildVersion,
             verboseMode: flags.verbose,
-        }, this.isFalseOrNil);
+        };
 
+        const optionsWithValue = omitBy(flagsMappedToEnvFields, this.isFalseOrNil);
         projectConfig.overrideEnvironmentSettings(optionsWithValue);
 
         if (flags.verbose) {
