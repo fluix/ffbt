@@ -5,7 +5,7 @@ export const cleanDistFolderConfigLayer: WebpackLayerConfigurator = (projectConf
     return {
         plugins: [
             new CleanWebpackPlugin({
-                verbose: projectConfig.profile.verboseMode,
+                verbose: projectConfig.env.verboseMode,
             }),
         ]
     };

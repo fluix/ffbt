@@ -7,7 +7,7 @@ export const indexFileConfigLayer: WebpackLayerConfigurator = (projectConfig, pa
     const pathToTemplate = resolve(paths.project.workingDirectory, "index.ejs");
     const settingsForCustomTemplate: HtmlWebpackPlugin.Options = {
         template: pathToTemplate,
-        templateParameters: projectConfig.profile,
+        templateParameters: projectConfig.env,
     };
 
     const settingsForDefaultTemplate: HtmlWebpackPlugin.Options = {
@@ -22,7 +22,7 @@ export const indexFileConfigLayer: WebpackLayerConfigurator = (projectConfig, pa
         plugins: [
             new HtmlWebpackPlugin({
                 ...pluginSettings,
-                minify: projectConfig.profile.optimizeBundle && {
+                minify: projectConfig.env.optimizeBundle && {
                     collapseWhitespace: true,
                     removeComments: true,
                 },

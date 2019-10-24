@@ -5,7 +5,7 @@ export const globalsConfigLayer: WebpackLayerConfigurator = (projectConfig, path
     return {
         plugins: [
             new webpack.DefinePlugin({
-                "FFBT_BUILD_VERSION": JSON.stringify(projectConfig.profile.buildVersion),
+                "FFBT_BUILD_VERSION": JSON.stringify(projectConfig.env.buildVersion),
             })
         ]
     };

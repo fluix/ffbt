@@ -1,16 +1,16 @@
-import {ProjectProfile} from "./index";
+import {ProjectEnv} from "./index";
 import * as webpack from "webpack";
 
 export interface IProjectConfig {
-    profiles: Record<string, Partial<ProjectProfile>> & {
-        default: ProjectProfile;
+    environments: Record<string, Partial<ProjectEnv>> & {
+        default: ProjectEnv;
     };
     aliases?: Pick<webpack.Resolve, "alias">;
     noParse?: Pick<webpack.Module, "noParse">;
 }
 
 export const defaultConfig: IProjectConfig = {
-    profiles: {
+    environments: {
         default: {
             browserlist: "last 2 versions",
             outputPath: "dist",

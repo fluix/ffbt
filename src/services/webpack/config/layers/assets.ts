@@ -1,7 +1,7 @@
 import {WebpackLayerConfigurator} from "../index";
 
 export const assetsConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
-    const thresholdInBytes = projectConfig.profile.staticFilesSizeThresholdKb * 1024;
+    const thresholdInBytes = projectConfig.env.staticFilesSizeThresholdKb * 1024;
 
     return {
         module: {

@@ -12,12 +12,12 @@ export const baseConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) 
     }
 
     return {
-        mode: projectConfig.profile.optimizeBundle ? "production" : "development",
+        mode: projectConfig.env.optimizeBundle ? "production" : "development",
         context: paths.project.workingDirectory,
         output: {
             filename: '[name].bundle.js',
             chunkFilename: '[name].chunk.js',
-            path: resolve(paths.project.root, projectConfig.profile.outputPath),
+            path: resolve(paths.project.root, projectConfig.env.outputPath),
         },
         optimization: {
             splitChunks: {
