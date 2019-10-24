@@ -1,7 +1,7 @@
 import {flags} from "@oclif/command";
 import {BaseCommand, BaseFlags} from "./base-command";
 import {ProjectConfig} from "../project-config";
-import {isNil, omitBy} from 'lodash';
+import {omitBy} from 'lodash';
 import * as path from "path";
 import {createWebpackConfig} from "../services/webpack/config";
 import * as webpack from "webpack";
@@ -66,7 +66,7 @@ export abstract class BaseWebpackCommand extends BaseCommand {
         return args[Arguments.sourcesDirectory];
     }
 
-    private createProjectConfig(workdir: string, environmentName: string, flags: Record<string, any>): ProjectConfig {
+    private createProjectConfig(workdir: string, environmentName: string, flags: BaseWebpackFlags): ProjectConfig {
         const projectConfig = ProjectConfig.loadFromFile(workdir);
         projectConfig.setCurrentEnvironmentName(environmentName);
 
@@ -76,12 +76,20 @@ export abstract class BaseWebpackCommand extends BaseCommand {
             analyzeBundle: flags.analyze,
             buildVersion: flags.buildVersion,
             verboseMode: flags.verbose,
-        }, isNil);
+        }, this.isFalseOrNil);
 
         projectConfig.overrideEnvironmentSettings(optionsWithValue);
 
+        if (flags.verbose) {
+            console.log("Current environment", projectConfig.env);
+        }
+
         return projectConfig;
     }
+
+    private isFalseOrNil = (value: any) => {
+        return value === null || value === undefined || value === false;
+    };
 
     private getAbsoluteSourcesDirectory(workdirPath: string) {
         return workdirPath
