@@ -1,5 +1,4 @@
 import * as ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
-import * as ForkTsCheckerNotifierWebpackPlugin from "fork-ts-checker-notifier-webpack-plugin";
 import {WebpackLayerConfigurator} from "../index";
 import {CompilerOptions} from "typescript";
 import {readJson} from "../../../../core/read-json";
@@ -40,11 +39,6 @@ export const typescriptConfigLayer: WebpackLayerConfigurator = (projectConfig, p
         plugins: [
             new ForkTsCheckerWebpackPlugin({
                 tsconfig: tsConfigPath,
-            }),
-            new ForkTsCheckerNotifierWebpackPlugin({
-                title: "FFBT Type Checker",
-                skipFirstNotification: true,
-                skipSuccessful: true,
             }),
         ],
     };

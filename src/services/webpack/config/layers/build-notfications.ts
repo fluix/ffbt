@@ -1,5 +1,6 @@
 import {WebpackLayerConfigurator} from "../index";
 import * as WebpackBuildNotifierPlugin from "webpack-build-notifier";
+import * as ForkTsCheckerNotifierWebpackPlugin from "fork-ts-checker-notifier-webpack-plugin";
 
 export const buildNotificationsConfigLayer: WebpackLayerConfigurator = () => {
     return {
@@ -11,7 +12,12 @@ export const buildNotificationsConfigLayer: WebpackLayerConfigurator = () => {
                 notifyOptions: {
                     group: "ffbt-build-result-notifier",
                 }
-            })
+            }),
+            new ForkTsCheckerNotifierWebpackPlugin({
+                title: "FFBT Type Checker",
+                skipFirstNotification: true,
+                skipSuccessful: true,
+            }),
         ]
     };
 };
