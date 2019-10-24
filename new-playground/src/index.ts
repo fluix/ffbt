@@ -23,7 +23,7 @@ setTimeout(() => {
     })
 }, 1000);
 
-// // Produce type error
+// Produce type error
 // const a = 1;
 // a = 2;
 
