@@ -19,7 +19,7 @@ export function createTsLintConfig(options: CommandOptions): Options {
         ? paths.project.tsLintConfig
         : getDefaultConfigPath();
 
-    return  {
+    return {
         config: lintConfigPath,
         exclude: ["node_modules/**/*"],
         files: [path.resolve(paths.project.root, "./**/*.ts?(x)")],

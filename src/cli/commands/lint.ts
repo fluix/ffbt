@@ -58,16 +58,11 @@ export default class LintCommand extends BaseCommand {
 
     async run() {
         const {linter_type} = this.getArguments<Arguments>();
-        const runner = this.getRunner(linter_type);
 
-        if (!runner) {
-            return;
-        }
-
-        runner.run();
+        this.getRunner(linter_type).run();
     }
 
-    private getRunner(type: LinterType): ServiceRunStrategy | null {
+    private getRunner(type: LinterType): ServiceRunStrategy {
         const {sources_directory} = this.getArguments<Arguments>();
         const flags = this.getFlags<Flags>();
 
@@ -80,6 +75,6 @@ export default class LintCommand extends BaseCommand {
             return new TsLintRunner(tsLintRunnerConfig);
         }
 
-        return null;
+        throw new Error("Lint runner is not implemented yet");
     }
 }

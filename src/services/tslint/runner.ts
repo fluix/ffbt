@@ -1,6 +1,7 @@
 import {Options as TsLintOptions, run as tsLintRunner} from "tslint/lib/runner";
+import {ServiceRunStrategy} from "../run-strategy";
 
-export class TsLintRunner {
+export class TsLintRunner implements ServiceRunStrategy {
     constructor(private config: TsLintOptions) {
     }
 
