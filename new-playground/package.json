@@ -7,6 +7,7 @@
     "build": "ffbt build src"
   },
   "dependencies": {
+    "core-js": "^3.3.4",
     "leftpad": "0.0.1"
   }
 }
