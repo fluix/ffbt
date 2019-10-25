@@ -1,4 +1,5 @@
 import {Command, flags} from "@oclif/command";
+import Chalk from "chalk";
 
 export interface BaseFlags {
     verbose: boolean;
@@ -20,5 +21,15 @@ export abstract class BaseCommand extends Command {
     protected getFlags<TFlags>() {
         const {flags} = this.parse<TFlags, any>(this.constructor as any);
         return flags;
+    }
+
+    async catch(error: Error) {
+        const {verbose} = this.getFlags<BaseFlags>();
+
+        const errorInfo = verbose
+            ? String(error.stack)
+            : error.message;
+
+        console.log(Chalk.redBright(errorInfo));
     }
 }
