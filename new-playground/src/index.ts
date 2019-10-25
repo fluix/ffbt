@@ -1,3 +1,5 @@
+import "./polyfills";
+
 import "./index.scss";
 // import "./bad-styles.scss";
 // import "./file-that-doesnt-exist.scss";
