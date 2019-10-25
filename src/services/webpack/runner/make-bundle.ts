@@ -8,6 +8,9 @@ export class MakeBundleStrategy implements ServiceRunStrategy {
 
     run(): void {
         const compiler = webpack(this.webpackConfig);
-        compiler.run(printVerboseWebpackStats);
+        compiler.run((err, stats) => {
+            printVerboseWebpackStats(err, stats);
+            console.log("\nDone 🍺🍺🍺\n");
+        });
     }
 }

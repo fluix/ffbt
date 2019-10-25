@@ -13,7 +13,7 @@ export class RunWebpackCompileWatcherStrategy implements ServiceRunStrategy {
 
         cleanupIfError(() => {
             watcher.close(() => {
-                console.log(" Finished");
+                console.log(" 👍");
             });
         });
     }
