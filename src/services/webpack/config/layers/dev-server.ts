@@ -1,22 +1,10 @@
 import {WebpackLayerConfigurator} from "../index";
-import * as WebpackDevServer from "webpack-dev-server";
 
 export const devServerConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
-    const devServerConfig: WebpackDevServer.Configuration = {
-        open: true,
-        overlay: true,
-        port: 9393,
-        inline: true,
-        contentBase: projectConfig.env.outputPath,
-        host: "0.0.0.0",
-        historyApiFallback: true,
-        publicPath: "/",
-        stats: {
-            colors: true,
-        },
-    };
-
     return {
-        devServer: devServerConfig,
+        devServer: {
+            ...projectConfig.env.devServerConfig,
+            contentBase: projectConfig.env.outputPath,
+        },
     }
 };

@@ -1,6 +1,7 @@
 import {ProjectConfig} from "./index";
+import {defaultConfig} from "./default";
 
-fdescribe("Project Config", () => {
+describe("Project Config", () => {
     test("use default profile by default", () => {
         const projectConfig = new ProjectConfig();
         expect(projectConfig.env._displayName).toBe("default");
@@ -17,23 +18,42 @@ fdescribe("Project Config", () => {
         expect(projectConfig.aliases).toEqual(aliases);
     });
 
-    test("deeply applies defaults", () => {
-        const projectConfig = new ProjectConfig({
+    test("deep merge default and custom settings", () => {
+        const defaultConfig: any = {
             environments: {
                 default: {
-                    buildVersion: "1",
-                },
-                development: {
-                    buildVersion: "2",
+                    a: {
+                        value: 1,
+                        value2: 2,
+                    },
+                    a1: {
+                        value: 3,
+                    }
+                }
+            }
+        };
+
+        const customConfig: any = {
+            environments: {
+                default: {
+                    a: {
+                        value: "newValue",
+                    }
                 },
             }
+        };
+
+        const projectConfig = new ProjectConfig(customConfig, defaultConfig);
+
+        expect(projectConfig.env).toMatchObject({
+            "a": {
+                "value": "newValue",
+                "value2": 2
+            },
+            "a1": {
+                "value": 3
+            },
         });
-
-        projectConfig.setCurrentEnvironmentName("default");
-        expect(projectConfig.env.buildVersion).toBe("1");
-
-        projectConfig.setCurrentEnvironmentName("development");
-        expect(projectConfig.env.buildVersion).toBe("2");
     });
 
     test("converts [], null in noParse to undefined (required by webpack)", () => {
@@ -53,5 +73,10 @@ fdescribe("Project Config", () => {
         });
 
         expect(projectConfig.env.buildVersion).toBe(originalEnvValue + "1");
-    })
+    });
+
+    // test("deep override env settings", () => {
+    //     const projectConfig = new ProjectConfig();
+    //
+    // });
 });

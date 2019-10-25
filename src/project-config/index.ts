@@ -15,8 +15,8 @@ export class ProjectConfig {
     @Prop() aliases!: any;
     @Prop() noParse!: any;
 
-    constructor(projectConfig: DeepPartial<IProjectConfig> = {}) {
-        this.props = merge({} as IProjectConfig, defaultConfig, projectConfig);
+    constructor(projectConfig: DeepPartial<IProjectConfig> = {}, defaults = defaultConfig) {
+        this.props = merge({} as IProjectConfig, defaults, projectConfig);
         this.fixIncorrectConfigValuesForWebpack();
 
         this.environments.addMany(this.props.environments);

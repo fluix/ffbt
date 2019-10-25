@@ -1,5 +1,7 @@
 import * as webpack from "webpack";
 import {Environment} from "../core/environment-registry";
+import * as HtmlWebpackPlugin from "html-webpack-plugin";
+import * as WebpackDevServer from "webpack-dev-server";
 
 export interface IProjectConfig {
     environments: Record<string, Partial<ProjectEnv>> & {
@@ -24,6 +26,8 @@ export interface ProjectEnvProperties {
     verboseMode: boolean;
     cleanDistFolderBeforeBuild: boolean;
     moveLibrariesToSeparateBundle: boolean;
+    htmlWebpackPluginConfig: Partial<HtmlWebpackPlugin.Options>,
+    devServerConfig: Partial<WebpackDevServer.Configuration>,
 }
 
 export const defaultConfig: IProjectConfig = {
@@ -39,6 +43,19 @@ export const defaultConfig: IProjectConfig = {
             verboseMode: false,
             cleanDistFolderBeforeBuild: false,
             moveLibrariesToSeparateBundle: true,
+            htmlWebpackPluginConfig: {},
+            devServerConfig: {
+                port: 9393,
+                host: "0.0.0.0",
+                open: true,
+                overlay: true,
+                inline: true,
+                historyApiFallback: true,
+                publicPath: "/",
+                stats: {
+                    colors: true,
+                },
+            },
         },
         development: {
             _extends: "default",

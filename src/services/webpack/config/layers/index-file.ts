@@ -21,6 +21,7 @@ export const indexFileConfigLayer: WebpackLayerConfigurator = (projectConfig, pa
     return {
         plugins: [
             new HtmlWebpackPlugin({
+                ...projectConfig.env.htmlWebpackPluginConfig,
                 ...pluginSettings,
                 minify: projectConfig.env.optimizeBundle && {
                     collapseWhitespace: true,
