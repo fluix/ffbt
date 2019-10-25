@@ -72,7 +72,12 @@
     "bin": "ffbt",
     "plugins": [
       "@oclif/plugin-help"
-    ]
+    ],
+    "hooks": {
+      "prerun": [
+        "./dist/cli/banner.js"
+      ]
+    }
   },
   "repository": "git+https://github.com/readdle/ffbt.git",
   "keywords": [

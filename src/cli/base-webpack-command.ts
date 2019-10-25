@@ -8,6 +8,7 @@ import * as webpack from "webpack";
 import * as Parser from "@oclif/parser";
 import {ServiceRunStrategy} from "../services/run-strategy";
 import {ProjectEnvProperties} from "../project-config/default";
+import {calculateProjectPaths, ProjectPaths} from "../paths";
 
 export interface BaseWebpackFlags extends BaseFlags {
     output: string | undefined;
@@ -57,7 +58,10 @@ export abstract class BaseWebpackCommand extends BaseCommand {
         const environment = this.getEnvironment();
 
         const projectConfig = this.createProjectConfig(sourcesDirectory, environment, flags);
+        const projectPaths = calculateProjectPaths(sourcesDirectory);
         const webpackConfig = createWebpackConfig(projectConfig, sourcesDirectory);
+
+        this.printBannerWithBuildInfo(projectConfig, projectPaths, flags.verbose);
 
         this.getWebpackRunner(webpackConfig).run();
     }
@@ -67,8 +71,8 @@ export abstract class BaseWebpackCommand extends BaseCommand {
         return args[Arguments.sourcesDirectory];
     }
 
-    private createProjectConfig(workdir: string, environmentName: string, flags: BaseWebpackFlags): ProjectConfig {
-        const projectConfig = ProjectConfig.loadFromFile(workdir);
+    private createProjectConfig(sourcesDir: string, environmentName: string, flags: BaseWebpackFlags): ProjectConfig {
+        const projectConfig = ProjectConfig.loadFromFile(sourcesDir);
         projectConfig.setCurrentEnvironmentName(environmentName);
 
         const flagsMappedToEnvFields: Partial<ProjectEnvProperties> = {
@@ -81,10 +85,6 @@ export abstract class BaseWebpackCommand extends BaseCommand {
         const optionsWithValue = omitBy(flagsMappedToEnvFields, this.isFalseOrNil);
         projectConfig.overrideEnvironmentSettings(optionsWithValue);
 
-        if (flags.verbose) {
-            console.log("Current environment", projectConfig.env);
-        }
-
         return projectConfig;
     }
 
@@ -96,5 +96,16 @@ export abstract class BaseWebpackCommand extends BaseCommand {
         return workdirPath
             ? path.resolve(process.cwd(), workdirPath)
             : process.cwd();
+    }
+
+    private printBannerWithBuildInfo(projectConfig: ProjectConfig, paths: ProjectPaths, verbose: boolean) {
+        console.log("Environment: " + projectConfig.env._displayName);
+        console.log("Source Directory: " + paths.project.workingDirectory);
+        console.log();
+
+        if (verbose) {
+            console.log("Current environment", projectConfig.env, "\n");
+            console.log("Paths", paths, "\n");
+        }
     }
 }
