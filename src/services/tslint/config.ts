@@ -15,9 +15,9 @@ function getDefaultConfigPath() {
 
 export function createTsLintConfig(options: CommandOptions): Options {
     const paths = calculateProjectPaths(options.path);
-    const lintConfigPath = paths.project.tsLintConfig
-        ? paths.project.tsLintConfig
-        : getDefaultConfigPath();
+
+    const customConfigPath = locateFile("tslint.json", paths.project.root, false);
+    const lintConfigPath = customConfigPath || getDefaultConfigPath();
 
     return {
         config: lintConfigPath,

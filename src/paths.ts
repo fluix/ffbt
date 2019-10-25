@@ -10,7 +10,6 @@ export interface ProjectPaths {
         entrypoint: string;
         workingDirectory: string;
         tsConfig: string;
-        tsLintConfig: string;
     };
     ffbtRoot: string;
 }
@@ -30,7 +29,6 @@ export function calculateProjectPaths(workingDirectory: string): ProjectPaths {
             root: projectRoot,
             entrypoint: locateEntrypoint(workingDirectory, "index"),
             tsConfig: locateFile("tsconfig.json", projectRoot),
-            tsLintConfig: locateFile("tslint.json", projectRoot, false),
         }
     };
 }
