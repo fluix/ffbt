@@ -72,6 +72,10 @@ export default class LintCommand extends BaseCommand {
                 path: sources_directory,
             });
 
+            if (flags.verbose) {
+                console.log("TsLint Parameters", tsLintRunnerConfig, "\n");
+            }
+
             return new TsLintRunner(tsLintRunnerConfig);
         }
 
