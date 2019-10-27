@@ -12,7 +12,8 @@
   },
   "include": [
     "src/**/*.ts",
-    "src/services/tslint/tslint.json"
+    "src/services/tslint/tslint.json",
+    "src/services/stylelint/stylelint.config.js"
   ],
   "exclude": [
     "node_modules",

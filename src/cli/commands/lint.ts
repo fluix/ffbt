@@ -4,6 +4,8 @@ import {flags} from "@oclif/command";
 import {TsLintRunner} from "../../services/tslint/runner";
 import {createTsLintConfig} from "../../services/tslint/config";
 import {ServiceRunStrategy} from "../../services/run-strategy";
+import {createStyleLintConfig} from "../../services/stylelint/config";
+import {StyleLintRunner} from "../../services/stylelint/runner";
 
 interface Flags extends BaseFlags {
     fix: boolean;
@@ -79,6 +81,19 @@ export default class LintCommand extends BaseCommand {
             return new TsLintRunner(tsLintRunnerConfig);
         }
 
-        throw new Error("Lint runner is not implemented yet");
+        if (type === LinterType.style) {
+            const styleLintRunnerConfig = createStyleLintConfig({
+                ...flags,
+                path: sources_directory,
+            });
+
+            if (flags.verbose) {
+                console.log("StyleLint Parameters", styleLintRunnerConfig, "\n");
+            }
+
+            return new StyleLintRunner(styleLintRunnerConfig, flags.force);
+        }
+
+        throw new Error(`Lint runner for '${type}' is not implemented yet`);
     }
 }
