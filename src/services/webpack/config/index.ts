@@ -15,8 +15,11 @@ export function createWebpackConfig(projectConfig: ProjectConfig, workingDirecto
         require("./layers/assets").assetsConfigLayer,
         require("./layers/globals").globalsConfigLayer,
         require("./layers/dev-server").devServerConfigLayer,
-        require("./layers/build-notfications").buildNotificationsConfigLayer,
     ];
+
+    if (projectConfig.env.showBuildNotifications) {
+        layers.push(require("./layers/build-notfications").buildNotificationsConfigLayer);
+    }
 
     if (projectConfig.env.analyzeBundle) {
         layers.push(require("./layers/bundle-analyze").bundleAnalyzeConfigLayer);
