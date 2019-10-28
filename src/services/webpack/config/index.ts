@@ -17,7 +17,7 @@ export function createWebpackConfig(projectConfig: ProjectConfig, workingDirecto
         require("./layers/dev-server").devServerConfigLayer,
     ];
 
-    if (!projectConfig.env.turnOffNotifications) {
+    if (projectConfig.env.showBuildNotifications) {
         layers.push(require("./layers/build-notfications").buildNotificationsConfigLayer);
     }
 
