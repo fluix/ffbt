@@ -12,7 +12,7 @@ export const typescriptConfigLayer: WebpackLayerConfigurator = (projectConfig, p
     const tsConfig = readJson<TsConfig>(tsConfigPath);
     const plugins: Array<any> = [];
 
-    if (!projectConfig.env.disableTypeChecking) {
+    if (projectConfig.env.enableTypeChecking) {
         plugins.push(
             new ForkTsCheckerWebpackPlugin({
                 tsconfig: tsConfigPath,
