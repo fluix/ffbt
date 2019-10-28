@@ -21,8 +21,31 @@ export class EnvironmentRegistry<TEnv extends Environment> {
 
     addMany(environments: Record<string, TEnv>) {
         Object.keys(environments).forEach((name) => {
-            this.add(name, environments[name]);
+            this.resolveEnvDependencyAndAdd(name, environments[name], environments, []);
         });
+    }
+
+    private resolveEnvDependencyAndAdd(
+        name: string,
+        env: TEnv,
+        environments: Record<string, TEnv>,
+        parents: Array<TEnv>,
+    ) {
+        const parentEnvName = env._extends;
+        if (parentEnvName) {
+            const parentEnv = environments[parentEnvName];
+            if (!parentEnv) {
+                throw new Error(`Can't extend environment ${name} from ${parentEnvName} because it doesn't exist`);
+            }
+
+            if (parents.includes(parentEnv)) {
+                throw new Error("Circular dependency found");
+            }
+
+            this.resolveEnvDependencyAndAdd(parentEnvName, parentEnv, environments, [...parents, env]);
+        }
+
+        this.add(name, env);
     }
 
     private extendEnv(env: TEnv): TEnv {

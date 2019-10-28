@@ -13,7 +13,7 @@ describe("Environment", () => {
          environments = new EnvironmentRegistry();
     });
 
-    describe("register/get environment", () => {
+    describe("add/get environment", () => {
         test("env can be registered by name", () => {
             expect(environments.size).toBe(0);
 
@@ -46,17 +46,44 @@ describe("Environment", () => {
 
         test("add many environments", () => {
             environments.addMany({
-                p1: {},
-                p2: {}
+                e1: {},
+                e2: {}
             });
 
             expect(environments.size).toBe(2);
-            expect(environments.get("p1")._displayName).toBe("p1");
-            expect(environments.get("p2")._displayName).toBe("p2");
+            expect(environments.get("e1")._displayName).toBe("e1");
+            expect(environments.get("e2")._displayName).toBe("e2");
         });
 
-        test.todo("add many in proper order");
-        test.todo("add many and handle circular dependencies");
+        test("add many in proper order", () => {
+            environments.addMany({
+                e1: {
+                    _extends: "e2"
+                },
+                e2: {
+                    a: "1",
+                }
+            });
+
+            expect(environments.get("e2")).toMatchObject({
+                a: "1",
+            });
+        });
+
+        test("add many and handle circular dependencies", () => {
+            expect(() => {
+                environments.addMany({
+                    e1: {
+                        _extends: "e2"
+                    },
+                    e2: {
+                        _extends: "e1"
+                    }
+                });
+            }).toThrow("Circular dependency found"); // TODO: provide better message with the list of dependencies
+        });
+
+        test.todo("don't add the similar environment twice");
     });
 
     describe("extension", () => {
