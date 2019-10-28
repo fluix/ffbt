@@ -24,6 +24,7 @@ export interface ProjectEnvProperties {
     optimizeBundle: boolean;
     analyzeBundle: boolean;
     verboseMode: boolean;
+    enableTypeChecking: boolean;
     showBuildNotifications: boolean;
     cleanDistFolderBeforeBuild: boolean;
     moveLibrariesToSeparateBundle: boolean;
@@ -43,6 +44,7 @@ export const defaultConfig: IProjectConfig = {
             analyzeBundle: false,
             verboseMode: false,
             showBuildNotifications: true,
+            enableTypeChecking: true,
             cleanDistFolderBeforeBuild: false,
             moveLibrariesToSeparateBundle: true,
             htmlWebpackPluginConfig: {},
@@ -67,6 +69,7 @@ export const defaultConfig: IProjectConfig = {
             sourceMapType: "nosources-source-map",
             optimizeBundle: true,
             showBuildNotifications: false,
+            enableTypeChecking: false,
             cleanDistFolderBeforeBuild: true,
         }
     },

@@ -10,6 +10,15 @@ interface TsConfig {
 export const typescriptConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
     const tsConfigPath = paths.project.tsConfig;
     const tsConfig = readJson<TsConfig>(tsConfigPath);
+    const plugins: Array<any> = [];
+
+    if (projectConfig.env.enableTypeChecking) {
+        plugins.push(
+            new ForkTsCheckerWebpackPlugin({
+                tsconfig: tsConfigPath,
+            })
+        );
+    }
 
     return {
         devtool: projectConfig.env.sourceMapType as any, // Webpack doesn't have "(none)" value in typings
@@ -36,10 +45,6 @@ export const typescriptConfigLayer: WebpackLayerConfigurator = (projectConfig, p
                 },
             ],
         },
-        plugins: [
-            new ForkTsCheckerWebpackPlugin({
-                tsconfig: tsConfigPath,
-            }),
-        ],
+        plugins,
     };
 };
