@@ -23,6 +23,11 @@ export class EnvironmentRegistry<TEnv extends Environment> {
 
     addMany(environments: Record<string, TEnv>) {
         Object.keys(environments).forEach((name) => {
+            const isEnvironmentAlreadyAdded = this.environments.get(name) !== undefined;
+            if (isEnvironmentAlreadyAdded) {
+                return;
+            }
+
             this.resolveParentEnvAndAdd(name, environments[name], environments, []);
         });
     }

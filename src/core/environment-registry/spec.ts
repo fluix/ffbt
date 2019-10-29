@@ -83,7 +83,20 @@ describe("Environment", () => {
             }).toThrow(new RegExp(CIRCULAR_DEPENDENCY_ERROR_TEXT));
         });
 
-        test.todo("don't add the similar environment twice");
+        test("don't add the similar environment twice", () => {
+            const spyForAdd = spyOn(environments, "add").and.callThrough();
+
+            environments.addMany({
+                e1: {
+                    _extends: "e2"
+                },
+                e2: {}
+            });
+
+            expect(spyForAdd.calls.count()).toBe(2);
+            expect(spyForAdd.calls.argsFor(0)[0]).toBe("e2");
+            expect(spyForAdd.calls.argsFor(1)[0]).toBe("e1");
+        });
     });
 
     describe("extension", () => {
