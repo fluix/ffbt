@@ -74,9 +74,4 @@ describe("Project Config", () => {
 
         expect(projectConfig.env.buildVersion).toBe(originalEnvValue + "1");
     });
-
-    // test("deep override env settings", () => {
-    //     const projectConfig = new ProjectConfig();
-    //
-    // });
 });

@@ -1,4 +1,4 @@
-import {Environment, EnvironmentRegistry} from "./index";
+import {CIRCULAR_DEPENDENCY_ERROR_TEXT, Environment, EnvironmentRegistry} from "./index";
 
 interface TestEnv extends Environment {
     a?: any;
@@ -80,7 +80,7 @@ describe("Environment", () => {
                         _extends: "e1"
                     }
                 });
-            }).toThrow("Circular dependency found"); // TODO: provide better message with the list of dependencies
+            }).toThrow(new RegExp(CIRCULAR_DEPENDENCY_ERROR_TEXT));
         });
 
         test.todo("don't add the similar environment twice");

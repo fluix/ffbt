@@ -3,6 +3,8 @@ export interface Environment {
     _displayName?: string;
 }
 
+export const CIRCULAR_DEPENDENCY_ERROR_TEXT = "Found circular dependency in environment list";
+
 export class EnvironmentRegistry<TEnv extends Environment> {
     private environments = new Map<string, TEnv>();
 
@@ -21,31 +23,42 @@ export class EnvironmentRegistry<TEnv extends Environment> {
 
     addMany(environments: Record<string, TEnv>) {
         Object.keys(environments).forEach((name) => {
-            this.resolveEnvDependencyAndAdd(name, environments[name], environments, []);
+            this.resolveParentEnvAndAdd(name, environments[name], environments, []);
         });
     }
 
-    private resolveEnvDependencyAndAdd(
+    private resolveParentEnvAndAdd(
         name: string,
         env: TEnv,
         environments: Record<string, TEnv>,
         parents: Array<TEnv>,
     ) {
         const parentEnvName = env._extends;
-        if (parentEnvName) {
-            const parentEnv = environments[parentEnvName];
-            if (!parentEnv) {
-                throw new Error(`Can't extend environment ${name} from ${parentEnvName} because it doesn't exist`);
-            }
-
-            if (parents.includes(parentEnv)) {
-                throw new Error("Circular dependency found");
-            }
-
-            this.resolveEnvDependencyAndAdd(parentEnvName, parentEnv, environments, [...parents, env]);
+        if (!parentEnvName) {
+            this.add(name, env);
+            return;
         }
 
+        const parentEnv = environments[parentEnvName];
+        parentEnv._displayName = parentEnvName;
+
+        if (!parentEnv) {
+            throw new Error(`Can't extend environment ${name} from ${parentEnvName} because it doesn't exist`);
+        }
+
+        if (parents.includes(parentEnv)) {
+            const dependencyChain = this.buildDependencyChainString(parents, env);
+            throw new Error(`${CIRCULAR_DEPENDENCY_ERROR_TEXT}: ${dependencyChain}`);
+        }
+
+        this.resolveParentEnvAndAdd(parentEnvName, parentEnv, environments, [...parents, env]);
+
         this.add(name, env);
+    }
+
+    private buildDependencyChainString(parents: Array<TEnv>, env: TEnv): string {
+        const parentNames = parents.map(parent => parent._displayName);
+        return [...parentNames, env._displayName, env._extends].join(" -> ");
     }
 
     private extendEnv(env: TEnv): TEnv {
