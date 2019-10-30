@@ -99,7 +99,7 @@ export abstract class BaseWebpackCommand extends BaseCommand {
     }
 
     private printBannerWithBuildInfo(projectConfig: ProjectConfig, paths: ProjectPaths, verbose: boolean) {
-        console.log("Environment: " + projectConfig.env._displayName);
+        console.log("Environment: " + projectConfig.env._name);
         console.log("Source Directory: " + paths.project.workingDirectory);
         console.log();
 

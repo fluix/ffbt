@@ -4,7 +4,7 @@ import {defaultConfig} from "./default";
 describe("Project Config", () => {
     test("use default profile by default", () => {
         const projectConfig = new ProjectConfig();
-        expect(projectConfig.env._displayName).toBe("default");
+        expect(projectConfig.env._name).toBe("default");
     });
 
     test("applies default values to the config", () => {
@@ -74,9 +74,4 @@ describe("Project Config", () => {
 
         expect(projectConfig.env.buildVersion).toBe(originalEnvValue + "1");
     });
-
-    // test("deep override env settings", () => {
-    //     const projectConfig = new ProjectConfig();
-    //
-    // });
 });
