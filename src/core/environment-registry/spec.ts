@@ -25,7 +25,7 @@ describe("Environment", () => {
             environments.add("A", {a: 1});
 
             expect(environments.get("A")).toStrictEqual({
-                _displayName: "A",
+                _name: "A",
                 a: 1,
             });
         });
@@ -51,8 +51,8 @@ describe("Environment", () => {
             });
 
             expect(environments.size).toBe(2);
-            expect(environments.get("e1")._displayName).toBe("e1");
-            expect(environments.get("e2")._displayName).toBe("e2");
+            expect(environments.get("e1")._name).toBe("e1");
+            expect(environments.get("e2")._name).toBe("e2");
         });
 
         test("add many in proper order", () => {
@@ -141,14 +141,12 @@ describe("Environment", () => {
             });
 
             expect(environments.get("envB")).toStrictEqual({
-                _displayName: "envB",
+                _name: "envB",
                 _extends: "envA",
                 a: 1,
                 b: 2
             })
         });
-
-        test.todo("if extends is empty - extends from default");
 
         // TODO: make error snapshot
         test("throw error if env trying to extend itself", () => {
@@ -167,6 +165,16 @@ describe("Environment", () => {
                     _extends: "envThatDoesntExist"
                 });
             }).toThrowError();
+        });
+
+        test("if extends is empty - extends from default", () => {
+            environments.add("default", {a: 1});
+            environments.add("e1", {b: 2});
+
+            expect(environments.get("e1")).toMatchObject({
+                a: 1,
+                b: 2
+            });
         });
     });
 });

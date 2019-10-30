@@ -1,9 +1,10 @@
 export interface Environment {
     _extends?: string;
-    _displayName?: string;
+    _name?: string;
 }
 
 export const CIRCULAR_DEPENDENCY_ERROR_TEXT = "Found circular dependency in environment list";
+const DEFAULT_ENV_NAME = "default";
 
 export class EnvironmentRegistry<TEnv extends Environment> {
     private environments = new Map<string, TEnv>();
@@ -14,7 +15,7 @@ export class EnvironmentRegistry<TEnv extends Environment> {
 
     add(name: string, env: TEnv): TEnv {
         const newEnv = this.extendEnv(env);
-        newEnv._displayName = name;
+        newEnv._name = name;
 
         this.environments.set(name, newEnv);
 
@@ -45,7 +46,7 @@ export class EnvironmentRegistry<TEnv extends Environment> {
         }
 
         const parentEnv = environments[parentEnvName];
-        parentEnv._displayName = parentEnvName;
+        parentEnv._name = parentEnvName;
 
         if (!parentEnv) {
             throw new Error(`Can't extend environment ${name} from ${parentEnvName} because it doesn't exist`);
@@ -62,30 +63,35 @@ export class EnvironmentRegistry<TEnv extends Environment> {
     }
 
     private buildDependencyChainString(parents: Array<TEnv>, env: TEnv): string {
-        const parentNames = parents.map(parent => parent._displayName);
-        return [...parentNames, env._displayName, env._extends].join(" -> ");
+        const parentNames = parents.map(parent => parent._name);
+        return [...parentNames, env._name, env._extends].join(" -> ");
     }
 
     private extendEnv(env: TEnv): TEnv {
-        if (!env._extends) {
-            return env;
-        }
+        const extendTarget = env._extends || DEFAULT_ENV_NAME;
 
-        const parentEnv = this.get(env._extends);
+        const parentEnv = this.get(extendTarget);
 
-        return {
-            ...parentEnv,
-            ...env,
-        };
+        return this.mergeEnvironments(parentEnv, env);
     }
 
     get(name: string): TEnv {
         const env = this.environments.get(name);
-
-        if (!env) {
-            throw new Error(`Environment with name ${name} doesn't exist`);
+        if (env) {
+            return env;
         }
 
-        return env;
+        if (name === DEFAULT_ENV_NAME) {
+            return {} as TEnv;
+        }
+
+        throw new Error(`Environment with name ${name} doesn't exist`);
+    }
+
+    private mergeEnvironments(e1: TEnv, e2: TEnv): TEnv {
+        return {
+            ...e1,
+            ...e2,
+        };
     }
 }
