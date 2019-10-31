@@ -3,3 +3,4 @@ node_modules
 old_src/linters/ts-rules/*.js
 old_src/playground/public
 dist
+oclif.manifest.json
