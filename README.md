@@ -19,11 +19,11 @@ TBD
 
 ## How about unit tests?
 We don't include a testing framework because it's depends on your needs. 
-We suggest to start from [Jest](https://jestjs.io/) because it's fast and reliable solution for most cases.
+We suggest to start from [Jest](https://jestjs.io/) because it's fast and reliable solution.
 
 Quick setup (using [ts-jest](https://github.com/kulshekhar/ts-jest) for Typescript support):
 ```
-npm i -D ts-jest @types/jest
+npm i -D jest ts-jest @types/jest
 npx ts-jest config:init
 npm test
 ```
