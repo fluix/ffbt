@@ -5,9 +5,17 @@ import {existsSync} from "fs";
 
 export const indexFileConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
     const pathToTemplate = resolve(paths.project.workingDirectory, "index.ejs");
+
     const settingsForCustomTemplate: HtmlWebpackPlugin.Options = {
         template: pathToTemplate,
-        templateParameters: projectConfig.env,
+        templateParameters: (compilation, assets, options) => {
+            return {
+                envName: projectConfig.env._name,
+                env: projectConfig.env,
+                files: assets,
+                htmlWebpackPluginOptions: options,
+            };
+        },
     };
 
     const settingsForDefaultTemplate: HtmlWebpackPlugin.Options = {

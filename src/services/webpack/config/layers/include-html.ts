@@ -8,7 +8,7 @@ export const includeHtmlConfigLayer: WebpackLayerConfigurator = () => {
                     test: /\.html$/,
                     loader: "html-loader",
                     options: {
-                        minimize: true,
+                        attrs: false,
                     }
                 },
             ],
