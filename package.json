@@ -7,7 +7,7 @@
     "node": ">=10"
   },
   "files": [
-    "*"
+    "dist"
   ],
   "bin": {
     "ffbt": "./dist/cli/entrypoint.js"
