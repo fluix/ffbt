@@ -65,6 +65,7 @@ export const defaultConfig: IProjectConfig = {
         },
         development: {
             _extends: "default",
+            sourceMapType: "eval",
         },
         production: {
             _extends: "default",
