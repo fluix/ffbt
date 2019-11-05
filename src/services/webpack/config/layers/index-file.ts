@@ -4,7 +4,7 @@ import {resolve} from "path";
 import {existsSync} from "fs";
 
 export const indexFileConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
-    const pathToTemplate = resolve(paths.project.workingDirectory, "index.ejs");
+    const pathToTemplate = resolve(paths.projectWorkingDirectory, "index.ejs");
 
     const settingsForCustomTemplate: HtmlWebpackPlugin.Options = {
         template: pathToTemplate,

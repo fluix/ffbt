@@ -32,14 +32,14 @@ export default class LintCommand extends BaseCommand {
 
     static args: Array<Parser.args.IArg> = [
         {
-            name: ArgumentsKeys.sourcesDirectory,
-            description: "directory with sources of the application",
-            required: true,
-        },
-        {
             name: ArgumentsKeys.linterType,
             description: "type of the linter",
             options: [LinterType.ts, LinterType.style],
+            required: true,
+        },
+        {
+            name: ArgumentsKeys.sourcesDirectory,
+            description: "directory with sources of the application",
             required: true,
         }
     ];

@@ -1,34 +1,48 @@
 import {dirname} from "path";
 import {locateDirectory, locateEntrypoint, locateFile} from "./core/locate";
+import {Memoize} from "./core/memoize-decorator";
 
-export interface ProjectPaths {
-    project: {
-        nodeModules: string;
-        packageJson: string;
-        config: string;
-        root: string;
-        entrypoint: string;
-        workingDirectory: string;
-        tsConfig: string;
-    };
-    ffbtRoot: string;
-}
+export class ProjectPaths {
+    constructor(private workingDirectory: string) {
+    }
 
-export function calculateProjectPaths(workingDirectory: string): ProjectPaths {
-    const projectConfigPath = locateFile("ffbt-config.js", workingDirectory);
-    const projectPackageJsonPath = locateFile("package.json", workingDirectory);
-    const projectRoot = dirname(projectConfigPath);
+    @Memoize()
+    get ffbtRoot(): string {
+        return dirname(locateFile("package.json", __dirname));
+    }
 
-    return {
-        ffbtRoot: dirname(locateFile("package.json", __dirname)),
-        project: {
-            workingDirectory,
-            nodeModules: locateDirectory("node_modules", workingDirectory, false),
-            packageJson: projectPackageJsonPath,
-            config: projectConfigPath,
-            root: projectRoot,
-            entrypoint: locateEntrypoint(workingDirectory, "index"),
-            tsConfig: locateFile("tsconfig.json", projectRoot),
-        }
-    };
+    @Memoize()
+    get projectConfig(): string {
+        return locateFile("ffbt-config.js", this.workingDirectory);
+    }
+
+    @Memoize()
+    get projectPackageJson(): string {
+        return locateFile("package.json", this.workingDirectory);
+    }
+
+    @Memoize()
+    get projectRoot(): string {
+        return dirname(this.projectConfig);
+    }
+
+    @Memoize()
+    get projectWorkingDirectory(): string {
+        return this.workingDirectory;
+    }
+
+    @Memoize()
+    get projectNodeModules(): string {
+        return locateDirectory("node_modules", this.workingDirectory, false);
+    }
+
+    @Memoize()
+    get projectEntrypoint(): string {
+        return locateEntrypoint(this.workingDirectory, "index");
+    }
+
+    @Memoize()
+    get projectTsConfig(): string {
+        return locateFile("tsconfig.json", this.projectRoot);
+    }
 }

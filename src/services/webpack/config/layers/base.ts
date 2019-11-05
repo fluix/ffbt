@@ -7,17 +7,17 @@ export const baseConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) 
         resolve(paths.ffbtRoot, "node_modules"),
     ];
 
-    if (paths.project.nodeModules) {
-        whereToSearchLoaders.push(paths.project.nodeModules);
+    if (paths.projectNodeModules) {
+        whereToSearchLoaders.push(paths.projectNodeModules);
     }
 
     return {
         mode: projectConfig.env.optimizeBundle ? "production" : "development",
-        context: paths.project.workingDirectory,
+        context: paths.projectWorkingDirectory,
         output: {
             filename: '[name].bundle.js',
             chunkFilename: '[name].chunk.js',
-            path: resolve(paths.project.root, projectConfig.env.outputPath),
+            path: resolve(paths.projectRoot, projectConfig.env.outputPath),
         },
         optimization: {
             splitChunks: {

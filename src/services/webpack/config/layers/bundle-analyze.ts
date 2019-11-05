@@ -4,7 +4,7 @@ import {WebpackLayerConfigurator} from "../index";
 import {resolve} from "path";
 
 export const bundleAnalyzeConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
-    const pathToReports = resolve(paths.project.root, "bundle-report");
+    const pathToReports = resolve(paths.projectRoot, "bundle-report");
 
     const isBundleCompareMode = Boolean(process.env.FFBT_COMPARE);
     const isBaselineBuild = Boolean(process.env.FFBT_COMPARE_BASELINE);

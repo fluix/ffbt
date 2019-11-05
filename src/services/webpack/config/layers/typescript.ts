@@ -8,7 +8,7 @@ interface TsConfig {
 }
 
 export const typescriptConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
-    const tsConfigPath = paths.project.tsConfig;
+    const tsConfigPath = paths.projectTsConfig;
     const tsConfig = readJson<TsConfig>(tsConfigPath);
     const plugins: Array<any> = [];
 
@@ -23,7 +23,7 @@ export const typescriptConfigLayer: WebpackLayerConfigurator = (projectConfig, p
     return {
         devtool: projectConfig.env.sourceMapType as any, // Webpack doesn't have "(none)" value in typings
         entry: {
-            main: paths.project.entrypoint,
+            main: paths.projectEntrypoint,
         },
         resolve: {
             extensions: [".ts", ".tsx", ".js", ".json"],

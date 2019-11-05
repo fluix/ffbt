@@ -1,7 +1,7 @@
 import {ProjectConfig} from "../../../project-config";
 import * as webpack from "webpack";
-import {calculateProjectPaths, ProjectPaths} from "../../../paths";
 import * as webpackMerge from "webpack-merge";
+import {ProjectPaths} from "../../../paths";
 
 export type WebpackLayerConfigurator = (projectConfig: ProjectConfig, paths: ProjectPaths) => webpack.Configuration;
 
@@ -37,7 +37,7 @@ export function createWebpackConfig(projectConfig: ProjectConfig, workingDirecto
         layers.push(require("./layers/caching").cachingConfigLayer);
     }
 
-    const paths = calculateProjectPaths(workingDirectory);
+    const paths = new ProjectPaths(workingDirectory);
     const configuredWebpackLayers = layers.map(layer => layer(projectConfig, paths));
 
     return webpackMerge.smart(...configuredWebpackLayers);

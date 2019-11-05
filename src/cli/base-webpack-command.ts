@@ -8,7 +8,7 @@ import * as webpack from "webpack";
 import * as Parser from "@oclif/parser";
 import {ServiceRunStrategy} from "../services/run-strategy";
 import {ProjectEnvProperties} from "../project-config/default";
-import {calculateProjectPaths, ProjectPaths} from "../paths";
+import {ProjectPaths} from "../paths";
 
 export interface BaseWebpackFlags extends BaseFlags {
     output: string | undefined;
@@ -58,7 +58,7 @@ export abstract class BaseWebpackCommand extends BaseCommand {
         const environment = this.getEnvironment();
 
         const projectConfig = this.createProjectConfig(sourcesDirectory, environment, flags);
-        const projectPaths = calculateProjectPaths(sourcesDirectory);
+        const projectPaths = new ProjectPaths(sourcesDirectory);
         const webpackConfig = createWebpackConfig(projectConfig, sourcesDirectory);
 
         this.printBannerWithBuildInfo(projectConfig, projectPaths, flags.verbose);
@@ -100,7 +100,7 @@ export abstract class BaseWebpackCommand extends BaseCommand {
 
     private printBannerWithBuildInfo(projectConfig: ProjectConfig, paths: ProjectPaths, verbose: boolean) {
         console.log("Environment: " + projectConfig.env._name);
-        console.log("Source Directory: " + paths.project.workingDirectory);
+        console.log("Source Directory: " + paths.projectWorkingDirectory);
         console.log();
 
         if (verbose) {

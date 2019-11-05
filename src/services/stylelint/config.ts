@@ -1,30 +1,29 @@
 import * as path from "path";
 import {LinterOptions as StyleLintOptions} from "stylelint";
-import {calculateProjectPaths} from "../../paths";
 import {locateFile} from "../../core/locate";
+import {ProjectPaths} from "../../paths";
 
 interface CommandOptions {
     path: string;
     fix: boolean;
 }
 
-function getLintConfig(customConfigPath: string) {
+function getLintConfig(projectRoot: string) {
+    const customConfigPath = locateFile("stylelint.config.js", projectRoot, false);
     if (!customConfigPath) {
         return require("./stylelint.config");
     }
 
-    require(customConfigPath);
+    return require(customConfigPath);
 }
 
 export function createStyleLintConfig(options: CommandOptions): Partial<StyleLintOptions> {
-    const paths = calculateProjectPaths(options.path);
-
-    const customConfigPath = locateFile("stylelint.config.js", paths.project.root, false);
-    const lintConfig = getLintConfig(customConfigPath);
+    const paths = new ProjectPaths(options.path);
+    const lintConfig = getLintConfig(paths.projectRoot);
 
     return {
         config: lintConfig,
         fix: options.fix,
-        files: path.join(paths.project.workingDirectory, "./**/**/**.scss"),
+        files: path.join(paths.projectWorkingDirectory, "./**/**/**.scss"),
     };
 }

@@ -1,7 +1,7 @@
 import * as path from "path";
 import {Options} from "tslint/lib/runner";
-import {calculateProjectPaths} from "../../paths";
 import {locateFile} from "../../core/locate";
+import {ProjectPaths} from "../../paths";
 
 interface CommandOptions {
     path: string;
@@ -14,18 +14,18 @@ function getDefaultConfigPath() {
 }
 
 export function createTsLintConfig(options: CommandOptions): Options {
-    const paths = calculateProjectPaths(options.path);
+    const paths = new ProjectPaths(options.path);
 
-    const customConfigPath = locateFile("tslint.json", paths.project.root, false);
+    const customConfigPath = locateFile("tslint.json", paths.projectRoot, false);
     const lintConfigPath = customConfigPath || getDefaultConfigPath();
 
     return {
         config: lintConfigPath,
         exclude: ["node_modules/**/*"],
-        files: [path.resolve(paths.project.root, "./**/*.ts?(x)")],
+        files: [path.resolve(paths.projectRoot, "./**/*.ts?(x)")],
         fix: options.fix,
         force: options.force,
         format: "stylish",
-        project: paths.project.tsConfig,
+        project: paths.projectTsConfig,
     };
 }

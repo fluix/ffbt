@@ -26,7 +26,7 @@ export const stylesConfigLayer: WebpackLayerConfigurator = (projectConfig, paths
                             loader: "sass-loader",
                             options: {
                                 sassOptions: {
-                                    importer: importOnce(paths.project.nodeModules),
+                                    importer: importOnce(paths.projectNodeModules),
                                     importOnce: {
                                         index: true,
                                         css: false,
