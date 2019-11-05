@@ -4,6 +4,7 @@ import {merge} from "lodash";
 import {EnvironmentRegistry} from "../core/environment-registry";
 import {locateFile} from "../core/locate";
 import {DeepPartial} from "utility-types";
+import {WebpackLayerConfigurator} from "../services/webpack/config";
 
 export class ProjectConfig {
     private props: IProjectConfig;
@@ -14,6 +15,7 @@ export class ProjectConfig {
     // If you try to specify types you'll get a lot of type errors in webpack layers
     @Prop() aliases!: any;
     @Prop() noParse!: any;
+    @Prop() configureWebpack!: WebpackLayerConfigurator;
 
     constructor(projectConfig: DeepPartial<IProjectConfig> = {}, defaults = defaultConfig) {
         this.props = merge({} as IProjectConfig, defaults, projectConfig);

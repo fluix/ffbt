@@ -2,6 +2,7 @@ import * as webpack from "webpack";
 import {Environment} from "../core/environment-registry";
 import * as HtmlWebpackPlugin from "html-webpack-plugin";
 import * as WebpackDevServer from "webpack-dev-server";
+import {WebpackLayerConfigurator} from "../services/webpack/config";
 
 export interface IProjectConfig {
     environments: Record<string, Partial<ProjectEnv>> & {
@@ -10,6 +11,7 @@ export interface IProjectConfig {
     // copied from webpack typings because "PickProp" works bad in this case, I don't know why
     aliases?: Record<string, string>;
     noParse?: RegExp | RegExp[] | ((content: string) => boolean);
+    configureWebpack?: WebpackLayerConfigurator;
 }
 
 export interface ProjectEnv extends Environment, ProjectEnvProperties {
@@ -75,4 +77,5 @@ export const defaultConfig: IProjectConfig = {
     },
     noParse: undefined,
     aliases: {},
+    configureWebpack: undefined,
 };

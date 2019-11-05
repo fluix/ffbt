@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "core-js": "^3.3.4",
-    "leftpad": "0.0.1"
+    "leftpad": "0.0.1",
+    "offline-plugin": "^5.0.7"
   }
 }

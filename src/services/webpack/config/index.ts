@@ -38,6 +38,12 @@ export function createWebpackConfig(projectConfig: ProjectConfig, workingDirecto
     }
 
     const paths = new ProjectPaths(workingDirectory);
+
+    const customWebpackLayer = projectConfig.configureWebpack;
+    if (customWebpackLayer) {
+        layers.push(customWebpackLayer);
+    }
+
     const configuredWebpackLayers = layers.map(layer => layer(projectConfig, paths));
 
     return webpackMerge.smart(...configuredWebpackLayers);
