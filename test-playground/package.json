@@ -1,0 +1,14 @@
+{
+  "name": "webpack-playground",
+  "private": true,
+  "scripts": {
+    "start": "ffbt dev src --server",
+    "dev-watch": "ffbt dev src",
+    "build": "ffbt build src"
+  },
+  "dependencies": {
+    "core-js": "^3.3.4",
+    "leftpad": "0.0.1",
+    "offline-plugin": "^5.0.7"
+  }
+}

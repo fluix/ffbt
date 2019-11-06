@@ -1,92 +1,125 @@
-# FFBT: Fluix Frontend Build Tools
-CLI utility for compiling, testing and linting your TypeScript code.
+# FFBT: Fluix Frontend Build Tools [![Build Status](https://travis-ci.org/fluix/ffbt.svg?branch=master)](https://travis-ci.org/fluix/ffbt)
+
+A tool to create a Typescript web app without pain. 
 
 `npm i ffbt`
 
-### What's inside?
-- Webpack + Webpack Dev Server
+You don't need to install and configure Webpack with a lot of plugins for Typescript, SASS, etc. 
+Everything is already preconfigured for you
+
+## What's inside?
+- Webpack with configurations for development and production environments
+- Dev server with live reload
 - Typescript
-- Node-Sass with import-once plugin
-- Autoprefixer
-- Karma + Jasmine (With Console and TeamCity reporters)
-- Tslint + Stylelint with ready to use configs (linters dir)
-- WebWorkers support (experimental, will be stable in 1.0)
+- SASS with Autoprefixer and import-once plugin
+- TSlint
+- Stylelint
 
-## What I need to do to build my project?
-- `npm i ffbt`
-- Create an entrypoint for your app. Call it `app.ts`.
-- Create a `ffbt-config.js` file near the `package.json`.
-- `ffbt dev`
+## Quick start
+- `npm i -g ffbt`
+- create a file `ffbt-config.js` with the following content: `module.exports = {};`
+- create an empty index.ts file
+- run `ffbt dev . --server`
 
-### ffbt-config.js example
-```javascript
-module.exports = {
-    profiles: {
-        dev: {
-            // You can set variables which will be available in index.ejs template
-            myVariable: 123,
-            // Also you can override some webpack settings. Now only source map type is supported
-            sourceMapType: "inline-source-map",
-        },
-        production: {
-            // custom variables for index.html in PRODUCTION profile
-        },
-    },
-    supportedBrowsers: "last 2 versions", // strictly supports Autoprefixer's config format
-    vendorContents: [
-        // list of packages in your vendor bundle
-    ],
-    aliases: {
-        // aliases, if you need them
-    },
-    noParse: [
-        // list of absolute paths
-    ],
-    buildPath: "./public/build", // path to your dist directory
-    //You can specify the path to your custom lint config if the default config doesn't fit your needs
-    tsLintConfigPath: "",
-    styleLintConfigPath: "",
-    moveBuildArtifactsToSubfolder: "build", // you can move your compiled js, css and images to the subdirectory
-    webpackPlugins: {
-        // You can override settings for HTMLWebpackPlugin and WebpackDevServer 
-        // See docs for corresponding plugin for more info
-        // https://github.com/jantimon/html-webpack-plugin
-        // https://webpack.js.org/configuration/dev-server
-        htmlWebpackPlugin: {
-            inject: false,
-        },
-        devServer: {
-            port: 9999,
-        }
+You can run FFBT as a global executable or install it locally and invoke via NPM scripts
+
+## How about unit tests?
+We don't include a testing framework. Every project is unique and sometimes needs a specific test environment. 
+We suggest starting from [Jest](https://jestjs.io/) because it's a fast and reliable solution.
+
+Quick setup (using [ts-jest](https://github.com/kulshekhar/ts-jest) for Typescript support):
+```
+npm i -D jest ts-jest @types/jest
+npx ts-jest config:init
+```
+And run jest via NPM command. Here a package.json example:
+```json
+{
+    "scripts": {
+        "test": "jest",
     }
-};
+}
 ```
 
-## Available commands
-- `dev`. Watches your files and recompile them after each change
-- `dev-server`. The same as `dev`, but starts the local development server.
-- `build`. Builds the project for production and staging servers
-- `test`. Run unit tests
-- `lint-style`. Lints SASS files
-- `lint-ts`. Lints TS files
+If you want to use Karma or something other which needs Webpack, you can configure it via `configureWebpack` hook in `ffbt-config.js`. See the docs about the configuration below.
 
-##### Each command has the following options:
-- `ci`. Enabling CI mode, now it useful only in pair with the test command. It changes the Karma output by running the Teamcity reporter
-- `output`. You can override buildPath config property via this option
-- `analyze`. Runs webpack-bundle-analyzer plugin that displays a map of your dependencies
+## Configuration
+Create a file with name `ffbt-config.js` in the root of your project
 
-## Info for developers
+Minimal config is `module.exports = {};`. It's enough for most cases
 
-#### I Want to make an improvement/fix, but I don't understand how it works. What I have to do?
-Firstly, you need to open the `cli/cli.js` file. It's the main entrypoint for all commands.
+### Full annotated config example:
+```javascript
+module.exports = {
+    // FFBT is the environment-centric tool, almost all configuration describes in environments
+    // You can extend environments from each other
+    // All environments extend from "default" automatically unless you specify "_extends" property.
+    // See the example below
+    environments: {
+        default: {
+            // It contains default values for all flags in the system.
+            // See a list of all flags in the table below.
 
-Each CLI command executes the corresponding command file.
+            // Use it if you want to propagate values to all environments
+        },
+        development: {
+            // Used by default in `ffbt dev` command
+        },
+        production: {
+            // Used by default in `ffbt build` command
+        },
+        customProduction: {
+            // Custom env extended from the production. You can have as many custom envs as you need
+            // Usage example: ffbt build --env=customProduction
+            // Environment extension is recursive, so you can use an object with deep nesting and everything will be OK
 
-There are two types of command: `build` and `lint`. The commands are just the JS functions.
-- The `build` commands (dev, dev-server, build, test) need the webpack to work, so they received the build config as a first parameter
-- The `lint` commands doesn't need the build config, so they received a `library root path` and a `working directory path` as a parameters
 
-The command functions return nothing. You can do anything inside them. They are just containers for commands code
+            // For example, you want to make a bundle for production but without source maps
+            _extends: "production",
+            sourceMapType: "(none)",
+        }
+    },
+    aliases: {
+        // Aliases for the modules
+        // See resolve.alias in Webpack docs
+    },
+    noParse: [
+        // Restrict parsing of the specific modules
+        // Can help if you want to tune build performance
+        // See module.noParse in Webpack docs
+    ],
+    configureWebpack: (projectConfig, paths) => {
+        // Hook for customizing Webpack config
+        // You have access to the selected environment and helper for path calculation
+        // Just return the part of Webpack config and it will be merged with the main config automatically
+        // Use it if you want to slightly extend functionality
 
-Command files are stored in `cli/commands` directory.
-The lint commands are stored deeply in `cli/commands/lint` directory.
+        // In this example, we add OfflinePlugin to add offline functionality to your app
+        return {
+            plugins: [
+                new OfflinePlugin(),
+            ]
+        }
+    },
+};
+
+```
+
+### Environment flags
+Name | Description
+--- | --- 
+browserlist |  Currently used only in CSS Aftoprefixer. [Syntax Docs](https://github.com/browserslist/browserslist#full-list)
+outputPath | Destination path, your bundle will be created here
+sourceMapType | Source map type. [Docs](https://webpack.js.org/configuration/devtool/#devtool)
+staticFilesSizeThresholdKb | All assets with a size lower than the limit will be inlined, otherwise, they will be copied to the destination folder as is
+showBuildNotifications | Enable/Disable build and type checker system notifications
+enableTypeChecking | Enable/Disable typechecking for Typescript
+cleanDistFolderBeforeBuild | The name speaks for itself
+moveLibrariesToSeparateBundle | Move all used libs from node_modules to the separate bundle
+devServerConfig | Settings for the WebpackDevServer. [Docs](https://webpack.js.org/configuration/dev-server/)
+buildVersion | A string represents the version of the bundle. Accessible in your code via `FFBT_BUILD_VERSION` constant
+
+There are more flags in the system than described above. If you want to use flags that not described in the table - keep in mind that it can break the build process. Use them at your own risk
+
+### Environment defaults
+[See here](https://github.com/fluix/ffbt/blob/master/src/project-config/default.ts)
