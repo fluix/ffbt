@@ -1,7 +1,7 @@
 {
   "name": "ffbt",
   "version": "0.10.1",
-  "description": "Tool to create a Typescript web app without pain",
+  "description": "Build a Typescript app without pain",
   "license": "MIT",
   "engines": {
     "node": ">=10"

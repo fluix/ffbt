@@ -13,6 +13,7 @@ import {ProjectPaths} from "../paths";
 export interface BaseWebpackFlags extends BaseFlags {
     output: string | undefined;
     buildVersion: string | undefined;
+    env: string | undefined;
     analyze: boolean;
 }
 
@@ -33,6 +34,10 @@ export abstract class BaseWebpackCommand extends BaseCommand {
     ];
 
     static flags: flags.Input<BaseWebpackFlags> = {
+        env: flags.string({
+            default: undefined,
+            description: "environment name",
+        }),
         output: flags.string({
             default: undefined,
             description: "a directory where to put the bundled app",
@@ -49,13 +54,13 @@ export abstract class BaseWebpackCommand extends BaseCommand {
     };
 
     protected abstract getWebpackRunner(webpackConfig: webpack.Configuration): ServiceRunStrategy;
-    protected abstract getEnvironment(): string;
+    protected abstract getDefaultEnvironment(): string;
 
     async run() {
         const flags = this.getFlags<BaseWebpackFlags>();
 
         const sourcesDirectory = this.getAbsoluteSourcesDirectory(this.getSourcesDirectory());
-        const environment = this.getEnvironment();
+        const environment = flags.env || this.getDefaultEnvironment();
 
         const projectConfig = this.createProjectConfig(sourcesDirectory, environment, flags);
         const projectPaths = new ProjectPaths(sourcesDirectory);

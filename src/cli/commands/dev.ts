@@ -23,7 +23,7 @@ export default class DevCommand extends BaseWebpackCommand {
         ...BaseWebpackCommand.flags,
     };
 
-    protected getEnvironment(): string {
+    protected getDefaultEnvironment(): string {
         return "development";
     }
 
