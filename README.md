@@ -1,6 +1,7 @@
 # FFBT: Fluix Frontend Build Tools [![Build Status](https://travis-ci.org/fluix/ffbt.svg?branch=master)](https://travis-ci.org/fluix/ffbt)
 
 Tool to create a Typescript web app without pain. 
+
 `npm i ffbt`
 
 You don't need to install and configure Webpack with a lot of plugins for Typescript, SASS, etc. 
@@ -36,7 +37,7 @@ And run jest via NPM command. Here a package.json example:
 Create a file with name `ffbt-config.js` in the root of your project
 Minimal config is `module.exports = {};`. It's enough for most cases
 
-Full annotated config example:
+### Full annotated config example:
 ```javascript
 module.exports = {
     // FFBT is environment-centric, almost all configuration describes in environments
@@ -93,6 +94,20 @@ module.exports = {
 
 ```
 
+### Environment flags
+Name | Description
+--- | --- 
+browserlist |  Currently used only in CSS aftoprefixer. [Syntax Docs](https://github.com/browserslist/browserslist#full-list)
+outputPath | Destintation path, your bundle will be created here
+sourceMapType | Source map type. [Docs](https://webpack.js.org/configuration/devtool/#devtool)
+staticFilesSizeThresholdKb | All assets with size lower than limit will be inlined, oterwise they will be copiled to the destination folder as is
+showBuildNotifications | Enable/Disable build and type checker system notification
+enableTypeChecking | Enable/Disable typechecking for Typescript
+cleanDistFolderBeforeBuild | The name speaks for itself
+moveLibrariesToSeparateBundle | If true - move all used libs from node_modules to the separate bundle
+devServerConfig | Settings for the WebpackDevServer. [Docs](https://webpack.js.org/configuration/dev-server/)
+buildVersion | Some string represents the version of the bundle. Accessible in your code via `FFBT_BUILD_VERSION` constant
 
+There are more flags in the system than described above. If you went to use flags that not described in the table - keep in mind that it can break the build process. Use them at your own risk
 
 
