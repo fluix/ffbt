@@ -15,8 +15,16 @@ Everything is already preconfigured for you
 - TSlint
 - Stylelint
 
+## Quick start
+- `npm i -g ffbt`
+- create a file `ffbt-config.js` with the following content: `module.exports = {};`
+- create an empty index.ts file
+- run `ffbt dev . --server`
+
+You can run FFBT as a global executable or install it locally and invoke via NPM sripts
+
 ## How about unit tests?
-We don't include a testing framework because it's depends on your needs. 
+We don't include a testing framework. Every project is unique and sometimes needs a specific test environment. 
 We suggest to start from [Jest](https://jestjs.io/) because it's fast and reliable solution.
 
 Quick setup (using [ts-jest](https://github.com/kulshekhar/ts-jest) for Typescript support):
@@ -33,8 +41,11 @@ And run jest via NPM command. Here a package.json example:
 }
 ```
 
+If you want to use Karma or something other which needs Webpack, you can configure it via `configureWebpack` hook in `ffbt-config.js`. See the docs about configuration below.
+
 ## Configuration
 Create a file with name `ffbt-config.js` in the root of your project
+
 Minimal config is `module.exports = {};`. It's enough for most cases
 
 ### Full annotated config example:
@@ -110,4 +121,5 @@ buildVersion | Some string represents the version of the bundle. Accessible in y
 
 There are more flags in the system than described above. If you went to use flags that not described in the table - keep in mind that it can break the build process. Use them at your own risk
 
-
+### Environment defaults
+[See here](https://github.com/fluix/ffbt/blob/master/src/project-config/default.ts)
