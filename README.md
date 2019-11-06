@@ -1,6 +1,6 @@
 # FFBT: Fluix Frontend Build Tools [![Build Status](https://travis-ci.org/fluix/ffbt.svg?branch=master)](https://travis-ci.org/fluix/ffbt)
 
-Tool to create a Typescript web app without pain. 
+A tool to create a Typescript web app without pain. 
 
 `npm i ffbt`
 
@@ -11,7 +11,7 @@ Everything is already preconfigured for you
 - Webpack with configurations for development and production environments
 - Dev server with live reload
 - Typescript
-- SASS with autoprefixer and import-once plugin
+- SASS with Autoprefixer and import-once plugin
 - TSlint
 - Stylelint
 
@@ -21,11 +21,11 @@ Everything is already preconfigured for you
 - create an empty index.ts file
 - run `ffbt dev . --server`
 
-You can run FFBT as a global executable or install it locally and invoke via NPM sripts
+You can run FFBT as a global executable or install it locally and invoke via NPM scripts
 
 ## How about unit tests?
 We don't include a testing framework. Every project is unique and sometimes needs a specific test environment. 
-We suggest to start from [Jest](https://jestjs.io/) because it's fast and reliable solution.
+We suggest starting from [Jest](https://jestjs.io/) because it's a fast and reliable solution.
 
 Quick setup (using [ts-jest](https://github.com/kulshekhar/ts-jest) for Typescript support):
 ```
@@ -41,7 +41,7 @@ And run jest via NPM command. Here a package.json example:
 }
 ```
 
-If you want to use Karma or something other which needs Webpack, you can configure it via `configureWebpack` hook in `ffbt-config.js`. See the docs about configuration below.
+If you want to use Karma or something other which needs Webpack, you can configure it via `configureWebpack` hook in `ffbt-config.js`. See the docs about the configuration below.
 
 ## Configuration
 Create a file with name `ffbt-config.js` in the root of your project
@@ -108,18 +108,18 @@ module.exports = {
 ### Environment flags
 Name | Description
 --- | --- 
-browserlist |  Currently used only in CSS aftoprefixer. [Syntax Docs](https://github.com/browserslist/browserslist#full-list)
-outputPath | Destintation path, your bundle will be created here
+browserlist |  Currently used only in CSS Aftoprefixer. [Syntax Docs](https://github.com/browserslist/browserslist#full-list)
+outputPath | Destination path, your bundle will be created here
 sourceMapType | Source map type. [Docs](https://webpack.js.org/configuration/devtool/#devtool)
-staticFilesSizeThresholdKb | All assets with size lower than limit will be inlined, oterwise they will be copiled to the destination folder as is
-showBuildNotifications | Enable/Disable build and type checker system notification
+staticFilesSizeThresholdKb | All assets with a size lower than the limit will be inlined, otherwise, they will be copied to the destination folder as is
+showBuildNotifications | Enable/Disable build and type checker system notifications
 enableTypeChecking | Enable/Disable typechecking for Typescript
 cleanDistFolderBeforeBuild | The name speaks for itself
-moveLibrariesToSeparateBundle | If true - move all used libs from node_modules to the separate bundle
+moveLibrariesToSeparateBundle | Move all used libs from node_modules to the separate bundle
 devServerConfig | Settings for the WebpackDevServer. [Docs](https://webpack.js.org/configuration/dev-server/)
-buildVersion | Some string represents the version of the bundle. Accessible in your code via `FFBT_BUILD_VERSION` constant
+buildVersion | A string represents the version of the bundle. Accessible in your code via `FFBT_BUILD_VERSION` constant
 
-There are more flags in the system than described above. If you went to use flags that not described in the table - keep in mind that it can break the build process. Use them at your own risk
+There are more flags in the system than described above. If you want to use flags that not described in the table - keep in mind that it can break the build process. Use them at your own risk
 
 ### Environment defaults
 [See here](https://github.com/fluix/ffbt/blob/master/src/project-config/default.ts)
