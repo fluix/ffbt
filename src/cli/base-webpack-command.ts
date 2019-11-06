@@ -110,7 +110,7 @@ export abstract class BaseWebpackCommand extends BaseCommand {
 
         if (verbose) {
             console.log("Current environment", projectConfig.env, "\n");
-            console.log("Paths", paths, "\n");
+            console.log("Paths", paths.getAll(), "\n");
         }
     }
 }

@@ -6,6 +6,19 @@ export class ProjectPaths {
     constructor(private workingDirectory: string) {
     }
 
+    getAll() {
+        return {
+            ffbtRoot: this.ffbtRoot,
+            projectConfig: this.projectConfig,
+            projectPackageJson: this.projectPackageJson,
+            projectRoot: this.projectRoot,
+            projectWorkingDirectory: this.projectWorkingDirectory,
+            projectNodeModules: this.projectNodeModules,
+            projectEntrypoint: this.projectEntrypoint,
+            projectTsConfig: this.projectTsConfig,
+        }
+    }
+
     @Memoize()
     get ffbtRoot(): string {
         return dirname(locateFile("package.json", __dirname));
