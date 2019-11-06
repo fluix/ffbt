@@ -51,30 +51,30 @@ Minimal config is `module.exports = {};`. It's enough for most cases
 ### Full annotated config example:
 ```javascript
 module.exports = {
-    // FFBT is environment-centric, almost all configuration describes in environments
+    // FFBT is the environment-centric tool, almost all configuration describes in environments
     // You can extend environments from each other
     // All environments extend from "default" automatically unless you specify "_extends" property.
-    // See example below
+    // See the example below
     environments: {
         default: {
-            // Contains default values for the all flags in the system
-            // See list of all flags in the table below
+            // It contains default values for all flags in the system.
+            // See a list of all flags in the table below.
 
-            // Use it if you want to propagate values to the all environments
+            // Use it if you want to propagate values to all environments
         },
         development: {
-            // Used by default in `ffbt dev`
+            // Used by default in `ffbt dev` command
         },
         production: {
-            // Used by default in `ffbt build`
+            // Used by default in `ffbt build` command
         },
         customProduction: {
             // Custom env extended from the production. You can have as many custom envs as you need
             // Usage example: ffbt build --env=customProduction
-            // Environment extension is recursive, so you can use object with deep nesting and everything will be OK
+            // Environment extension is recursive, so you can use an object with deep nesting and everything will be OK
 
 
-            // For example, you want to make bundle for production but without source maps
+            // For example, you want to make a bundle for production but without source maps
             _extends: "production",
             sourceMapType: "(none)",
         }
@@ -89,12 +89,12 @@ module.exports = {
         // See module.noParse in Webpack docs
     ],
     configureWebpack: (projectConfig, paths) => {
-        // Hook for customizing webpack config
+        // Hook for customizing Webpack config
         // You have access to the selected environment and helper for path calculation
-        // Just return the part of webpack config and it will be merged with the main config automatically
+        // Just return the part of Webpack config and it will be merged with the main config automatically
         // Use it if you want to slightly extend functionality
 
-        // In this example we add OfflinePlugin to add a Offline functionality to your app
+        // In this example, we add OfflinePlugin to add offline functionality to your app
         return {
             plugins: [
                 new OfflinePlugin(),
