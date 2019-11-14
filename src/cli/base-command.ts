@@ -1,5 +1,5 @@
 import {Command, flags} from "@oclif/command";
-import Chalk from "chalk";
+import {redBright} from 'chalk';
 
 export interface BaseFlags {
     verbose: boolean;
@@ -30,6 +30,6 @@ export abstract class BaseCommand extends Command {
             ? String(error.stack)
             : error.message;
 
-        console.log(Chalk.redBright(errorInfo));
+        console.log(redBright(errorInfo));
     }
 }

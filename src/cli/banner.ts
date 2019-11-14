@@ -1,5 +1,5 @@
-import Chalk from "chalk";
 import {Hook} from "@oclif/config";
+import {blueBright} from 'chalk';
 
 const hook: Hook<'init'> = async function (options) {
     const banner =
@@ -9,7 +9,7 @@ const hook: Hook<'init'> = async function (options) {
         "|__|  |__|  |_____| |_|  \n" +
         "                         ";
 
-    console.log(Chalk.blueBright(banner));
+    console.log(blueBright(banner));
 };
 
 export default hook;
