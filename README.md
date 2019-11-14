@@ -115,7 +115,6 @@ staticFilesSizeThresholdKb | All assets with a size lower than the limit will be
 showBuildNotifications | Enable/Disable build and type checker system notifications
 enableTypeChecking | Enable/Disable typechecking for Typescript
 cleanDistFolderBeforeBuild | The name speaks for itself
-moveLibrariesToSeparateBundle | Move all used libs from node_modules to the separate bundle
 devServerConfig | Settings for the WebpackDevServer. [Docs](https://webpack.js.org/configuration/dev-server/)
 buildVersion | A string represents the version of the bundle. Accessible in your code via `FFBT_BUILD_VERSION` constant
 
