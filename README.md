@@ -17,7 +17,6 @@ Everything is already preconfigured for you
 
 ## Quick start
 - `npm i -g ffbt`
-- create a file `ffbt-config.js` with the following content: `module.exports = {};`
 - create an empty index.ts file
 - run `ffbt dev . --server`
 
@@ -44,9 +43,7 @@ And run jest via NPM command. Here a package.json example:
 If you want to use Karma or something other which needs Webpack, you can configure it via `configureWebpack` hook in `ffbt-config.js`. See the docs about the configuration below.
 
 ## Configuration
-Create a file with name `ffbt-config.js` in the root of your project
-
-Minimal config is `module.exports = {};`. It's enough for most cases
+Create a file with name `ffbt-config.js` in the root of your project (near the package.json file)
 
 ### Full annotated config example:
 ```javascript

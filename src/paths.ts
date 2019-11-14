@@ -26,7 +26,7 @@ export class ProjectPaths {
     }
 
     @Memoize()
-    get projectConfig(): string {
+    get projectConfig(): string | null {
         return ProjectConfig.getPathToConfigFile(this.sourcesDirectory);
     }
 
@@ -37,6 +37,10 @@ export class ProjectPaths {
 
     @Memoize()
     get projectRoot(): string {
+        if (!this.projectConfig) {
+            return dirname(this.projectPackageJson);
+        }
+
         return dirname(this.projectConfig);
     }
 

@@ -48,14 +48,19 @@ export class ProjectConfig {
         }
     }
 
-    static getPathToConfigFile(sourcesDirectory: string): string {
-        return locateFile(CONFIG_FILE_NAME, sourcesDirectory);
+    static getPathToConfigFile(sourcesDirectory: string): string | null {
+        return locateFile(CONFIG_FILE_NAME, sourcesDirectory, false) || null;
     }
 
     static loadFromFile(sourcesDirectory: string): ProjectConfig {
         const configPath = this.getPathToConfigFile(sourcesDirectory);
-        const config = require(configPath);
 
+        if (!configPath) {
+            // It's OK if we can't find the config, just create it from default values
+            return new this();
+        }
+
+        const config = require(configPath);
         return new this(config);
     }
 }
