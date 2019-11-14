@@ -16,10 +16,12 @@ Everything is already preconfigured for you
 - Stylelint
 
 ## Quick start
-- `npx typescript --init`
-- `npm i -g ffbt`
-- create an empty index.ts file
-- run `ffbt dev . --server`
+```sh
+npx typescript --init
+npm i -g ffbt
+touch index.ts
+ffbt dev . --server
+```
 
 You can run FFBT as a global executable or install it locally and invoke via NPM scripts
 
