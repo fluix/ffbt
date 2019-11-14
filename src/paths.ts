@@ -31,17 +31,25 @@ export class ProjectPaths {
     }
 
     @Memoize()
-    get projectPackageJson(): string {
-        return locateFile("package.json", this.sourcesDirectory);
+    get projectPackageJson(): string | null {
+        return locateFile("package.json", this.sourcesDirectory, false) || null;
     }
 
     @Memoize()
     get projectRoot(): string {
-        if (!this.projectConfig) {
-            return dirname(this.projectPackageJson);
+        const rootsInPriority = [
+            this.projectConfig,
+            this.projectPackageJson,
+            this.projectWorkingDirectory,
+        ];
+
+        const firstValidRoot = rootsInPriority.find((path) => Boolean(path));
+
+        if (!firstValidRoot) {
+            throw new Error("Can't determine the project's root");
         }
 
-        return dirname(this.projectConfig);
+        return dirname(firstValidRoot);
     }
 
     @Memoize()
@@ -50,8 +58,8 @@ export class ProjectPaths {
     }
 
     @Memoize()
-    get projectNodeModules(): string {
-        return locateDirectory("node_modules", this.sourcesDirectory, false);
+    get projectNodeModules(): string | null {
+        return locateDirectory("node_modules", this.sourcesDirectory, false) || null;
     }
 
     @Memoize()

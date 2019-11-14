@@ -8,7 +8,7 @@ export function locateFile(name: string, cwd = "", raiseErrorIfNotExists = true)
         type: "file",
     });
     if (!locatedPath && raiseErrorIfNotExists) {
-        throw new Error(`Can't locate ${name}`);
+        throw new Error(`Can't find ${name}`);
     }
 
     return locatedPath || "";
@@ -20,7 +20,7 @@ export function locateDirectory(name: string, cwd = "", raiseErrorIfNotExists = 
         type: "directory",
     });
     if (!locatedPath && raiseErrorIfNotExists) {
-        throw new Error(`Can't locate ${name}`);
+        throw new Error(`Can't find ${name}`);
     }
 
     return locatedPath || "";

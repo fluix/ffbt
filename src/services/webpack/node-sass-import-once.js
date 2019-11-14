@@ -291,7 +291,7 @@ function createImporter(nodeModules) {
 /**
  * Exports the importer
  * */
-module.exports = (customNodeModulesPath) => {
+module.exports = (customNodeModulesPath = "") => {
     const pathHasEndWithSlash = customNodeModulesPath[customNodeModulesPath.length - 1] === "/";
     const newCustomNodeModulesPath = !pathHasEndWithSlash ? `${customNodeModulesPath}/` : customNodeModulesPath;
 
