@@ -1,9 +1,10 @@
 import {dirname} from "path";
 import {locateDirectory, locateEntrypoint, locateFile} from "./core/locate";
 import {Memoize} from "./core/memoize-decorator";
+import {ProjectConfig} from "./project-config";
 
 export class ProjectPaths {
-    constructor(private workingDirectory: string) {
+    constructor(private sourcesDirectory: string) {
     }
 
     getAll() {
@@ -26,12 +27,12 @@ export class ProjectPaths {
 
     @Memoize()
     get projectConfig(): string {
-        return locateFile("ffbt-config.js", this.workingDirectory);
+        return ProjectConfig.getPathToConfigFile(this.sourcesDirectory);
     }
 
     @Memoize()
     get projectPackageJson(): string {
-        return locateFile("package.json", this.workingDirectory);
+        return locateFile("package.json", this.sourcesDirectory);
     }
 
     @Memoize()
@@ -41,17 +42,17 @@ export class ProjectPaths {
 
     @Memoize()
     get projectWorkingDirectory(): string {
-        return this.workingDirectory;
+        return this.sourcesDirectory;
     }
 
     @Memoize()
     get projectNodeModules(): string {
-        return locateDirectory("node_modules", this.workingDirectory, false);
+        return locateDirectory("node_modules", this.sourcesDirectory, false);
     }
 
     @Memoize()
     get projectEntrypoint(): string {
-        return locateEntrypoint(this.workingDirectory, "index");
+        return locateEntrypoint(this.sourcesDirectory, "index");
     }
 
     @Memoize()

@@ -2,9 +2,11 @@ import {Prop} from "../core/prop";
 import {defaultConfig, IProjectConfig, ProjectEnv, ProjectEnvProperties} from "./default";
 import {merge} from "lodash";
 import {EnvironmentRegistry} from "../core/environment-registry";
-import {locateFile} from "../core/locate";
 import {DeepPartial} from "utility-types";
 import {WebpackLayerConfigurator} from "../services/webpack/config";
+import {locateFile} from "../core/locate";
+
+const CONFIG_FILE_NAME = "ffbt-config.js";
 
 export class ProjectConfig {
     private props: IProjectConfig;
@@ -46,8 +48,12 @@ export class ProjectConfig {
         }
     }
 
-    static loadFromFile(workingDirectory: string): ProjectConfig {
-        const configPath = locateFile("ffbt-config.js", workingDirectory);
+    static getPathToConfigFile(sourcesDirectory: string): string {
+        return locateFile(CONFIG_FILE_NAME, sourcesDirectory);
+    }
+
+    static loadFromFile(sourcesDirectory: string): ProjectConfig {
+        const configPath = this.getPathToConfigFile(sourcesDirectory);
         const config = require(configPath);
 
         return new this(config);
