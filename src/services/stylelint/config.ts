@@ -18,7 +18,7 @@ function getLintConfig(projectRoot: string) {
 }
 
 export function createStyleLintConfig(options: CommandOptions): Partial<StyleLintOptions> {
-    const paths = new ProjectPaths(options.path);
+    const paths = ProjectPaths.getInstance(options.path);
     const lintConfig = getLintConfig(paths.projectRoot);
 
     return {

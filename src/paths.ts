@@ -4,7 +4,17 @@ import {Memoize} from "./core/memoize-decorator";
 import {ProjectConfig} from "./project-config";
 
 export class ProjectPaths {
-    constructor(private sourcesDirectory: string) {
+    private static instance: ProjectPaths;
+
+    private constructor(private sourcesDirectory: string) {
+    }
+
+    static getInstance(sourcesDirectory: string): ProjectPaths {
+        if (!this.instance) {
+            this.instance = new this(sourcesDirectory);
+        }
+
+        return this.instance;
     }
 
     getAll() {

@@ -63,7 +63,7 @@ export abstract class BaseWebpackCommand extends BaseCommand {
         const environment = flags.env || this.getDefaultEnvironment();
 
         const projectConfig = this.createProjectConfig(sourcesDirectory, environment, flags);
-        const projectPaths = new ProjectPaths(sourcesDirectory);
+        const projectPaths = ProjectPaths.getInstance(sourcesDirectory);
         const webpackConfig = createWebpackConfig(projectConfig, sourcesDirectory);
 
         this.printBannerWithBuildInfo(projectConfig, projectPaths, flags.verbose);

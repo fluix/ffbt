@@ -33,7 +33,7 @@ export function createWebpackConfig(projectConfig: ProjectConfig, workingDirecto
         layers.push(require("./layers/caching").cachingConfigLayer);
     }
 
-    const paths = new ProjectPaths(workingDirectory);
+    const paths = ProjectPaths.getInstance(workingDirectory);
 
     const customWebpackLayer = projectConfig.configureWebpack;
     if (customWebpackLayer) {
