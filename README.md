@@ -16,6 +16,7 @@ Everything is already preconfigured for you
 - Stylelint
 
 ## Quick start
+- `npx typescript --init`
 - `npm i -g ffbt`
 - create an empty index.ts file
 - run `ffbt dev . --server`
