@@ -6,13 +6,14 @@
   "engines": {
     "node": ">=10"
   },
-  "files": [
-    "dist",
-    "oclif.manifest.json"
-  ],
   "bin": {
     "ffbt": "./dist/cli/entrypoint.js"
   },
+  "files": [
+    "dist",
+    "index.d.ts",
+    "oclif.manifest.json"
+  ],
   "scripts": {
     "start": "npm run ts-watch",
     "ts-watch": "tsc --watch --pretty",
@@ -22,7 +23,6 @@
     "postpack": "rm -f oclif.manifest.json",
     "prepack": "npm run build && oclif-dev manifest"
   },
-  "types": "./index.d.ts",
   "dependencies": {
     "@oclif/command": "^1.5.19",
     "@oclif/config": "^1.13.3",
