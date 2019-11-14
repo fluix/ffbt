@@ -29,10 +29,6 @@ export function createWebpackConfig(projectConfig: ProjectConfig, workingDirecto
         layers.push(require("./layers/clean-dist").cleanDistFolderConfigLayer);
     }
 
-    if (projectConfig.env.moveLibrariesToSeparateBundle) {
-        layers.push(require("./layers/vendor-bundle").vendorBundleConfigLayer);
-    }
-
     if (projectConfig.env.optimizeBundle) {
         layers.push(require("./layers/caching").cachingConfigLayer);
     }

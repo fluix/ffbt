@@ -29,7 +29,6 @@ export interface ProjectEnvProperties {
     enableTypeChecking: boolean;
     showBuildNotifications: boolean;
     cleanDistFolderBeforeBuild: boolean;
-    moveLibrariesToSeparateBundle: boolean;
     htmlWebpackPluginConfig: Partial<HtmlWebpackPlugin.Options>,
     devServerConfig: Partial<WebpackDevServer.Configuration>,
 }
@@ -48,7 +47,6 @@ export const defaultConfig: IProjectConfig = {
             showBuildNotifications: true,
             enableTypeChecking: true,
             cleanDistFolderBeforeBuild: false,
-            moveLibrariesToSeparateBundle: true,
             htmlWebpackPluginConfig: {},
             devServerConfig: {
                 port: 9393,

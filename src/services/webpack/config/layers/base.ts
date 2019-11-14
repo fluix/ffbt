@@ -19,11 +19,6 @@ export const baseConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) 
             chunkFilename: '[name].chunk.js',
             path: resolve(paths.projectRoot, projectConfig.env.outputPath),
         },
-        optimization: {
-            splitChunks: {
-                chunks: "all",
-            }
-        },
         module: {
             noParse: projectConfig.noParse,
             rules: [],
