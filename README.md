@@ -16,7 +16,7 @@ Everything is already preconfigured for you
 - Stylelint
 
 ## Quick start
-```sh
+```shell script
 npx typescript --init
 npm i -g ffbt
 touch index.ts
@@ -46,9 +46,10 @@ And run jest via NPM command. Here a package.json example:
 If you want to use Karma or something other which needs Webpack, you can configure it via `configureWebpack` hook in `ffbt-config.js`. See the docs about the configuration below.
 
 ## Configuration
-Create a file with name `ffbt-config.js` in the root of your project (near the package.json file)
+Usually you don't need config. If you need to change default behaviour - see the config structure below
 
-### Full annotated config example:
+Create a file with name `ffbt-config.js` in the root of your project (near the package.json file)
+### Config structure:
 ```javascript
 module.exports = {
     // FFBT is the environment-centric tool, almost all configuration is described in environments
@@ -92,33 +93,55 @@ module.exports = {
         // Hook for customizing Webpack config
         // You have access to the selected environment and helper for path calculation
         // Just return the part of Webpack config and it will be merged with the main config automatically
-        // Use it if you want to slightly extend functionality
+    },
+};
+```
 
-        // In this example, we add OfflinePlugin to add offline functionality to your app
+### Environment config flags
+Name | Description | Type
+--- | --- | ---
+browserlist |  Currently used only in CSS Aftoprefixer. | string [Syntax Docs](https://github.com/browserslist/browserslist#full-list)
+outputPath | Destination path, your bundle will be created here | string
+sourceMapType | Source map type. | string [Docs](https://webpack.js.org/configuration/devtool/#devtool)
+staticFilesSizeThresholdKb | All assets with a size lower than the limit will be inlined, otherwise, they will be copied to the destination folder as is | number (Kilobytes)
+showBuildNotifications | Enable/Disable build and type checker system notifications | boolean
+enableTypeChecking | Enable/Disable typechecking for Typescript | boolean
+cleanDistFolderBeforeBuild | The name speaks for itself | boolean
+devServerConfig | Settings for the WebpackDevServer. | object [Docs](https://webpack.js.org/configuration/dev-server/)
+buildVersion | A string represents the version of the bundle. Accessible in your code via `FFBT_BUILD_VERSION` constant | string
+
+#### Config example
+```javascript
+module.exports = {
+    environments: {
+        default: {
+            browserlist: "last 2 versions",
+            outputPath: "dist",
+            staticFilesSizeThresholdKb: 10,
+            showBuildNotifications: true,
+            enableTypeChecking: true,
+            cleanDistFolderBeforeBuild: false,
+            devServerConfig: {
+                port: 9393,
+            },
+        },
+        development: {
+            sourceMapType: "eval",
+        },
+        production: {
+            sourceMapType: "nosources-source-map",
+            optimizeBundle: true,
+            showBuildNotifications: false,
+            enableTypeChecking: false,
+            cleanDistFolderBeforeBuild: true,
+        },
+    },
+    configureWebpack: () => {
         return {
             plugins: [
                 new OfflinePlugin(),
             ]
         }
-    },
+    }
 };
-
 ```
-
-### Environment flags
-Name | Description
---- | --- 
-browserlist |  Currently used only in CSS Aftoprefixer. [Syntax Docs](https://github.com/browserslist/browserslist#full-list)
-outputPath | Destination path, your bundle will be created here
-sourceMapType | Source map type. [Docs](https://webpack.js.org/configuration/devtool/#devtool)
-staticFilesSizeThresholdKb | All assets with a size lower than the limit will be inlined, otherwise, they will be copied to the destination folder as is
-showBuildNotifications | Enable/Disable build and type checker system notifications
-enableTypeChecking | Enable/Disable typechecking for Typescript
-cleanDistFolderBeforeBuild | The name speaks for itself
-devServerConfig | Settings for the WebpackDevServer. [Docs](https://webpack.js.org/configuration/dev-server/)
-buildVersion | A string represents the version of the bundle. Accessible in your code via `FFBT_BUILD_VERSION` constant
-
-There are more flags in the system than described above. If you want to use flags that not described in the table - keep in mind that it can break the build process. Use them at your own risk
-
-### Environment defaults
-[See here](https://github.com/fluix/ffbt/blob/master/src/project-config/default.ts)
