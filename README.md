@@ -110,7 +110,7 @@ cleanDistFolderBeforeBuild | The name speaks for itself | boolean
 devServerConfig | Settings for the WebpackDevServer. | object [Docs](https://webpack.js.org/configuration/dev-server/)
 buildVersion | A string represents the version of the bundle. Accessible in your code via `FFBT_BUILD_VERSION` constant | string
 
-#### Config example
+### Config example
 ```javascript
 module.exports = {
     environments: {
