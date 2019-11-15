@@ -28,6 +28,11 @@ export const baseConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) 
         },
         resolveLoader: {
             modules: whereToSearchLoaders,
-        }
+        },
+        optimization: {
+            splitChunks: {
+                chunks: "all",
+            },
+        },
     };
 };
