@@ -51,9 +51,9 @@ Create a file with name `ffbt-config.js` in the root of your project (near the p
 ### Full annotated config example:
 ```javascript
 module.exports = {
-    // FFBT is the environment-centric tool, almost all configuration describes in environments
+    // FFBT is the environment-centric tool, almost all configuration is described in environments
     // You can extend environments from each other
-    // All environments extend from "default" automatically unless you specify "_extends" property.
+    // All environments extend "default" automatically unless you specify "_extends" property.
     // See the example below
     environments: {
         default: {
