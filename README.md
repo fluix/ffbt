@@ -1,6 +1,6 @@
 # FFBT: Fluix Frontend Build Tools [![Build Status](https://travis-ci.org/fluix/ffbt.svg?branch=master)](https://travis-ci.org/fluix/ffbt)
 
-A tool to create a Typescript web app without pain. 
+A tool to build a Typescript based web app without pain.
 
 `npm i ffbt`
 
@@ -58,7 +58,7 @@ module.exports = {
     // See the example below
     environments: {
         default: {
-            // It contains default values for all flags in the system.
+            // It contains default values for all flags in the environment.
             // See a list of all flags in the table below.
 
             // Use it if you want to propagate values to all environments
