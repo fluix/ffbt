@@ -1,4 +1,4 @@
-# FFBT: Fluix Frontend Build Tools [![Build Status](https://travis-ci.org/fluix/ffbt.svg?branch=master)](https://travis-ci.org/fluix/ffbt)
+# FFBT: Fluix Frontend Build Tools
 
 A tool to build a Typescript based web app without pain.
 
