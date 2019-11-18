@@ -19,7 +19,8 @@
     "ts-watch": "tsc --watch --pretty",
     "build": "rm -rf dist && tsc",
     "test": "jest",
-    "test-watch": "jest --watchAll",
+    "test:watch": "jest --watchAll",
+    "test:ci": "jest --ci",
     "postpack": "rm -f oclif.manifest.json",
     "prepack": "npm run build && oclif-dev manifest"
   },
