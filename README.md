@@ -1,11 +1,14 @@
-# FFBT: Fluix Frontend Build Tools
+# FFBT: Fluix Frontend Build Tool
 
 A tool to build a Typescript based web app without pain.
 
-`npm i ffbt`
-
 You don't need to install and configure Webpack with a lot of plugins for Typescript, SASS, etc. 
 Everything is already preconfigured for you
+
+## Quick start
+```shell script
+npx ffbt-init [PATH_TO_NEW_PROJECT]
+```
 
 ## What's inside?
 - Webpack with configurations for development and production environments
@@ -14,36 +17,6 @@ Everything is already preconfigured for you
 - SASS with Autoprefixer and import-once plugin
 - TSlint
 - Stylelint
-
-## Quick start
-```shell script
-npx typescript --init
-npm i -g ffbt
-touch index.ts
-ffbt dev . --server
-```
-
-You can run FFBT as a global executable or install it locally and invoke via NPM scripts
-
-## How about unit tests?
-We don't include a testing framework. Every project is unique and sometimes needs a specific test environment. 
-We suggest starting from [Jest](https://jestjs.io/) because it's a fast and reliable solution.
-
-Quick setup (using [ts-jest](https://github.com/kulshekhar/ts-jest) for Typescript support):
-```
-npm i -D jest ts-jest @types/jest
-npx ts-jest config:init
-```
-And run jest via NPM command. Here a package.json example:
-```json
-{
-    "scripts": {
-        "test": "jest",
-    }
-}
-```
-
-If you want to use Karma or something other which needs Webpack, you can configure it via `configureWebpack` hook in `ffbt-config.js`. See the docs about the configuration below.
 
 ## Configuration
 Usually you don't need config. If you need to change default behaviour - see the config structure below
