@@ -1,11 +1,6 @@
 {
   "extends": "tslint-config-airbnb",
   "rulesDirectory": "ts-rules",
-  "linterOptions": {
-    "exclude": [
-      "node_modules/**"
-    ]
-  },
   "rules": {
     "spec-defocus": true,
     "no-underscore-property": true,

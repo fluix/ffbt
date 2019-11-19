@@ -22,7 +22,7 @@ export function createTsLintConfig(options: CommandOptions): Options {
     return {
         config: lintConfigPath,
         exclude: ["node_modules/**"],
-        files: [path.resolve(paths.projectRoot, "./**/*.ts?(x)")],
+        files: [path.resolve(paths.projectWorkingDirectory, "./**/*.ts?(x)")],
         fix: options.fix,
         force: options.force,
         format: "stylish",
