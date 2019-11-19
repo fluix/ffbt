@@ -21,7 +21,7 @@ export function createTsLintConfig(options: CommandOptions): Options {
 
     return {
         config: lintConfigPath,
-        exclude: ["node_modules/**/*"],
+        exclude: ["node_modules/**"],
         files: [path.resolve(paths.projectRoot, "./**/*.ts?(x)")],
         fix: options.fix,
         force: options.force,
