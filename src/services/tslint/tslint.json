@@ -48,6 +48,7 @@
     "no-trailing-whitespace": [true, "ignore-template-strings", "ignore-comments", "ignore-blank-lines"],
     "no-unused-expression": true,
     "no-var-keyword": true,
+    "no-boolean-literal-compare": false,
     "new-parens": true,
     "one-line": [
       true,
