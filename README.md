@@ -78,6 +78,7 @@ outputPath | Destination path, your bundle will be created here | string
 sourceMapType | Source map type. | string [Docs](https://webpack.js.org/configuration/devtool/#devtool)
 staticFilesSizeThresholdKb | All assets with a size lower than the limit will be inlined, otherwise, they will be copied to the destination folder as is | number (Kilobytes)
 entrypointName | An entrypoint file name without ts/tsx extension | string
+tsconfigPath | Path to tsconfig file | string
 devServerConfig | Settings for the WebpackDevServer. | object [Docs](https://webpack.js.org/configuration/dev-server/)
 buildVersion | A string represents the version of the bundle. Accessible in your code via `FFBT_BUILD_VERSION` constant | string
 showBuildNotifications | Enable/Disable build and type checker system notifications | boolean
