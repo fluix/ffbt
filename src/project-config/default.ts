@@ -33,6 +33,7 @@ export interface ProjectEnvProperties {
     devServerConfig: Partial<WebpackDevServer.Configuration>,
     enableCacheBusting: boolean;
     entrypointName: string;
+    tsconfigPath: string;
 }
 
 export const defaultConfig: IProjectConfig = {
@@ -52,6 +53,7 @@ export const defaultConfig: IProjectConfig = {
             htmlWebpackPluginConfig: {},
             enableCacheBusting: false,
             entrypointName: "index",
+            tsconfigPath: "./tsconfig.json",
             devServerConfig: {
                 port: 9393,
                 host: "0.0.0.0",

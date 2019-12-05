@@ -76,6 +76,6 @@ export class ProjectPaths {
 
     @Memoize()
     get projectTsConfig(): string {
-        return locateFile("tsconfig.json", this.projectRoot);
+        return locateFile(this.env.tsconfigPath, this.projectRoot);
     }
 }
