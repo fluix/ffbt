@@ -23,7 +23,7 @@ export class ProjectConfig {
     public readonly paths: ProjectPaths;
 
     constructor(
-        sourcesDirectory: string,
+        public readonly sourcesDirectory: string,
         projectConfig: DeepPartial<IProjectConfig> = {},
         defaults = defaultConfig,
     ) {
@@ -31,7 +31,7 @@ export class ProjectConfig {
         this.fixIncorrectConfigValuesForWebpack();
         this.environments.addMany(this.props.environments);
 
-        this.paths = new ProjectPaths(sourcesDirectory);
+        this.paths = new ProjectPaths(this);
     }
 
     setCurrentEnvironmentName(currentEnvName: string) {

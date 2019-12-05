@@ -4,7 +4,15 @@ import {Memoize} from "../core/memoize-decorator";
 import {ProjectConfig} from "./";
 
 export class ProjectPaths {
-    constructor(private sourcesDirectory: string) {
+    constructor(private config: ProjectConfig) {
+    }
+
+    private get sourcesDirectory() {
+        return this.config.sourcesDirectory;
+    }
+
+    private get env() {
+        return this.config.env;
     }
 
     getAll() {
@@ -52,7 +60,6 @@ export class ProjectPaths {
         return dirname(firstValidRoot);
     }
 
-    @Memoize()
     get projectWorkingDirectory(): string {
         return this.sourcesDirectory;
     }
@@ -64,7 +71,7 @@ export class ProjectPaths {
 
     @Memoize()
     get projectEntrypoint(): string {
-        return locateEntrypoint(this.sourcesDirectory, "index");
+        return locateEntrypoint(this.sourcesDirectory, this.env.entrypointName);
     }
 
     @Memoize()

@@ -32,6 +32,7 @@ export interface ProjectEnvProperties {
     htmlWebpackPluginConfig: Partial<HtmlWebpackPlugin.Options>,
     devServerConfig: Partial<WebpackDevServer.Configuration>,
     enableCacheBusting: boolean;
+    entrypointName: string;
 }
 
 export const defaultConfig: IProjectConfig = {
@@ -50,6 +51,7 @@ export const defaultConfig: IProjectConfig = {
             cleanDistFolderBeforeBuild: false,
             htmlWebpackPluginConfig: {},
             enableCacheBusting: false,
+            entrypointName: "index",
             devServerConfig: {
                 port: 9393,
                 host: "0.0.0.0",
