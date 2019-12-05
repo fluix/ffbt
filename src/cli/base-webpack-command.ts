@@ -8,7 +8,6 @@ import * as webpack from "webpack";
 import * as Parser from "@oclif/parser";
 import {ServiceRunStrategy} from "../services/run-strategy";
 import {ProjectEnvProperties} from "../project-config/default";
-import {ProjectPaths} from "../paths";
 
 export interface BaseWebpackFlags extends BaseFlags {
     output: string | undefined;

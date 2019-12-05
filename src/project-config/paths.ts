@@ -1,7 +1,7 @@
 import {dirname} from "path";
-import {locateDirectory, locateEntrypoint, locateFile} from "./core/locate";
-import {Memoize} from "./core/memoize-decorator";
-import {ProjectConfig} from "./project-config";
+import {locateDirectory, locateEntrypoint, locateFile} from "../core/locate";
+import {Memoize} from "../core/memoize-decorator";
+import {ProjectConfig} from "./";
 
 export class ProjectPaths {
     constructor(private sourcesDirectory: string) {

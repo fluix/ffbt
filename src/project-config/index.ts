@@ -5,7 +5,7 @@ import {EnvironmentRegistry} from "../core/environment-registry";
 import {DeepPartial} from "utility-types";
 import {WebpackLayerConfigurator} from "../services/webpack/config";
 import {locateFile} from "../core/locate";
-import {ProjectPaths} from "../paths";
+import {ProjectPaths} from "./paths";
 
 const CONFIG_FILE_NAME = "ffbt-config.js";
 

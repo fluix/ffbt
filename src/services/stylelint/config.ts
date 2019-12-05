@@ -1,7 +1,6 @@
 import * as path from "path";
 import {LinterOptions as StyleLintOptions} from "stylelint";
 import {locateFile} from "../../core/locate";
-import {ProjectPaths} from "../../paths";
 import {ProjectConfig} from "../../project-config";
 
 interface CommandOptions {
