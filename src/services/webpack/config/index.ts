@@ -29,7 +29,7 @@ export function createWebpackConfig(projectConfig: ProjectConfig, workingDirecto
         layers.push(require("./layers/clean-dist").cleanDistFolderConfigLayer);
     }
 
-    if (projectConfig.env.optimizeBundle) {
+    if (projectConfig.env.enableCacheBusting) {
         layers.push(require("./layers/caching").cachingConfigLayer);
     }
 

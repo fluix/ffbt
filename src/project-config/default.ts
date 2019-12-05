@@ -31,6 +31,7 @@ export interface ProjectEnvProperties {
     cleanDistFolderBeforeBuild: boolean;
     htmlWebpackPluginConfig: Partial<HtmlWebpackPlugin.Options>,
     devServerConfig: Partial<WebpackDevServer.Configuration>,
+    enableCacheBusting: boolean;
 }
 
 export const defaultConfig: IProjectConfig = {
@@ -48,6 +49,7 @@ export const defaultConfig: IProjectConfig = {
             enableTypeChecking: true,
             cleanDistFolderBeforeBuild: false,
             htmlWebpackPluginConfig: {},
+            enableCacheBusting: false,
             devServerConfig: {
                 port: 9393,
                 host: "0.0.0.0",
@@ -72,6 +74,7 @@ export const defaultConfig: IProjectConfig = {
             showBuildNotifications: false,
             enableTypeChecking: false,
             cleanDistFolderBeforeBuild: true,
+            enableCacheBusting: true,
         }
     },
     noParse: undefined,

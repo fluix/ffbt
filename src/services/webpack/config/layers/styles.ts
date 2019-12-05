@@ -56,8 +56,8 @@ export const stylesConfigLayer: WebpackLayerConfigurator = (projectConfig, paths
         },
         plugins: [
             new MiniCssExtractPlugin({
-                filename: projectConfig.env.optimizeBundle ? "[name].[contenthash].css" : "[name].css",
-                chunkFilename: projectConfig.env.optimizeBundle ? "[id].[contenthash].css" : "[id].css",
+                filename: projectConfig.env.enableCacheBusting ? "[name].[contenthash].css" : "[name].css",
+                chunkFilename: projectConfig.env.enableCacheBusting ? "[id].[contenthash].css" : "[id].css",
             }),
         ],
     };
