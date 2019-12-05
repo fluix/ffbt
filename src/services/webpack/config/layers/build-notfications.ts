@@ -13,6 +13,7 @@ export const buildNotificationsConfigLayer: WebpackLayerConfigurator = () => {
             new WebpackNotifierPlugin({
                 title: "FFBT",
                 alwaysNotify: true,
+                excludeWarnings: true,
             }),
         ]
     };
