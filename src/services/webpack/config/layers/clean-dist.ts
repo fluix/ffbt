@@ -1,7 +1,7 @@
 import {WebpackLayerConfigurator} from "../index";
 import {CleanWebpackPlugin} from "clean-webpack-plugin";
 
-export const cleanDistFolderConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
+export const cleanDistFolderConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
     return {
         plugins: [
             new CleanWebpackPlugin({

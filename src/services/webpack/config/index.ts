@@ -1,9 +1,8 @@
 import {ProjectConfig} from "../../../project-config";
 import * as webpack from "webpack";
 import * as webpackMerge from "webpack-merge";
-import {ProjectPaths} from "../../../paths";
 
-export type WebpackLayerConfigurator = (projectConfig: ProjectConfig, paths: ProjectPaths) => webpack.Configuration;
+export type WebpackLayerConfigurator = (projectConfig: ProjectConfig) => webpack.Configuration;
 
 export function createWebpackConfig(projectConfig: ProjectConfig, workingDirectory: string): webpack.Configuration {
     const layers: Array<WebpackLayerConfigurator> = [
@@ -33,14 +32,12 @@ export function createWebpackConfig(projectConfig: ProjectConfig, workingDirecto
         layers.push(require("./layers/caching").cachingConfigLayer);
     }
 
-    const paths = ProjectPaths.getInstance(workingDirectory);
-
     const customWebpackLayer = projectConfig.configureWebpack;
     if (customWebpackLayer) {
         layers.push(customWebpackLayer);
     }
 
-    const configuredWebpackLayers = layers.map(layer => layer(projectConfig, paths));
+    const configuredWebpackLayers = layers.map(layer => layer(projectConfig));
 
     return webpackMerge.smart(...configuredWebpackLayers);
 }

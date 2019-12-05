@@ -7,7 +7,8 @@ interface TsConfig {
     compilerOptions: CompilerOptions;
 }
 
-export const typescriptConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
+export const typescriptConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
+    const {paths} = projectConfig;
     const tsConfigPath = paths.projectTsConfig;
     const tsConfig = readJson<TsConfig>(tsConfigPath);
     const plugins: Array<any> = [];

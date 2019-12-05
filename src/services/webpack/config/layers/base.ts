@@ -1,7 +1,9 @@
 import {resolve} from "path";
 import {WebpackLayerConfigurator} from "../index";
 
-export const baseConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
+export const baseConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
+    const {paths} = projectConfig;
+
     const whereToSearchLoaders = [
         "node_modules",
         resolve(paths.ffbtRoot, "node_modules"),

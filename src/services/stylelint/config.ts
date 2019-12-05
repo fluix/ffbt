@@ -2,6 +2,7 @@ import * as path from "path";
 import {LinterOptions as StyleLintOptions} from "stylelint";
 import {locateFile} from "../../core/locate";
 import {ProjectPaths} from "../../paths";
+import {ProjectConfig} from "../../project-config";
 
 interface CommandOptions {
     path: string;
@@ -18,12 +19,12 @@ function getLintConfig(projectRoot: string) {
 }
 
 export function createStyleLintConfig(options: CommandOptions): Partial<StyleLintOptions> {
-    const paths = ProjectPaths.getInstance(options.path);
-    const lintConfig = getLintConfig(paths.projectRoot);
+    const projectConfig = ProjectConfig.loadFromFile(options.path);
+    const lintConfig = getLintConfig(projectConfig.paths.projectRoot);
 
     return {
         config: lintConfig,
         fix: options.fix,
-        files: path.join(paths.projectWorkingDirectory, "./**/**/**.scss"),
+        files: path.join(projectConfig.paths.projectWorkingDirectory, "./**/**/**.scss"),
     };
 }

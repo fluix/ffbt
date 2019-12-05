@@ -5,7 +5,7 @@ import {WebpackLayerConfigurator} from "../index";
 
 // TODO: run in a separate process via thread-loader
 //   https://webpack.js.org/guides/build-performance/#sass
-export const stylesConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
+export const stylesConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
     return {
         module: {
             rules: [
@@ -26,7 +26,7 @@ export const stylesConfigLayer: WebpackLayerConfigurator = (projectConfig, paths
                             loader: "sass-loader",
                             options: {
                                 sassOptions: {
-                                    importer: importOnce(paths.projectNodeModules || ""),
+                                    importer: importOnce(projectConfig.paths.projectNodeModules || ""),
                                     importOnce: {
                                         index: true,
                                         css: false,

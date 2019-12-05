@@ -5,6 +5,7 @@ import {EnvironmentRegistry} from "../core/environment-registry";
 import {DeepPartial} from "utility-types";
 import {WebpackLayerConfigurator} from "../services/webpack/config";
 import {locateFile} from "../core/locate";
+import {ProjectPaths} from "../paths";
 
 const CONFIG_FILE_NAME = "ffbt-config.js";
 
@@ -19,11 +20,18 @@ export class ProjectConfig {
     @Prop() noParse!: any;
     @Prop() configureWebpack!: WebpackLayerConfigurator;
 
-    constructor(projectConfig: DeepPartial<IProjectConfig> = {}, defaults = defaultConfig) {
+    public readonly paths: ProjectPaths;
+
+    constructor(
+        sourcesDirectory: string,
+        projectConfig: DeepPartial<IProjectConfig> = {},
+        defaults = defaultConfig,
+    ) {
         this.props = merge({} as IProjectConfig, defaults, projectConfig);
         this.fixIncorrectConfigValuesForWebpack();
-
         this.environments.addMany(this.props.environments);
+
+        this.paths = new ProjectPaths(sourcesDirectory);
     }
 
     setCurrentEnvironmentName(currentEnvName: string) {
@@ -57,10 +65,10 @@ export class ProjectConfig {
 
         if (!configPath) {
             // It's OK if we can't find the config, just create it from default values
-            return new this();
+            return new this(sourcesDirectory);
         }
 
         const config = require(configPath);
-        return new this(config);
+        return new this(sourcesDirectory, config);
     }
 }
