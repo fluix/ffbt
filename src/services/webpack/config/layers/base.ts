@@ -19,7 +19,7 @@ export const baseConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
         output: {
             filename: '[name].bundle.js',
             chunkFilename: '[name].chunk.js',
-            path: resolve(paths.projectRoot, projectConfig.env.outputPath),
+            path: paths.destination,
         },
         module: {
             noParse: projectConfig.env.noParse,

@@ -1,4 +1,4 @@
-import {dirname} from "path";
+import {dirname, resolve} from "path";
 import {locateDirectory, locateEntrypoint, locateFile} from "../core/locate";
 import {Memoize} from "../core/memoize-decorator";
 import {ProjectConfig} from "./";
@@ -25,6 +25,7 @@ export class ProjectPaths {
             projectNodeModules: this.projectNodeModules,
             projectEntrypoint: this.projectEntrypoint,
             projectTsConfig: this.projectTsConfig,
+            destination: this.destination,
         }
     }
 
@@ -77,5 +78,10 @@ export class ProjectPaths {
     @Memoize()
     get projectTsConfig(): string {
         return locateFile(this.env.tsconfigPath, this.projectRoot);
+    }
+
+    @Memoize()
+    get destination(): string {
+        return resolve(this.projectRoot, this.env.outputPath);
     }
 }
