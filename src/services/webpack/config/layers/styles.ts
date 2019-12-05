@@ -37,6 +37,21 @@ export const stylesConfigLayer: WebpackLayerConfigurator = (projectConfig, paths
                         },
                     ],
                 },
+                {
+                    test: /\.css$/i,
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        "css-loader",
+                        {
+                            loader: "postcss-loader",
+                            options: {
+                                plugins: [
+                                    autoprefixer(projectConfig.env.browserlist),
+                                ],
+                            },
+                        },
+                    ]
+                },
             ],
         },
         plugins: [
