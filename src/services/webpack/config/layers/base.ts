@@ -22,11 +22,11 @@ export const baseConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
             path: resolve(paths.projectRoot, projectConfig.env.outputPath),
         },
         module: {
-            noParse: projectConfig.noParse,
+            noParse: projectConfig.env.noParse,
             rules: [],
         },
         resolve: {
-            alias: projectConfig.aliases,
+            alias: projectConfig.env.aliases,
         },
         resolveLoader: {
             modules: whereToSearchLoaders,

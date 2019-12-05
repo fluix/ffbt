@@ -11,11 +11,15 @@ describe("Project Config", () => {
         const aliases = {"key": "value"};
 
         const projectConfig = new ProjectConfig("", {
-            aliases,
+            environments: {
+                default: {
+                    aliases
+                }
+            },
         });
 
         projectConfig.setCurrentEnvironmentName("default");
-        expect(projectConfig.aliases).toEqual(aliases);
+        expect(projectConfig.env.aliases).toEqual(aliases);
     });
 
     test("deep merge default and custom settings", () => {
@@ -58,10 +62,10 @@ describe("Project Config", () => {
 
     test("converts [], null in noParse to undefined (required by webpack)", () => {
         const configWithArrayNoParse = new ProjectConfig("", {noParse: []} as any);
-        expect(configWithArrayNoParse.noParse).toBeUndefined();
+        expect(configWithArrayNoParse.env.noParse).toBeUndefined();
 
         const configWithNullNoParse = new ProjectConfig("", {noParse: null} as any);
-        expect(configWithNullNoParse.noParse).toBeUndefined();
+        expect(configWithNullNoParse.env.noParse).toBeUndefined();
     });
 
     test("shallow override environment settings", () => {

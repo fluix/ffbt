@@ -14,7 +14,8 @@ npx ffbt-init [PATH_TO_NEW_PROJECT]
 - Webpack with configurations for development and production environments
 - Dev server with live reload
 - Typescript
-- SASS with Autoprefixer and import-once plugin
+- CSS and SASS with Autoprefixer
+- import-once plugin for SASS
 - TSlint
 - Stylelint
 
@@ -45,8 +46,7 @@ module.exports = {
         customProduction: {
             // Custom env extended from the production. You can have as many custom envs as you need
             // Usage example: ffbt build --env=customProduction
-            // Environment extension is recursive, so you can use an object with deep nesting and everything will be OK
-
+            // Environment extension is a shallow merge
 
             // For example, you want to make a bundle for production but without source maps
             _extends: "production",
@@ -86,6 +86,8 @@ enableTypeChecking | Enable/Disable typechecking for Typescript | boolean
 cleanDistFolderBeforeBuild | The name speaks for itself | boolean
 optimizeBundle | Minify and three-shake the output | boolean
 enableCacheBusting | Add hashes to the output file names | boolean
+noParse | Webpack's module.noParse ([Docs](https://webpack.js.org/configuration/module/#modulenoparse))| []
+aliases | Webpack's resolve.alias ([Docs](https://webpack.js.org/configuration/resolve/#resolvealias)) | {}
 
 ### Config example
 ```javascript
