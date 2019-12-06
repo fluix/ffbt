@@ -3,19 +3,23 @@ import {defaultConfig} from "./default";
 
 describe("Project Config", () => {
     test("use default profile by default", () => {
-        const projectConfig = new ProjectConfig();
+        const projectConfig = new ProjectConfig("");
         expect(projectConfig.env._name).toBe("default");
     });
 
     test("applies default values to the config", () => {
         const aliases = {"key": "value"};
 
-        const projectConfig = new ProjectConfig({
-            aliases,
+        const projectConfig = new ProjectConfig("", {
+            environments: {
+                default: {
+                    aliases
+                }
+            },
         });
 
         projectConfig.setCurrentEnvironmentName("default");
-        expect(projectConfig.aliases).toEqual(aliases);
+        expect(projectConfig.env.aliases).toEqual(aliases);
     });
 
     test("deep merge default and custom settings", () => {
@@ -43,7 +47,7 @@ describe("Project Config", () => {
             }
         };
 
-        const projectConfig = new ProjectConfig(customConfig, defaultConfig);
+        const projectConfig = new ProjectConfig("", customConfig, defaultConfig);
 
         expect(projectConfig.env).toMatchObject({
             "a": {
@@ -57,15 +61,15 @@ describe("Project Config", () => {
     });
 
     test("converts [], null in noParse to undefined (required by webpack)", () => {
-        const configWithArrayNoParse = new ProjectConfig({noParse: []} as any);
-        expect(configWithArrayNoParse.noParse).toBeUndefined();
+        const configWithArrayNoParse = new ProjectConfig("", {noParse: []} as any);
+        expect(configWithArrayNoParse.env.noParse).toBeUndefined();
 
-        const configWithNullNoParse = new ProjectConfig({noParse: null} as any);
-        expect(configWithNullNoParse.noParse).toBeUndefined();
+        const configWithNullNoParse = new ProjectConfig("", {noParse: null} as any);
+        expect(configWithNullNoParse.env.noParse).toBeUndefined();
     });
 
     test("shallow override environment settings", () => {
-        const projectConfig = new ProjectConfig();
+        const projectConfig = new ProjectConfig("");
         const originalEnvValue = projectConfig.env.buildVersion;
 
         projectConfig.overrideEnvironmentSettings({

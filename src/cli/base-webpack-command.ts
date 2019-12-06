@@ -8,7 +8,6 @@ import * as webpack from "webpack";
 import * as Parser from "@oclif/parser";
 import {ServiceRunStrategy} from "../services/run-strategy";
 import {ProjectEnvProperties} from "../project-config/default";
-import {ProjectPaths} from "../paths";
 
 export interface BaseWebpackFlags extends BaseFlags {
     output: string | undefined;
@@ -63,10 +62,9 @@ export abstract class BaseWebpackCommand extends BaseCommand {
         const environment = flags.env || this.getDefaultEnvironment();
 
         const projectConfig = this.createProjectConfig(sourcesDirectory, environment, flags);
-        const projectPaths = ProjectPaths.getInstance(sourcesDirectory);
         const webpackConfig = createWebpackConfig(projectConfig, sourcesDirectory);
 
-        this.printBannerWithBuildInfo(projectConfig, projectPaths, flags.verbose);
+        this.printBannerWithBuildInfo(projectConfig, flags.verbose);
 
         this.getWebpackRunner(webpackConfig).run();
     }
@@ -103,14 +101,14 @@ export abstract class BaseWebpackCommand extends BaseCommand {
             : process.cwd();
     }
 
-    private printBannerWithBuildInfo(projectConfig: ProjectConfig, paths: ProjectPaths, verbose: boolean) {
+    private printBannerWithBuildInfo(projectConfig: ProjectConfig, verbose: boolean) {
         console.log("Environment: " + projectConfig.env._name);
-        console.log("Source Directory: " + paths.projectWorkingDirectory);
+        console.log("Source Directory: " + projectConfig.paths.projectWorkingDirectory);
         console.log();
 
         if (verbose) {
             console.log("Current environment", projectConfig.env, "\n");
-            console.log("Paths", paths.getAll(), "\n");
+            console.log("Paths", projectConfig.paths.getAll(), "\n");
         }
     }
 }

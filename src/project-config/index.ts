@@ -5,6 +5,7 @@ import {EnvironmentRegistry} from "../core/environment-registry";
 import {DeepPartial} from "utility-types";
 import {WebpackLayerConfigurator} from "../services/webpack/config";
 import {locateFile} from "../core/locate";
+import {ProjectPaths} from "./paths";
 
 const CONFIG_FILE_NAME = "ffbt-config.js";
 
@@ -13,17 +14,20 @@ export class ProjectConfig {
     private readonly environments = new EnvironmentRegistry<ProjectEnv>();
     private currentEnvName: string = "default";
 
-    // We don't care about types in this getters, just proxy values which comes from props
-    // If you try to specify types you'll get a lot of type errors in webpack layers
-    @Prop() aliases!: any;
-    @Prop() noParse!: any;
     @Prop() configureWebpack!: WebpackLayerConfigurator;
 
-    constructor(projectConfig: DeepPartial<IProjectConfig> = {}, defaults = defaultConfig) {
+    public readonly paths: ProjectPaths;
+
+    constructor(
+        public readonly sourcesDirectory: string,
+        projectConfig: DeepPartial<IProjectConfig> = {},
+        defaults = defaultConfig,
+    ) {
         this.props = merge({} as IProjectConfig, defaults, projectConfig);
         this.fixIncorrectConfigValuesForWebpack();
-
         this.environments.addMany(this.props.environments);
+
+        this.paths = new ProjectPaths(this);
     }
 
     setCurrentEnvironmentName(currentEnvName: string) {
@@ -40,11 +44,12 @@ export class ProjectConfig {
 
     // Normalize some values that seems to be correct but webpack interprets them as incorrect
     private fixIncorrectConfigValuesForWebpack() {
-        const noParseIsEmptyArray = Array.isArray(this.noParse) && !this.noParse.length;
-        const noParseIsNull = this.noParse === null;
+        const noParse = this.env.noParse;
+        const noParseIsEmptyArray = Array.isArray(noParse) && !noParse.length;
+        const noParseIsNull = noParse === null;
 
         if (noParseIsEmptyArray || noParseIsNull) {
-            this.props.noParse = undefined;
+            this.env.noParse = undefined;
         }
     }
 
@@ -57,10 +62,10 @@ export class ProjectConfig {
 
         if (!configPath) {
             // It's OK if we can't find the config, just create it from default values
-            return new this();
+            return new this(sourcesDirectory);
         }
 
         const config = require(configPath);
-        return new this(config);
+        return new this(sourcesDirectory, config);
     }
 }

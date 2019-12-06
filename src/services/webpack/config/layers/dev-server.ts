@@ -1,6 +1,6 @@
 import {WebpackLayerConfigurator} from "../index";
 
-export const devServerConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
+export const devServerConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
     return {
         devServer: {
             ...projectConfig.env.devServerConfig,

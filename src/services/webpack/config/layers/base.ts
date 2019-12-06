@@ -1,7 +1,9 @@
 import {resolve} from "path";
 import {WebpackLayerConfigurator} from "../index";
 
-export const baseConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
+export const baseConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
+    const {paths} = projectConfig;
+
     const whereToSearchLoaders = [
         "node_modules",
         resolve(paths.ffbtRoot, "node_modules"),
@@ -17,14 +19,14 @@ export const baseConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) 
         output: {
             filename: '[name].bundle.js',
             chunkFilename: '[name].chunk.js',
-            path: resolve(paths.projectRoot, projectConfig.env.outputPath),
+            path: paths.destination,
         },
         module: {
-            noParse: projectConfig.noParse,
+            noParse: projectConfig.env.noParse,
             rules: [],
         },
         resolve: {
-            alias: projectConfig.aliases,
+            alias: projectConfig.env.aliases,
         },
         resolveLoader: {
             modules: whereToSearchLoaders,

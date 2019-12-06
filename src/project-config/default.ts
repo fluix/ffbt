@@ -8,9 +8,6 @@ export interface IProjectConfig {
     environments: Record<string, Partial<ProjectEnv>> & {
         default: ProjectEnv;
     };
-    // copied from webpack typings because "PickProp" works bad in this case, I don't know why
-    aliases?: Record<string, string>;
-    noParse?: RegExp | RegExp[] | ((content: string) => boolean);
     configureWebpack?: WebpackLayerConfigurator;
 }
 
@@ -31,6 +28,11 @@ export interface ProjectEnvProperties {
     cleanDistFolderBeforeBuild: boolean;
     htmlWebpackPluginConfig: Partial<HtmlWebpackPlugin.Options>,
     devServerConfig: Partial<WebpackDevServer.Configuration>,
+    enableCacheBusting: boolean;
+    entrypointName: string;
+    tsconfigPath: string;
+    aliases: Record<string, string>;
+    noParse?: RegExp | RegExp[] | ((content: string) => boolean);
 }
 
 export const defaultConfig: IProjectConfig = {
@@ -48,6 +50,11 @@ export const defaultConfig: IProjectConfig = {
             enableTypeChecking: true,
             cleanDistFolderBeforeBuild: false,
             htmlWebpackPluginConfig: {},
+            enableCacheBusting: false,
+            entrypointName: "index",
+            tsconfigPath: "./tsconfig.json",
+            aliases: {},
+            noParse: undefined,
             devServerConfig: {
                 port: 9393,
                 host: "0.0.0.0",
@@ -72,9 +79,8 @@ export const defaultConfig: IProjectConfig = {
             showBuildNotifications: false,
             enableTypeChecking: false,
             cleanDistFolderBeforeBuild: true,
+            enableCacheBusting: true,
         }
     },
-    noParse: undefined,
-    aliases: {},
     configureWebpack: undefined,
 };

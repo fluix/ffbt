@@ -5,7 +5,7 @@ import {WebpackLayerConfigurator} from "../index";
 
 // TODO: run in a separate process via thread-loader
 //   https://webpack.js.org/guides/build-performance/#sass
-export const stylesConfigLayer: WebpackLayerConfigurator = (projectConfig, paths) => {
+export const stylesConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
     return {
         module: {
             rules: [
@@ -26,7 +26,7 @@ export const stylesConfigLayer: WebpackLayerConfigurator = (projectConfig, paths
                             loader: "sass-loader",
                             options: {
                                 sassOptions: {
-                                    importer: importOnce(paths.projectNodeModules || ""),
+                                    importer: importOnce(projectConfig.paths.projectNodeModules || ""),
                                     importOnce: {
                                         index: true,
                                         css: false,
@@ -37,12 +37,27 @@ export const stylesConfigLayer: WebpackLayerConfigurator = (projectConfig, paths
                         },
                     ],
                 },
+                {
+                    test: /\.css$/i,
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        "css-loader",
+                        {
+                            loader: "postcss-loader",
+                            options: {
+                                plugins: [
+                                    autoprefixer(projectConfig.env.browserlist),
+                                ],
+                            },
+                        },
+                    ]
+                },
             ],
         },
         plugins: [
             new MiniCssExtractPlugin({
-                filename: projectConfig.env.optimizeBundle ? "[name].[contenthash].css" : "[name].css",
-                chunkFilename: projectConfig.env.optimizeBundle ? "[id].[contenthash].css" : "[id].css",
+                filename: projectConfig.env.enableCacheBusting ? "[name].[contenthash].css" : "[name].css",
+                chunkFilename: projectConfig.env.enableCacheBusting ? "[id].[contenthash].css" : "[id].css",
             }),
         ],
     };

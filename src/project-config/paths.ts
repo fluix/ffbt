@@ -1,20 +1,18 @@
-import {dirname} from "path";
-import {locateDirectory, locateEntrypoint, locateFile} from "./core/locate";
-import {Memoize} from "./core/memoize-decorator";
-import {ProjectConfig} from "./project-config";
+import {dirname, resolve} from "path";
+import {locateDirectory, locateEntrypoint, locateFile} from "../core/locate";
+import {Memoize} from "../core/memoize-decorator";
+import {ProjectConfig} from "./";
 
 export class ProjectPaths {
-    private static instance: ProjectPaths;
-
-    private constructor(private sourcesDirectory: string) {
+    constructor(private config: ProjectConfig) {
     }
 
-    static getInstance(sourcesDirectory: string): ProjectPaths {
-        if (!this.instance) {
-            this.instance = new this(sourcesDirectory);
-        }
+    private get sourcesDirectory() {
+        return this.config.sourcesDirectory;
+    }
 
-        return this.instance;
+    private get env() {
+        return this.config.env;
     }
 
     getAll() {
@@ -27,6 +25,7 @@ export class ProjectPaths {
             projectNodeModules: this.projectNodeModules,
             projectEntrypoint: this.projectEntrypoint,
             projectTsConfig: this.projectTsConfig,
+            destination: this.destination,
         }
     }
 
@@ -62,7 +61,6 @@ export class ProjectPaths {
         return dirname(firstValidRoot);
     }
 
-    @Memoize()
     get projectWorkingDirectory(): string {
         return this.sourcesDirectory;
     }
@@ -74,11 +72,16 @@ export class ProjectPaths {
 
     @Memoize()
     get projectEntrypoint(): string {
-        return locateEntrypoint(this.sourcesDirectory, "index");
+        return locateEntrypoint(this.sourcesDirectory, this.env.entrypointName);
     }
 
     @Memoize()
     get projectTsConfig(): string {
-        return locateFile("tsconfig.json", this.projectRoot);
+        return locateFile(this.env.tsconfigPath, this.projectRoot);
+    }
+
+    @Memoize()
+    get destination(): string {
+        return resolve(this.projectRoot, this.env.outputPath);
     }
 }

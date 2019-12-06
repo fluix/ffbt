@@ -1,6 +1,7 @@
 import "./polyfills";
 require('offline-plugin/runtime').install();
 import "./index.scss";
+import "./styles/test.css";
 // import "./bad-styles.scss";
 // import "./file-that-doesnt-exist.scss";
 import {hello} from "./constants";
