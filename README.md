@@ -62,7 +62,7 @@ module.exports = {
         // Can help if you want to tune build performance
         // See module.noParse in Webpack docs
     ],
-    configureWebpack: (projectConfig, paths) => {
+    configureWebpack: (projectConfig) => {
         // Hook for customizing Webpack config
         // You have access to the selected environment and helper for path calculation
         // Just return the part of Webpack config and it will be merged with the main config automatically
