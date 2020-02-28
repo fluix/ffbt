@@ -1,6 +1,6 @@
 import * as webpack from "webpack";
 import {cleanupIfError} from "../../../core/cleanup";
-import {printVerboseWebpackStats} from "../utils/output";
+import {printWebpackStats} from "../utils/output";
 import {ServiceRunStrategy} from "../../run-strategy";
 
 export class RunWebpackCompileWatcherStrategy implements ServiceRunStrategy {
@@ -9,7 +9,9 @@ export class RunWebpackCompileWatcherStrategy implements ServiceRunStrategy {
 
     run(): void {
         const compiler = webpack(this.webpackConfig);
-        const watcher = compiler.watch({}, printVerboseWebpackStats);
+        const printStats = printWebpackStats(this.webpackConfig.stats);
+
+        const watcher = compiler.watch({}, printStats);
 
         cleanupIfError(() => {
             watcher.close(() => {

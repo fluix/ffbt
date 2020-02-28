@@ -104,7 +104,6 @@ export abstract class BaseWebpackCommand extends BaseCommand {
     private printBannerWithBuildInfo(projectConfig: ProjectConfig, verbose: boolean) {
         console.log("Environment: " + projectConfig.env._name);
         console.log("Source Directory: " + projectConfig.paths.projectWorkingDirectory);
-        console.log();
 
         if (verbose) {
             console.log("Current environment", projectConfig.env, "\n");

@@ -11,9 +11,10 @@
   },
   "files": [
     "dist",
-    "index.d.ts",
+    "interfaces.d.ts",
     "oclif.manifest.json"
   ],
+  "types": "interfaces.d.ts",
   "scripts": {
     "start": "npm run ts-watch",
     "ts-watch": "tsc --watch --pretty",

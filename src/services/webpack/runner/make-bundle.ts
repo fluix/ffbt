@@ -1,5 +1,5 @@
 import * as webpack from "webpack";
-import {printVerboseWebpackStats} from "../utils/output";
+import {printWebpackStats} from "../utils/output";
 import {ServiceRunStrategy} from "../../run-strategy";
 
 export class MakeBundleStrategy implements ServiceRunStrategy {
@@ -8,8 +8,10 @@ export class MakeBundleStrategy implements ServiceRunStrategy {
 
     run(): void {
         const compiler = webpack(this.webpackConfig);
+        const printStats = printWebpackStats(this.webpackConfig.stats);
+
         compiler.run((err, stats) => {
-            printVerboseWebpackStats(err, stats);
+            printStats(err, stats);
             console.log("\nDone 🍺🍺🍺\n");
         });
     }

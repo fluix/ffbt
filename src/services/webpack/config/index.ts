@@ -7,6 +7,7 @@ export type WebpackLayerConfigurator = (projectConfig: ProjectConfig) => webpack
 export function createWebpackConfig(projectConfig: ProjectConfig, workingDirectory: string): webpack.Configuration {
     const layers: Array<WebpackLayerConfigurator> = [
         require("./layers/base").baseConfigLayer,
+        require("./layers/output-stats").outputStatsConfigLayer,
         require("./layers/typescript").typescriptConfigLayer,
         require("./layers/styles").stylesConfigLayer,
         require("./layers/index-file").indexFileConfigLayer,

@@ -14,6 +14,12 @@ export interface IProjectConfig {
 export interface ProjectEnv extends Environment, ProjectEnvProperties {
 }
 
+export enum OutputStatsStyles {
+    minimal = "minimal",
+    normal = "normal",
+    verbose = "verbose",
+}
+
 export interface ProjectEnvProperties {
     outputPath: string;
     browserlist: string | Array<string>; // See https://github.com/browserslist/browserslist for syntax
@@ -33,6 +39,7 @@ export interface ProjectEnvProperties {
     tsconfigPath: string;
     aliases: Record<string, string>;
     noParse?: RegExp | RegExp[] | ((content: string) => boolean);
+    buildStatsStyle: OutputStatsStyles;
 }
 
 export const defaultConfig: IProjectConfig = {
@@ -55,6 +62,7 @@ export const defaultConfig: IProjectConfig = {
             tsconfigPath: "./tsconfig.json",
             aliases: {},
             noParse: undefined,
+            buildStatsStyle: OutputStatsStyles.minimal,
             devServerConfig: {
                 port: 9393,
                 host: "0.0.0.0",
@@ -63,9 +71,6 @@ export const defaultConfig: IProjectConfig = {
                 inline: true,
                 historyApiFallback: true,
                 publicPath: "/",
-                stats: {
-                    colors: true,
-                },
             },
         },
         development: {
@@ -80,6 +85,7 @@ export const defaultConfig: IProjectConfig = {
             enableTypeChecking: false,
             cleanDistFolderBeforeBuild: true,
             enableCacheBusting: true,
+            buildStatsStyle: OutputStatsStyles.normal,
         }
     },
     configureWebpack: undefined,
