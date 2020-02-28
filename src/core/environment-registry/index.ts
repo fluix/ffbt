@@ -13,7 +13,7 @@ export class EnvironmentRegistry<TEnv extends Environment> {
         return this.environments.size;
     }
 
-    add(name: string, env: TEnv): TEnv {
+    add(name: string, env: Partial<TEnv>): TEnv {
         const newEnv = this.extendEnv(env);
         newEnv._name = name;
 
@@ -22,7 +22,7 @@ export class EnvironmentRegistry<TEnv extends Environment> {
         return newEnv;
     }
 
-    addMany(environments: Record<string, TEnv>) {
+    addMany(environments: Record<string, Partial<TEnv>>) {
         Object.keys(environments).forEach((name) => {
             const isEnvironmentAlreadyAdded = this.environments.get(name) !== undefined;
             if (isEnvironmentAlreadyAdded) {
@@ -35,17 +35,17 @@ export class EnvironmentRegistry<TEnv extends Environment> {
 
     private resolveParentEnvAndAdd(
         name: string,
-        env: TEnv,
-        environments: Record<string, TEnv>,
-        parents: Array<TEnv>,
+        env: Partial<TEnv>,
+        environments: Record<string, Environment>,
+        parents: Array<Environment>,
     ) {
-        const parentEnvName = env._extends;
+        const parentEnvName = env._extends as string;
         if (!parentEnvName) {
             this.add(name, env);
             return;
         }
 
-        const parentEnv = environments[parentEnvName];
+        const parentEnv = environments[parentEnvName] as TEnv;
         parentEnv._name = parentEnvName;
 
         if (!parentEnv) {
@@ -62,13 +62,13 @@ export class EnvironmentRegistry<TEnv extends Environment> {
         this.add(name, env);
     }
 
-    private buildDependencyChainString(parents: Array<TEnv>, env: TEnv): string {
+    private buildDependencyChainString(parents: Array<Environment>, env: Environment): string {
         const parentNames = parents.map(parent => parent._name);
         return [...parentNames, env._name, env._extends].join(" -> ");
     }
 
-    private extendEnv(env: TEnv): TEnv {
-        const extendTarget = env._extends || DEFAULT_ENV_NAME;
+    private extendEnv(env: Partial<TEnv>): TEnv {
+        const extendTarget = env._extends as string || DEFAULT_ENV_NAME;
 
         const parentEnv = this.get(extendTarget);
 
@@ -88,10 +88,10 @@ export class EnvironmentRegistry<TEnv extends Environment> {
         throw new Error(`Environment with name ${name} doesn't exist`);
     }
 
-    private mergeEnvironments(e1: TEnv, e2: TEnv): TEnv {
+    private mergeEnvironments(e1: Environment, e2: Environment): TEnv {
         return {
             ...e1,
             ...e2,
-        };
+        } as TEnv;
     }
 }
