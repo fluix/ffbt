@@ -1,4 +1,4 @@
-# FFBT: Fluix Frontend Build Tool
+# FFBT: Fluix Frontend Build Tool 🛠
 
 A tool to build a Typescript based web app without pain.
 
@@ -86,6 +86,7 @@ enableTypeChecking | Enable/Disable typechecking for Typescript | boolean
 cleanDistFolderBeforeBuild | The name speaks for itself | boolean
 optimizeBundle | Minify and three-shake the output | boolean
 enableCacheBusting | Add hashes to the output file names | boolean
+buildStatsStyle | Control what bundle information gets displayed  | `minimal`, `normal`, `verbose`
 noParse | Webpack's module.noParse ([Docs](https://webpack.js.org/configuration/module/#modulenoparse))| []
 aliases | Webpack's resolve.alias ([Docs](https://webpack.js.org/configuration/resolve/#resolvealias)) | {}
 
