@@ -34,6 +34,7 @@ export const baseConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
         optimization: {
             splitChunks: {
                 chunks: "all",
+                automaticNameDelimiter: "-",
             },
         },
     };
