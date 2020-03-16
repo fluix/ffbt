@@ -1,6 +1,6 @@
-import {WebpackLayerConfigurator} from "../index";
+import {WebpackLayerConfigurator} from "./index";
 
-export const devServerConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
+const layer: WebpackLayerConfigurator = (projectConfig) => {
     return {
         devServer: {
             stats: projectConfig.env.buildStatsStyle,
@@ -9,3 +9,5 @@ export const devServerConfigLayer: WebpackLayerConfigurator = (projectConfig) =>
         },
     }
 };
+
+module.exports = layer;

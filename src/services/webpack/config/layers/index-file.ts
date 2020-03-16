@@ -1,9 +1,9 @@
 import * as HtmlWebpackPlugin from "html-webpack-plugin";
-import {WebpackLayerConfigurator} from "../index";
 import {resolve} from "path";
 import {existsSync} from "fs";
+import {WebpackLayerConfigurator} from "./index";
 
-export const indexFileConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
+const layer: WebpackLayerConfigurator = (projectConfig) => {
     const pathToTemplate = resolve(projectConfig.paths.projectWorkingDirectory, "index.ejs");
 
     const settingsForCustomTemplate: HtmlWebpackPlugin.Options = {
@@ -39,3 +39,5 @@ export const indexFileConfigLayer: WebpackLayerConfigurator = (projectConfig) =>
         ]
     };
 };
+
+module.exports = layer;

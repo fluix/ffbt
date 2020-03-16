@@ -1,6 +1,6 @@
-import {WebpackLayerConfigurator} from "../index";
+import {WebpackLayerConfigurator} from "./index";
 
-export const cachingConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
+const layer: WebpackLayerConfigurator = (projectConfig) => {
     return {
         output: {
             filename: "[name].[contenthash].js",
@@ -15,3 +15,5 @@ export const cachingConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
         }
     };
 };
+
+module.exports = layer;

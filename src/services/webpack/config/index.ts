@@ -1,44 +1,49 @@
 import {ProjectConfig} from "../../../project-config";
 import * as webpack from "webpack";
 import * as webpackMerge from "webpack-merge";
-
-export type WebpackLayerConfigurator = (projectConfig: ProjectConfig) => webpack.Configuration;
+import {FFBTLayers, registerLayer, WebpackConfigLayer} from "./layers";
 
 export function createWebpackConfig(projectConfig: ProjectConfig, workingDirectory: string): webpack.Configuration {
-    const layers: Array<WebpackLayerConfigurator> = [
-        require("./layers/base").baseConfigLayer,
-        require("./layers/output-stats").outputStatsConfigLayer,
-        require("./layers/typescript").typescriptConfigLayer,
-        require("./layers/styles").stylesConfigLayer,
-        require("./layers/index-file").indexFileConfigLayer,
-        require("./layers/include-html").includeHtmlConfigLayer,
-        require("./layers/assets").assetsConfigLayer,
-        require("./layers/globals").globalsConfigLayer,
-        require("./layers/dev-server").devServerConfigLayer,
+    const layers: Array<WebpackConfigLayer> = [
+        registerLayer("base", require("./layers/base")),
+        registerLayer(FFBTLayers.outputStats, require("./layers/output-stats")),
+        registerLayer(FFBTLayers.typescript, require("./layers/typescript")),
+        registerLayer(FFBTLayers.styles, require("./layers/styles")),
+        registerLayer(FFBTLayers.indexFile, require("./layers/index-file")),
+        registerLayer(FFBTLayers.includeHtml, require("./layers/include-html")),
+        registerLayer(FFBTLayers.staticAssets, require("./layers/static-assets")),
+        registerLayer(FFBTLayers.globals, require("./layers/globals")),
+        registerLayer(FFBTLayers.devServer, require("./layers/dev-server")),
     ];
 
     if (projectConfig.env.showBuildNotifications) {
-        layers.push(require("./layers/build-notfications").buildNotificationsConfigLayer);
+        layers.push(registerLayer(FFBTLayers.buildNotifications, require("./layers/build-notfications")));
     }
 
     if (projectConfig.env.analyzeBundle) {
-        layers.push(require("./layers/bundle-analyze").bundleAnalyzeConfigLayer);
+        layers.push(registerLayer(FFBTLayers.bundleAnalyze, require("./layers/bundle-analyze")));
     }
 
     if (projectConfig.env.cleanDistFolderBeforeBuild) {
-        layers.push(require("./layers/clean-dist").cleanDistFolderConfigLayer);
+        layers.push(registerLayer(FFBTLayers.cleanDist, require("./layers/clean-dist")));
     }
 
     if (projectConfig.env.enableCacheBusting) {
-        layers.push(require("./layers/caching").cachingConfigLayer);
+        layers.push(registerLayer(FFBTLayers.caching, require("./layers/caching")));
     }
 
     const customWebpackLayer = projectConfig.configureWebpack;
     if (customWebpackLayer) {
-        layers.push(customWebpackLayer);
+        layers.push(registerLayer("custom", customWebpackLayer));
     }
 
-    const configuredWebpackLayers = layers.map(layer => layer(projectConfig));
+    const configuredWebpackLayers = layers.map(layer => layer.configurator(projectConfig));
+
+    if (projectConfig.env.verboseMode) {
+        console.log("Enabled webpack config layers:");
+        console.log(layers.map(layer => layer.name));
+        console.log();
+    }
 
     return webpackMerge.smart(...configuredWebpackLayers);
 }
