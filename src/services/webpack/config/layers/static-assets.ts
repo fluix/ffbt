@@ -1,6 +1,6 @@
-import {WebpackLayerConfigurator} from "../index";
+import {WebpackLayerConfigurator} from '.';
 
-export const assetsConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
+const layer: WebpackLayerConfigurator = (projectConfig) => {
     const thresholdInBytes = projectConfig.env.staticFilesSizeThresholdKb * 1024;
 
     return {
@@ -19,3 +19,5 @@ export const assetsConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
         },
     };
 };
+
+module.exports = layer;

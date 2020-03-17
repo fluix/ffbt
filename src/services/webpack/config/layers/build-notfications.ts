@@ -1,8 +1,8 @@
-import {WebpackLayerConfigurator} from "../index";
 import * as ForkTsCheckerNotifierWebpackPlugin from "fork-ts-checker-notifier-webpack-plugin";
 import * as WebpackNotifierPlugin from "webpack-notifier";
+import {WebpackLayerConfigurator} from "./index";
 
-export const buildNotificationsConfigLayer: WebpackLayerConfigurator = () => {
+const layer: WebpackLayerConfigurator = () => {
     return {
         plugins: [
             new ForkTsCheckerNotifierWebpackPlugin({
@@ -18,3 +18,5 @@ export const buildNotificationsConfigLayer: WebpackLayerConfigurator = () => {
         ]
     };
 };
+
+module.exports = layer;

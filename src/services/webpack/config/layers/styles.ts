@@ -1,11 +1,9 @@
 import * as MiniCssExtractPlugin from "mini-css-extract-plugin";
 import * as autoprefixer from "autoprefixer";
 import * as importOnce from "../../node-sass-import-once";
-import {WebpackLayerConfigurator} from "../index";
+import {WebpackLayerConfigurator} from "./index";
 
-// TODO: run in a separate process via thread-loader
-//   https://webpack.js.org/guides/build-performance/#sass
-export const stylesConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
+const layer: WebpackLayerConfigurator = (projectConfig) => {
     return {
         module: {
             rules: [
@@ -62,3 +60,5 @@ export const stylesConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
         ],
     };
 };
+
+module.exports = layer;

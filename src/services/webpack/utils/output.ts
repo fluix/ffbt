@@ -1,4 +1,5 @@
 import * as webpack from "webpack";
+import {bold, red} from "chalk";
 
 function getTimeString(): string {
     const dateNow = new Date();
@@ -11,8 +12,20 @@ function getTimeString(): string {
 
 export const printWebpackStats = (settings?: webpack.Stats.ToJsonOptions): webpack.ICompiler.Handler => {
     return (error, stats) => {
+        const startTime = stats.startTime || NaN;
+        const endTime = stats.endTime || NaN;
+        const buildDuration = endTime - startTime;
+        const prettyBuildDuration = isNaN(buildDuration)
+            ? bold(red("unknown"))
+            : `${bold(buildDuration)}ms`;
+
         console.log();
         console.log(`🛠  Built at ${getTimeString()}`);
+
+        if (settings === "minimal") {
+            console.log(`   Time: ${prettyBuildDuration}`);
+        }
+
         console.log(stats.toString(settings));
         console.log();
     };

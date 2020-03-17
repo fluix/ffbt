@@ -2,13 +2,14 @@ import * as webpack from "webpack";
 import {Environment} from "../core/environment-registry";
 import * as HtmlWebpackPlugin from "html-webpack-plugin";
 import * as WebpackDevServer from "webpack-dev-server";
-import {WebpackLayerConfigurator} from "../services/webpack/config";
+import {WebpackLayerConfigurator, WebpackLayersGetter} from "../services/webpack/config/layers";
 
 export interface IProjectConfig {
     environments: Record<string, Partial<ProjectEnv>> & {
         default: ProjectEnv;
     };
     configureWebpack?: WebpackLayerConfigurator;
+    disableWebpackLayers?: WebpackLayersGetter;
 }
 
 export interface ProjectEnv extends Environment, ProjectEnvProperties {
@@ -89,4 +90,5 @@ export const defaultConfig: IProjectConfig = {
         }
     },
     configureWebpack: undefined,
+    disableWebpackLayers: () => [],
 };

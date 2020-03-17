@@ -1,7 +1,7 @@
 import * as webpack from "webpack";
-import {WebpackLayerConfigurator} from "../index";
+import {WebpackLayerConfigurator} from "./index";
 
-export const globalsConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
+const layer: WebpackLayerConfigurator = (projectConfig) => {
     return {
         plugins: [
             new webpack.DefinePlugin({
@@ -10,3 +10,5 @@ export const globalsConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
         ]
     };
 };
+
+module.exports = layer;

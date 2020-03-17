@@ -1,7 +1,7 @@
-import {WebpackLayerConfigurator} from "../index";
 import {ProjectConfig} from "../../../../project-config";
 import {Stats} from "webpack";
 import {OutputStatsStyles} from "../../../../project-config/default";
+import {WebpackLayerConfigurator} from "./index";
 
 // https://webpack.js.org/configuration/stats/#stats
 const webpackLoggingConfigs = {
@@ -34,8 +34,10 @@ function getStatsLoggingConfig(projectConfig: ProjectConfig): Stats.ToStringOpti
     return loggingConfig as Stats.ToStringOptions;
 }
 
-export const outputStatsConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
+const layer: WebpackLayerConfigurator = (projectConfig) => {
     return {
         stats: getStatsLoggingConfig(projectConfig),
     };
 };
+
+module.exports = layer;

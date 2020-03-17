@@ -1,9 +1,9 @@
 import {BundleStatsWebpackPlugin} from "bundle-stats";
 import {BundleAnalyzerPlugin} from "webpack-bundle-analyzer";
-import {WebpackLayerConfigurator} from "../index";
 import {relative, resolve} from "path";
+import {WebpackLayerConfigurator} from "./index";
 
-export const bundleAnalyzeConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
+const layer: WebpackLayerConfigurator = (projectConfig) => {
     const pathToReports = resolve(projectConfig.paths.projectRoot, "bundle-report");
 
     return {
@@ -22,3 +22,5 @@ export const bundleAnalyzeConfigLayer: WebpackLayerConfigurator = (projectConfig
         ]
     };
 };
+
+module.exports = layer;

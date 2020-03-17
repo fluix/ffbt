@@ -1,13 +1,13 @@
 import * as ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
-import {WebpackLayerConfigurator} from "../index";
 import {CompilerOptions} from "typescript";
 import {readJson} from "../../../../core/read-json";
+import {WebpackLayerConfigurator} from "./index";
 
 interface TsConfig {
     compilerOptions: CompilerOptions;
 }
 
-export const typescriptConfigLayer: WebpackLayerConfigurator = (projectConfig) => {
+const layer: WebpackLayerConfigurator = (projectConfig) => {
     const {paths} = projectConfig;
     const tsConfigPath = paths.projectTsConfig;
     const tsConfig = readJson<TsConfig>(tsConfigPath);
@@ -49,3 +49,5 @@ export const typescriptConfigLayer: WebpackLayerConfigurator = (projectConfig) =
         plugins,
     };
 };
+
+module.exports = layer;

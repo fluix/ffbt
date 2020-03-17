@@ -1,6 +1,6 @@
-import {WebpackLayerConfigurator} from "../index";
+import {WebpackLayerConfigurator} from "./index";
 
-export const includeHtmlConfigLayer: WebpackLayerConfigurator = () => {
+const layer: WebpackLayerConfigurator = () => {
     return {
         module: {
             rules: [
@@ -15,3 +15,5 @@ export const includeHtmlConfigLayer: WebpackLayerConfigurator = () => {
         },
     };
 };
+
+module.exports = layer;
