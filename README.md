@@ -15,7 +15,7 @@ npx ffbt-init [PATH_TO_NEW_PROJECT]
 - Dev server with live reload
 - Typescript
 - CSS and SASS with Autoprefixer
-- import-once plugin for SASS
+- import-once plugin for SASS (remove duplicated imports across the project during compilation)
 - TSlint
 - Stylelint
 - Tools for analyzing bundle structure
