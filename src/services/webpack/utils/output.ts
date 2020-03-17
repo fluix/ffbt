@@ -21,7 +21,11 @@ export const printWebpackStats = (settings?: webpack.Stats.ToJsonOptions): webpa
 
         console.log();
         console.log(`🛠  Built at ${getTimeString()}`);
-        console.log(`   Time: ${prettyBuildDuration}`);
+
+        if (settings === "minimal") {
+            console.log(`   Time: ${prettyBuildDuration}`);
+        }
+
         console.log(stats.toString(settings));
         console.log();
     };
