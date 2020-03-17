@@ -5,7 +5,9 @@ import {FFBTLayers, registerLayer, WebpackConfigLayer} from "./layers";
 
 export function createWebpackConfig(projectConfig: ProjectConfig, workingDirectory: string): webpack.Configuration {
     const layers: Array<WebpackConfigLayer> = [
-        registerLayer("base", require("./layers/base")),
+        registerLayer(FFBTLayers.base, require("./layers/base")),
+        registerLayer(FFBTLayers.moduleAliases, require("./layers/module-aliases")),
+        registerLayer(FFBTLayers.moduleNoParse, require("./layers/module-no-parse")),
         registerLayer(FFBTLayers.outputStats, require("./layers/output-stats")),
         registerLayer(FFBTLayers.typescript, require("./layers/typescript")),
         registerLayer(FFBTLayers.styles, require("./layers/styles")),
@@ -34,11 +36,11 @@ export function createWebpackConfig(projectConfig: ProjectConfig, workingDirecto
 
     const customWebpackLayer = projectConfig.configureWebpack;
     if (customWebpackLayer) {
-        layers.push(registerLayer("custom", customWebpackLayer));
+        layers.push(registerLayer(FFBTLayers.custom, customWebpackLayer));
     }
 
     const disabledLayers = projectConfig.disableWebpackLayers(projectConfig);
-    const layersWithoutDisabled = layers.filter(layer => !disabledLayers.includes(layer.name as FFBTLayers));
+    const layersWithoutDisabled = layers.filter(layer => !disabledLayers.includes(layer.name));
     const configuredWebpackLayers = layersWithoutDisabled.map(layer => layer.configurator(projectConfig));
 
     if (projectConfig.env.verboseMode) {

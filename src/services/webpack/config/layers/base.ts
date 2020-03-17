@@ -21,13 +21,6 @@ const layer: WebpackLayerConfigurator = (projectConfig) => {
             chunkFilename: '[name].chunk.js',
             path: paths.destination,
         },
-        module: {
-            noParse: projectConfig.env.noParse,
-            rules: [],
-        },
-        resolve: {
-            alias: projectConfig.env.aliases,
-        },
         resolveLoader: {
             modules: whereToSearchLoaders,
         },

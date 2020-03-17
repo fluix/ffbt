@@ -5,6 +5,9 @@ export type WebpackLayerConfigurator = (projectConfig: ProjectConfig) => webpack
 export type WebpackLayersGetter = (projectConfig: ProjectConfig) => Array<FFBTLayers>;
 
 export enum FFBTLayers {
+    base = "base",
+    moduleNoParse = "moduleNoParse",
+    moduleAliases = "moduleAliases",
     typescript = "typescript",
     styles = "styles",
     buildNotifications = "buildNotifications",
@@ -17,14 +20,15 @@ export enum FFBTLayers {
     indexFile = "indexFile",
     outputStats = "outputStats",
     staticAssets = "staticAssets",
+    custom = "custom",
 }
 
 export interface WebpackConfigLayer {
-    name: FFBTLayers | string;
+    name: FFBTLayers;
     configurator: WebpackLayerConfigurator;
 }
 
-export function registerLayer(name: FFBTLayers | string, configurator: WebpackLayerConfigurator): WebpackConfigLayer {
+export function registerLayer(name: FFBTLayers, configurator: WebpackLayerConfigurator): WebpackConfigLayer {
     return {
         name,
         configurator,
