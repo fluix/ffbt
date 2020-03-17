@@ -1,4 +1,4 @@
-declare module "bundle-stats";
+declare module "bundle-stats-webpack-plugin";
 declare module "webpack-bundle-analyzer";
 declare module "mini-css-extract-plugin";
 declare module "autoprefixer";

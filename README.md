@@ -18,6 +18,7 @@ npx ffbt-init [PATH_TO_NEW_PROJECT]
 - import-once plugin for SASS
 - TSlint
 - Stylelint
+- Tools for analyzing bundle structure
 
 ## Configuration
 Usually you don't need config. If you need to change default behaviour - see the config structure below
@@ -126,4 +127,23 @@ module.exports = {
         }
     }
 };
+```
+### Bundle analysis
+To analyze bundle just run `ffbt dev|build --analyze`
+We use the following webpack plugins for analyzing:
+- [bundle-stats-webpack-plugin](https://github.com/relative-ci/bundle-stats/tree/master/packages/webpack-plugin)
+- [webpack-bundle-analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer)
+
+Once you run the analyze command the generated report from webpack-bundle-analyzer will be opened.
+You can find the report from bundle-stats-webpack-plugin inside the `bundle-report` folder inside your project.
+
+#### Compare bundles
+You can compare bundles
+```
+# use the current bundle as a base for comparison
+BUNDLE_STATS_BASELINE=true ffbt build --analyze
+# do some operations with bundle (add/remove libraries, etc.)
+# run analyze again
+ffbt build --analyze
+# open bundle-report/bundle-stats.html and see the comparison
 ```
