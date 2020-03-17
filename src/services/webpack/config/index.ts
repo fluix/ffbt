@@ -37,11 +37,13 @@ export function createWebpackConfig(projectConfig: ProjectConfig, workingDirecto
         layers.push(registerLayer("custom", customWebpackLayer));
     }
 
-    const configuredWebpackLayers = layers.map(layer => layer.configurator(projectConfig));
+    const disabledLayers = projectConfig.disableWebpackLayers(projectConfig);
+    const layersWithoutDisabled = layers.filter(layer => !disabledLayers.includes(layer.name as FFBTLayers));
+    const configuredWebpackLayers = layersWithoutDisabled.map(layer => layer.configurator(projectConfig));
 
     if (projectConfig.env.verboseMode) {
         console.log("Enabled webpack config layers:");
-        console.log(layers.map(layer => layer.name));
+        console.log(layersWithoutDisabled.map(layer => layer.name));
         console.log();
     }
 

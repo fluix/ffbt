@@ -5,7 +5,7 @@ import {EnvironmentRegistry} from "../core/environment-registry";
 import {DeepPartial} from "utility-types";
 import {locateFile} from "../core/locate";
 import {ProjectPaths} from "./paths";
-import {WebpackLayerConfigurator} from "../services/webpack/config/layers";
+import {WebpackLayerConfigurator, WebpackLayersGetter} from "../services/webpack/config/layers";
 
 const CONFIG_FILE_NAME = "ffbt-config.js";
 
@@ -15,6 +15,7 @@ export class ProjectConfig {
     private currentEnvName: string = "default";
 
     @Prop() configureWebpack!: WebpackLayerConfigurator;
+    @Prop() disableWebpackLayers!: WebpackLayersGetter;
 
     public readonly paths: ProjectPaths;
 

@@ -7,7 +7,8 @@ module.exports = {
             entrypointName: "index2",
         }
     },
-    configureWebpack: (projectConfig, paths) => {
+    // disableWebpackLayers: () => ["buildNotifications"],
+    configureWebpack: projectConfig => {
         return {
             plugins: [
                 new OfflinePlugin(),
