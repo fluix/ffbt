@@ -8,7 +8,7 @@ const layer: WebpackLayerConfigurator = () => {
                     test: /\.html$/,
                     loader: "html-loader",
                     options: {
-                        attrs: false,
+                        attributes: false,
                     }
                 },
             ],

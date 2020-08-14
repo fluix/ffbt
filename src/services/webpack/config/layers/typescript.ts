@@ -16,7 +16,10 @@ const layer: WebpackLayerConfigurator = (projectConfig) => {
     if (projectConfig.env.enableTypeChecking) {
         plugins.push(
             new ForkTsCheckerWebpackPlugin({
-                tsconfig: tsConfigPath,
+                typescript: {
+                    configFile: tsConfigPath,
+                    profile: projectConfig.env.verboseMode,
+                }
             })
         );
     }
@@ -42,6 +45,8 @@ const layer: WebpackLayerConfigurator = (projectConfig) => {
                         experimentalWatchApi: true,
                         // disable type checker - we will use it in fork plugin
                         transpileOnly: true,
+                        logLevel: projectConfig.env.verboseMode ? "info" : "warn",
+                        logInfoToStdOut: projectConfig.env.verboseMode,
                     },
                 },
             ],

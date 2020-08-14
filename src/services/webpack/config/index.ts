@@ -49,5 +49,5 @@ export function createWebpackConfig(projectConfig: ProjectConfig, workingDirecto
         console.log();
     }
 
-    return webpackMerge.smart(...configuredWebpackLayers);
+    return webpackMerge.merge(...configuredWebpackLayers as [webpack.Configuration]);
 }
