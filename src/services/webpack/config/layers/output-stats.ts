@@ -1,7 +1,7 @@
 import {Configuration} from "webpack/types";
 import {ProjectConfig} from "../../../../project-config";
 import {OutputStatsStyles} from "../../../../project-config/default";
-import { WebpackLayerConfig, WebpackLayerConfigurator } from "./index";
+import {WebpackLayerConfig, WebpackLayerConfigurator} from "./index";
 
 // https://webpack.js.org/configuration/stats/#stats
 const webpackLoggingConfigs = {
