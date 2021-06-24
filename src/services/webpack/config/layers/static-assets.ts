@@ -1,6 +1,6 @@
-import {WebpackLayerConfigurator} from '.';
+import { WebpackLayerConfig, WebpackLayerConfigurator } from '.';
 
-const layer: WebpackLayerConfigurator = (projectConfig) => {
+const layer: WebpackLayerConfigurator = (projectConfig): WebpackLayerConfig<"module"> => {
     const thresholdInBytes = projectConfig.env.staticFilesSizeThresholdKb * 1024;
 
     return {
@@ -8,12 +8,14 @@ const layer: WebpackLayerConfigurator = (projectConfig) => {
             rules: [
                 {
                     test: /\.(jpe?g|png|gif|ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
-                    loader: {
-                        loader: "url-loader",
-                        options: {
-                            limit: thresholdInBytes,
+                    use: [
+                        {
+                            loader: "url-loader",
+                            options: {
+                                limit: thresholdInBytes,
+                            },
                         },
-                    },
+                    ],
                 }
             ]
         },

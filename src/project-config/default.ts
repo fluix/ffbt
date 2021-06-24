@@ -1,7 +1,6 @@
-import * as webpack from "webpack";
 import {Environment} from "../core/environment-registry";
 import * as HtmlWebpackPlugin from "html-webpack-plugin";
-import * as WebpackDevServer from "webpack-dev-server";
+import {Configuration} from "webpack/types";
 import {WebpackLayerConfigurator, WebpackLayersGetter} from "../services/webpack/config/layers";
 
 export interface IProjectConfig {
@@ -24,7 +23,7 @@ export enum OutputStatsStyles {
 export interface ProjectEnvProperties {
     outputPath: string;
     browserlist: string | Array<string>; // See https://github.com/browserslist/browserslist for syntax
-    sourceMapType: "(none)" | webpack.Options.Devtool;
+    sourceMapType: "(none)" | Configuration["devtool"];
     buildVersion: string;
     staticFilesSizeThresholdKb: number;
     optimizeBundle: boolean;
@@ -34,7 +33,7 @@ export interface ProjectEnvProperties {
     showBuildNotifications: boolean;
     cleanDistFolderBeforeBuild: boolean;
     htmlWebpackPluginConfig: Partial<HtmlWebpackPlugin.Options>,
-    devServerConfig: Partial<WebpackDevServer.Configuration>,
+    devServerConfig: Configuration["devServer"];
     enableCacheBusting: boolean;
     entrypointName: string;
     tsconfigPath: string;

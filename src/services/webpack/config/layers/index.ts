@@ -2,6 +2,7 @@ import {ProjectConfig} from "../../../../project-config";
 import * as webpack from "webpack";
 
 export type WebpackLayerConfigurator = (projectConfig: ProjectConfig) => webpack.Configuration;
+export type WebpackLayerConfig<T extends keyof webpack.Configuration> = Pick<webpack.Configuration, T>;
 export type WebpackLayersGetter = (projectConfig: ProjectConfig) => Array<FFBTLayers>;
 
 export enum FFBTLayers {
