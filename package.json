@@ -1,6 +1,6 @@
 {
   "name": "ffbt",
-  "version": "1.0.0-rc.0",
+  "version": "1.0.0-rc.0  ",
   "description": "Build a Typescript app without pain",
   "license": "MIT",
   "engines": {
