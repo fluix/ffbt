@@ -1,6 +1,6 @@
-import {WebpackLayerConfigurator} from "./index";
+import {WebpackLayerConfig, WebpackLayerConfigurator} from "./index";
 
-const layer: WebpackLayerConfigurator = (projectConfig) => {
+const layer: WebpackLayerConfigurator = (projectConfig): WebpackLayerConfig<"devServer"> => {
     return {
         devServer: {
             stats: projectConfig.env.buildStatsStyle,

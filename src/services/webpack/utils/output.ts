@@ -1,4 +1,4 @@
-import * as webpack from "webpack";
+import {Configuration, Stats} from "webpack/types";
 import {bold, red} from "chalk";
 
 function getTimeString(): string {
@@ -10,10 +10,10 @@ function getTimeString(): string {
     return `${hoursString}:${minutesString}:${secondsString}`;
 }
 
-export const printWebpackStats = (settings?: webpack.Stats.ToJsonOptions): webpack.ICompiler.Handler => {
-    return (error, stats) => {
-        const startTime = stats.startTime || NaN;
-        const endTime = stats.endTime || NaN;
+export const printWebpackStats = (settings?: Configuration["stats"]) => {
+    return (error?: Error, stats?: Stats) => {
+        const startTime = stats?.startTime || NaN;
+        const endTime = stats?.endTime || NaN;
         const buildDuration = endTime - startTime;
         const prettyBuildDuration = isNaN(buildDuration)
             ? bold(red("unknown"))
@@ -26,7 +26,7 @@ export const printWebpackStats = (settings?: webpack.Stats.ToJsonOptions): webpa
             console.log(`   Time: ${prettyBuildDuration}`);
         }
 
-        console.log(stats.toString(settings));
+        console.log(stats?.toString(settings));
         console.log();
     };
 };

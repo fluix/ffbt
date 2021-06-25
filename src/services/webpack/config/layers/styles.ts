@@ -10,7 +10,12 @@ const layer: WebpackLayerConfigurator = (projectConfig) => {
                 {
                     test: /\.s[ac]ss$/i,
                     use: [
-                        MiniCssExtractPlugin.loader,
+                        {
+                            loader: MiniCssExtractPlugin.loader,
+                            options: {
+                                publicPath: '',
+                            },
+                        },
                         "css-loader",
                         {
                             loader: "postcss-loader",
@@ -38,7 +43,12 @@ const layer: WebpackLayerConfigurator = (projectConfig) => {
                 {
                     test: /\.css$/i,
                     use: [
-                        MiniCssExtractPlugin.loader,
+                        {
+                            loader: MiniCssExtractPlugin.loader,
+                            options: {
+                                publicPath: '',
+                            },
+                        },
                         "css-loader",
                         {
                             loader: "postcss-loader",

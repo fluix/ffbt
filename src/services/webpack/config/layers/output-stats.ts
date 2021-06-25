@@ -1,7 +1,7 @@
+import {Configuration} from "webpack/types";
 import {ProjectConfig} from "../../../../project-config";
-import {Stats} from "webpack";
 import {OutputStatsStyles} from "../../../../project-config/default";
-import {WebpackLayerConfigurator} from "./index";
+import {WebpackLayerConfig, WebpackLayerConfigurator} from "./index";
 
 // https://webpack.js.org/configuration/stats/#stats
 const webpackLoggingConfigs = {
@@ -21,7 +21,7 @@ const webpackLoggingConfigs = {
     }
 };
 
-function getStatsLoggingConfig(projectConfig: ProjectConfig): Stats.ToStringOptions {
+function getStatsLoggingConfig(projectConfig: ProjectConfig): Configuration["stats"] {
     const presetName = projectConfig.env.verboseMode
         ? OutputStatsStyles.verbose
         : projectConfig.env.buildStatsStyle;
@@ -31,10 +31,10 @@ function getStatsLoggingConfig(projectConfig: ProjectConfig): Stats.ToStringOpti
         throw new Error(`Can't find stats logging preset with name ${presetName}`);
     }
 
-    return loggingConfig as Stats.ToStringOptions;
+    return loggingConfig as Configuration["stats"];
 }
 
-const layer: WebpackLayerConfigurator = (projectConfig) => {
+const layer: WebpackLayerConfigurator = (projectConfig): WebpackLayerConfig<"stats"> => {
     return {
         stats: getStatsLoggingConfig(projectConfig),
     };
