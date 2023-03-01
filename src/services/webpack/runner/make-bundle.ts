@@ -12,6 +12,10 @@ export class MakeBundleStrategy implements ServiceRunStrategy {
         const printStats = printWebpackStats(this.webpackConfig.stats);
 
         compiler.run((err, stats) => {
+            if (err === null) {
+                return;
+            }
+
             printStats(err, stats);
             console.log("\nDone 🍺🍺🍺\n");
         });

@@ -13,7 +13,7 @@ export abstract class BaseCommand extends Command {
         })
     };
 
-    protected getArguments<TArgs>() {
+    protected getArguments<TArgs extends Record<string, any>>() {
         const {args} = this.parse<any, TArgs>(this.constructor as any);
         return args;
     }
