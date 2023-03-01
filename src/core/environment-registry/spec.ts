@@ -84,7 +84,7 @@ describe("Environment", () => {
         });
 
         test("don't add the similar environment twice", () => {
-            const spyForAdd = spyOn(environments, "add").and.callThrough();
+            const spyForAdd = jest.spyOn(environments, "add");
 
             environments.addMany({
                 e1: {
@@ -93,9 +93,9 @@ describe("Environment", () => {
                 e2: {}
             });
 
-            expect(spyForAdd.calls.count()).toBe(2);
-            expect(spyForAdd.calls.argsFor(0)[0]).toBe("e2");
-            expect(spyForAdd.calls.argsFor(1)[0]).toBe("e1");
+            expect(spyForAdd).toHaveBeenCalledTimes(2);
+            expect(spyForAdd).toHaveBeenNthCalledWith(1, "e2", {"_name": "e2"});
+            expect(spyForAdd).toHaveBeenNthCalledWith(2, "e1", {"_extends": "e2"});
         });
     });
 
