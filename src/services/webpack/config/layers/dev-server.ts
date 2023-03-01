@@ -3,9 +3,14 @@ import {WebpackLayerConfig, WebpackLayerConfigurator} from "./index";
 const layer: WebpackLayerConfigurator = (projectConfig): WebpackLayerConfig<"devServer"> => {
     return {
         devServer: {
-            stats: projectConfig.env.buildStatsStyle,
+            devMiddleware: {
+                stats: projectConfig.env.buildStatsStyle,
+                ...projectConfig.env.devServerConfig?.devMiddleware,
+            },
             ...projectConfig.env.devServerConfig,
-            contentBase: projectConfig.env.outputPath,
+            static: {
+                directory: projectConfig.env.outputPath,
+            },
         },
     }
 };

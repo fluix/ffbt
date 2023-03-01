@@ -11,7 +11,13 @@ export class RunWebpackCompileWatcherStrategy implements ServiceRunStrategy {
         const compiler = webpack(this.webpackConfig);
         const printStats = printWebpackStats(this.webpackConfig.stats);
 
-        const watcher = compiler.watch({}, printStats);
+        const watcher = compiler.watch({}, (err, stats) => {
+            if (err === null) {
+                return;
+            }
+
+            printStats(err, stats);
+        });
 
         cleanupIfError(() => {
             watcher.close(() => {

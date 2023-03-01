@@ -67,10 +67,7 @@ export const defaultConfig: IProjectConfig = {
                 port: 9393,
                 host: "0.0.0.0",
                 open: true,
-                overlay: true,
-                inline: true,
                 historyApiFallback: true,
-                publicPath: "/",
             },
         },
         development: {

@@ -10,7 +10,7 @@ export class RunWebpackDevServerStrategy implements ServiceRunStrategy {
 
     run(): void {
         const compiler = webpack(this.webpackConfig);
-        const server = new WebpackDevServer(compiler, this.webpackConfig.devServer);
+        const server = new WebpackDevServer(compiler, this.webpackConfig.devServer || {});
 
         const {port, host} = {
             port: 9091,
@@ -18,7 +18,7 @@ export class RunWebpackDevServerStrategy implements ServiceRunStrategy {
             ...this.webpackConfig.devServer,
         };
 
-        server.listen(port, host);
+        server.listen(port, host, console.error);
 
         cleanupIfError(() => {
             server.close();
