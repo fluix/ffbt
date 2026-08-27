@@ -10,18 +10,23 @@ export class RunWebpackDevServerStrategy implements ServiceRunStrategy {
 
     run(): void {
         const compiler = webpack(this.webpackConfig);
-        const server = new WebpackDevServer(compiler, this.webpackConfig.devServer || {});
 
-        const {port, host} = {
-            port: 9091,
-            host: "localhost",
-            ...this.webpackConfig.devServer,
-        };
+        // webpack-dev-server v5 takes the options as the first argument and the
+        // compiler as the second, and reads port/host from those options rather
+        // than from listen() arguments.
+        const server = new WebpackDevServer(
+            {
+                port: 9091,
+                host: "localhost",
+                ...this.webpackConfig.devServer,
+            },
+            compiler,
+        );
 
-        server.listen(port, host, console.error);
+        server.start().catch(console.error);
 
         cleanupIfError(() => {
-            server.close();
+            server.stop();
         });
     }
 }
