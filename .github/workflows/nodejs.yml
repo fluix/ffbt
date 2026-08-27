@@ -9,7 +9,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [18.x, 20.x, 22.x]
 
     steps:
     - uses: actions/checkout@v1
@@ -18,8 +18,11 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: npm install, build, and test
+      # --legacy-peer-deps works around a pre-existing conflict unrelated to the
+      # build: the root pins tslint ^6 while tslint-config-airbnb peer-requires
+      # tslint ^5. npm >= 7 treats that as fatal, so plain `npm i` cannot install.
       run: |
-        npm i
+        npm i --legacy-peer-deps
         npm run build
         npm run test:ci
       env:
