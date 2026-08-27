@@ -20,7 +20,9 @@ export class RunWebpackCompileWatcherStrategy implements ServiceRunStrategy {
         });
 
         cleanupIfError(() => {
-            watcher.close(() => {
+            // Compiler.watch() is typed `undefined | Watching` in current webpack 5
+            // releases — it yields undefined when the compiler is already watching.
+            watcher?.close(() => {
                 console.log(" 👍");
             });
         });
